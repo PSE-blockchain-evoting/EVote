@@ -1,28 +1,15 @@
 language: java
 jdk: openjdk8
 
-cache:
-  directories:
-  - "$HOME/.m2"
-before_cache:
-- rm -rf $HOME/.m2/repository/edu
-- rm $HOME/.m2/settings.xml
-
-jobs:
-  include:
-    - stage: deploy
-      # Only deploy on master
-      if: branch = master
-      script: mvn package
-      deploy:
-        provider: releases
-        skip_cleanup: true
-        api_key:
-          secure: oPkahxW8nScs01Kdz+WnMra9o8WTPtbm1bTkYGEjxRsRCM7yFXvu1qntSIgMus16JXov2oRvZKIqCRhkxIfsAoPtMzaxHGNWpX49zxAU09/E0O9n439qxvcyaBsBbma1kRYagKGCycP+0J4PwE0WPZbQfYKcwhwGWsN7n9rDQ2/AcIbzzhVpwHgv9hQ1hWO64R1tns1WnfbxsYP5YnoVPBIv3NDxP7DHeHEUymL3EOg/flfYZ3KgLUK0LoUq0AOlmTpJwZp2E0wblJLoek31/JZA2ZjZL/HN/zVX0wpnSRq4KCNwciLjTjhMDqnyWCXG81QjfnakuwMQzGlN4QBL4nZERC83t2bd73U5pwjb774jJXy2T0vYvXVC0noNeO+t2RMbWPVZ432ep+ARCG6cWekmnGNbVqpnQBSmYdizLtaIE7WbRbodd/xkY0YiUI24bhn/0GQa/jj9+uiv3Ol6xyv3MaHtV2d0OpQIQExFuW2GQ4AELWprDRN0FnSZu7BaF8WYrOeAq3dPJsYtGXNcdhgQaDDVrIFwDcY/CNxkKkY2dZju2zrTW/meyprHoBU637KmolZRbyfEtZ8U5V0ZHt4UKzYlOB3QCtRKWIdvnksC//t6OV5hVdWiqIeXAQPm9SAOWeN8Amj/1j4i4wndsT2vmF1vO7UJv7Qtv7Mzxdc=
-        file: evote.jar
-        on:
-          repo: PSE-blockchain-evoting/EVote
-          branch: master
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: oPkahxW8nScs01Kdz+WnMra9o8WTPtbm1bTkYGEjxRsRCM7yFXvu1qntSIgMus16JXov2oRvZKIqCRhkxIfsAoPtMzaxHGNWpX49zxAU09/E0O9n439qxvcyaBsBbma1kRYagKGCycP+0J4PwE0WPZbQfYKcwhwGWsN7n9rDQ2/AcIbzzhVpwHgv9hQ1hWO64R1tns1WnfbxsYP5YnoVPBIv3NDxP7DHeHEUymL3EOg/flfYZ3KgLUK0LoUq0AOlmTpJwZp2E0wblJLoek31/JZA2ZjZL/HN/zVX0wpnSRq4KCNwciLjTjhMDqnyWCXG81QjfnakuwMQzGlN4QBL4nZERC83t2bd73U5pwjb774jJXy2T0vYvXVC0noNeO+t2RMbWPVZ432ep+ARCG6cWekmnGNbVqpnQBSmYdizLtaIE7WbRbodd/xkY0YiUI24bhn/0GQa/jj9+uiv3Ol6xyv3MaHtV2d0OpQIQExFuW2GQ4AELWprDRN0FnSZu7BaF8WYrOeAq3dPJsYtGXNcdhgQaDDVrIFwDcY/CNxkKkY2dZju2zrTW/meyprHoBU637KmolZRbyfEtZ8U5V0ZHt4UKzYlOB3QCtRKWIdvnksC//t6OV5hVdWiqIeXAQPm9SAOWeN8Amj/1j4i4wndsT2vmF1vO7UJv7Qtv7Mzxdc=
+  file: evote.jar
+  on:
+    repo: PSE-blockchain-evoting/EVote
+    branch: master
 
 branches:
   only: 
