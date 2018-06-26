@@ -10,6 +10,7 @@ deploy:
   on:
     repo: PSE-blockchain-evoting/EVote
     branch: master
+    tag: true
 
 branches:
   only: 
