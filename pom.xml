@@ -22,6 +22,7 @@
 
     </dependencies>
     <build>
+        <finalName>evote</finalName>
         <plugins>
             <!-- Checkstyle -->
             <plugin>
