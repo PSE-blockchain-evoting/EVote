@@ -11,7 +11,7 @@
         <dependency>
             <groupId>javax.json</groupId>
             <artifactId>javax.json-api</artifactId>
-            <version>LATEST</version>
+            <version>1.1.2</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.hyperledger.fabric-sdk-java/fabric-sdk-java -->
         <dependency>
@@ -50,6 +50,20 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- Jar Build -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>edu.kit.iti.formal.pse2018.evote.view.Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
         </plugins>
     </build>
