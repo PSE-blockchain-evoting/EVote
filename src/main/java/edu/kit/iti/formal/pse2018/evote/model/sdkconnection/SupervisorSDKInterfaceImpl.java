@@ -1,5 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection;
 
+import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -23,32 +25,35 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl {
 
     private HFCAClient hfcaClient;
 
-    private SupervisorSDKInterfaceImpl(String filePath) throws IOException, ClassNotFoundException, ClassCastException {
-        super(filePath); //TODO: SDKListener
+    private SupervisorSDKInterfaceImpl(String filePath, SDKEventListener listener) throws IOException,
+            ClassNotFoundException, ClassCastException, InvalidArgumentException {
+        super(filePath, listener);
     }
 
-    private SupervisorSDKInterfaceImpl(AppUser appUser) throws MalformedURLException {
-        super(appUser);
+    private SupervisorSDKInterfaceImpl(AppUser appUser, SDKEventListener listener) throws MalformedURLException,
+            InvalidArgumentException {
+        super(appUser, listener);
     }
 
     /**
-     * Creates a new SupervisorSDKInterfaceImpl instance
+     * Creates a new SupervisorSDKInterfaceImpl instance.
      * @param username Username of the admin user
      * @param password Password of the admin user
      * @param filePath Filepath to save the admin identity to
+     * @param listener listener to be notified of status changes
      * @return a new SupervisorSDKInterfaceImpl
      * @throws IOException if writing to filePath failed
      */
-    public static SupervisorSDKInterfaceImpl createInstance(String username, String password, String filePath)
-            throws IOException {
+    public static SupervisorSDKInterfaceImpl createInstance(String username, String password, String filePath,
+                SDKEventListener listener) throws IOException, InvalidArgumentException {
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         CryptoSuite cryptoSuite;
         HFCAClient hfcaClient;
         Enrollment enrollment;
         try {
             cryptoSuite = CryptoSuite.Factory.getCryptoSuite();
-        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | CryptoException |
-                InvalidArgumentException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | CryptoException
+                | InvalidArgumentException | NoSuchMethodException | InvocationTargetException e) {
             throw new RuntimeException(); //TODO: Use Exception from package
         }
         try {
@@ -67,18 +72,19 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl {
         FileOutputStream fos = new FileOutputStream(filePath);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(appUser);
-        return new SupervisorSDKInterfaceImpl(appUser);
+        return new SupervisorSDKInterfaceImpl(appUser, listener);
     }
 
     /**
-     * Creates a new SupervisorSDKInterfaceImpl instance
+     * Creates a new SupervisorSDKInterfaceImpl instance.
      * @param filePath path to load admin identity from
+     * @param listener listener to be notified of status changes
      * @return new SupervisorSDKInterfaceImpl
      * @throws IOException if reading filePath failed
      * @throws ClassNotFoundException if file is not a valid identity
      */
-    public static SupervisorSDKInterfaceImpl createInstance(String filePath) throws IOException,
-            ClassNotFoundException {
-        return new SupervisorSDKInterfaceImpl(filePath);
+    public static SupervisorSDKInterfaceImpl createInstance(String filePath, SDKEventListener listener)
+            throws IOException, ClassNotFoundException, InvalidArgumentException {
+        return new SupervisorSDKInterfaceImpl(filePath, listener);
     }
 }
