@@ -1,5 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.view.components;
 
+import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.ListExtension;
+
 import java.util.List;
 
 public class ExtendableList extends BasicList implements Extendable {

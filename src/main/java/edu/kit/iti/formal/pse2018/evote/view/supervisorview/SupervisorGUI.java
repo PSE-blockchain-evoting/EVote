@@ -8,6 +8,8 @@ public class SupervisorGUI extends JFrame {
 
     private SupervisorGUIPanel currentPanel;
 
+    priva
+
     public SupervisorGUI(){
 
 

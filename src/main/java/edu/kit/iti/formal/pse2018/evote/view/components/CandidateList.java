@@ -1,9 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.view.components;
 
-import edu.kit.iti.formal.pse2018.evote.view.components.listExtensions.DescriptionExtension;
-import edu.kit.iti.formal.pse2018.evote.view.components.listExtensions.NumberedExtension;
-import edu.kit.iti.formal.pse2018.evote.view.components.listExtensions.RemovableExtension;
-import edu.kit.iti.formal.pse2018.evote.view.components.listExtensions.TextFieldExtension;
+import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.*;
 
 import javax.swing.JFrame;
 

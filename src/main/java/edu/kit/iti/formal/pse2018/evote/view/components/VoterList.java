@@ -1,9 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.view.components;
 
-import edu.kit.iti.formal.pse2018.evote.view.components.listExtensions.NumberedExtension;
-import edu.kit.iti.formal.pse2018.evote.view.components.listExtensions.RadioSelectionExtension;
-import edu.kit.iti.formal.pse2018.evote.view.components.listExtensions.RemovableExtension;
-import edu.kit.iti.formal.pse2018.evote.view.components.listExtensions.TextFieldExtension;
+import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.*;
 
 public class VoterList extends ExtendableList{
     private VoterList(ListExtension mod) {

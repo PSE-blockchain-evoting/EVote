@@ -1,4 +1,8 @@
-package edu.kit.iti.formal.pse2018.evote.view.components;
+package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
+
+import edu.kit.iti.formal.pse2018.evote.view.components.Entry;
+import edu.kit.iti.formal.pse2018.evote.view.components.Extendable;
+import edu.kit.iti.formal.pse2018.evote.view.components.ExtendableList;
 
 public abstract class ListExtension {
 

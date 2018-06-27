@@ -1,19 +1,24 @@
-package edu.kit.iti.formal.pse2018.evote.view.components.listExtensions;
+package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
-import com.evoting.DescriptionDialog;
-import edu.kit.iti.formal.pse2018.evote.view.components.ListExtension;
+import edu.kit.iti.formal.pse2018.evote.view.components.DescriptionDialog;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import java.util.ResourceBundle;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
 public class DescriptionExtension extends ComponentExtension<JButton>{
 
     private LinkedList<DescriptionDialog> dds;
     private JFrame parent;
 
+    /**
+     * Creates a DescriptionExtension.
+     * @param next The next ListExtension in the chain.
+     * @param parent The JFrame parent for the used JDialog Description Windows.
+     */
     public DescriptionExtension(ListExtension next, JFrame parent) {
         super(next);
         this.parent = parent;

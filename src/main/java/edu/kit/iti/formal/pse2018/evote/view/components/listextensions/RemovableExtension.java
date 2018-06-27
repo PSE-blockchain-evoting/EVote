@@ -1,7 +1,6 @@
-package edu.kit.iti.formal.pse2018.evote.view.components.listExtensions;
+package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.Entry;
-import edu.kit.iti.formal.pse2018.evote.view.components.ListExtension;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

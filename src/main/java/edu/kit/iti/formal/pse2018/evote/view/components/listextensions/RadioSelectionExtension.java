@@ -1,8 +1,8 @@
-package edu.kit.iti.formal.pse2018.evote.view.components.listExtensions;
+package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
-import edu.kit.iti.formal.pse2018.evote.view.components.ListExtension;
-
-import javax.swing.*;
+import javax.swing.ButtonGroup;
+import javax.swing.ButtonModel;
+import javax.swing.JRadioButton;
 
 public class RadioSelectionExtension extends ComponentExtension<JRadioButton>{
 
@@ -21,13 +21,16 @@ public class RadioSelectionExtension extends ComponentExtension<JRadioButton>{
         return rb;
     }
 
+    /**
+     * @return The index of the selected Rai
+     */
     public int getSelection(){
         ButtonModel bm = group.getSelection();
-        if(bm == null){
+        if (bm == null) {
             return -1;
         }
 
-        for(int i = 0; i < components.size(); i++){
+        for (int i = 0; i < components.size(); i++) {
             if(components.get(i).getModel() == bm){
                 return i;
             }

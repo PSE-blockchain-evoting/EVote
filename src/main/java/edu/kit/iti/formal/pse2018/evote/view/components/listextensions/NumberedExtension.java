@@ -1,13 +1,16 @@
-package edu.kit.iti.formal.pse2018.evote.view.components.listExtensions;
+package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.Entry;
-import edu.kit.iti.formal.pse2018.evote.view.components.ListExtension;
 
-import javax.swing.*;
+import javax.swing.JLabel;
 
 public class NumberedExtension extends ComponentExtension<JLabel>{
 
-    public NumberedExtension(ListExtension next){
+    /**
+     * Creates a new NumberedExtension Instance.
+     * @param next
+     */
+    public NumberedExtension(ListExtension next) {
         super(next);
     }
 
@@ -17,7 +20,7 @@ public class NumberedExtension extends ComponentExtension<JLabel>{
         components.remove(i);
 
         //Change numbers afterwards
-        for(int j = i; j < components.size(); j++){
+        for (int j = i; j < components.size(); j++) {
             String t = genText(j);
             components.get(j).setText(t);
         }
@@ -31,7 +34,7 @@ public class NumberedExtension extends ComponentExtension<JLabel>{
         return lblNew;
     }
 
-    private String genText(int i){
-        return (i+1) + ". ";
+    private String genText(int i) {
+        return (i + 1) + ". ";
     }
 }
