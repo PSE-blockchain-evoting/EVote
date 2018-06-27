@@ -15,9 +15,6 @@ public class AppUser implements User, Serializable {
     private String mspID;
     private Enrollment enrollment;
 
-    public AppUser() {
-    }
-
     public AppUser(String userName, String affiliation, Set<String> roles, String accountName, String mspID, Enrollment enrollment) {
         this.userName = userName;
         this.affiliation = affiliation;
