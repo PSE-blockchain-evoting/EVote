@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface Extendable {
 
-    public void addEntry(Entry e);
-    public void addNewEntry();
-    public void removeEntry(Entry e);
-    public List<Entry> getEntries();
+    void addEntry(Entry e);
+    void addNewEntry();
+    void removeEntry(Entry e);
+    List<Entry> getEntries();
 }

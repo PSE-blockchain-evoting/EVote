@@ -1,16 +1,17 @@
 package edu.kit.iti.formal.pse2018.evote.view.components;
 
-import javax.swing.*;
 import java.util.Arrays;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
 
 public class Entry extends JPanel {
 
-    public Entry(int i){
+    public Entry(int i) {
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return Arrays.toString(super.getComponents());
     }
 }

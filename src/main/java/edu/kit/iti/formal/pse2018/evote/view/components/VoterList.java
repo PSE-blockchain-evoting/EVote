@@ -10,6 +10,10 @@ public class VoterList extends ExtendableList{
         super(mod);
     }
 
+    /**
+     * Creates a Table for adding and removing voters.
+     * @return a configured instance of ExtendableList
+     */
     public static VoterList createVoterList(){
 
         RadioSelectionExtension rse = new RadioSelectionExtension(new TextFieldExtension(new RemovableExtension(null)));

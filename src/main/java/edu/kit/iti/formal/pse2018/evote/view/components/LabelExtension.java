@@ -2,7 +2,7 @@ package edu.kit.iti.formal.pse2018.evote.view.components;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.listExtensions.ComponentExtension;
 
-import javax.swing.*;
+import javax.swing.JLabel;
 
 public class LabelExtension extends ComponentExtension<JLabel> {
 

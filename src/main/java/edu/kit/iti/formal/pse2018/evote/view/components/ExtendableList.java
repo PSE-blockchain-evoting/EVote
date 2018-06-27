@@ -6,7 +6,7 @@ public class ExtendableList extends BasicList implements Extendable {
 
     protected ListExtension mod;
 
-    public ExtendableList(ListExtension mod){
+    public ExtendableList(ListExtension mod) {
         super();
         this.mod = mod;
     }
@@ -37,8 +37,8 @@ public class ExtendableList extends BasicList implements Extendable {
         return entries;
     }
 
-    private void refreshUI(){
-        if(pnlScroll.getRootPane() != null){
+    private void refreshUI() {
+        if (pnlScroll.getRootPane() != null) {
             pnlScroll.getRootPane().validate();
             pnlScroll.getRootPane().repaint();
         }
