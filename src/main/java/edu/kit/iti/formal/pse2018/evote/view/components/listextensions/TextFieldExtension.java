@@ -1,6 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
-import javax.swing.*;
+import javax.swing.JTextField;
 
 public class TextFieldExtension extends ComponentExtension<JTextField> {
 
@@ -14,7 +14,7 @@ public class TextFieldExtension extends ComponentExtension<JTextField> {
     }
 
     public String getText(int i){
-        assert(0 <= i && i < components.size());
+        assert (0 <= i && i < components.size());
         return components.get(i).getText();
     }
 }

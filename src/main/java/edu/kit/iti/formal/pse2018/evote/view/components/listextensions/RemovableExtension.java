@@ -2,15 +2,19 @@ package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.Entry;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import javax.swing.JButton;
 
 public class RemovableExtension extends ListExtension {
 
     private LinkedList<JButton> btns;
 
+    /**
+     * Creates a RemovableExtension instance
+     * @param next
+     */
     public RemovableExtension(ListExtension next) {
         super(next);
 
@@ -30,11 +34,11 @@ public class RemovableExtension extends ListExtension {
         super.addEntry(e);
     }
 
-    private class EntryActionListener implements ActionListener{
+    private class EntryActionListener implements ActionListener {
 
         private Entry e;
 
-        public EntryActionListener(Entry e){
+        public EntryActionListener(Entry e) {
             this.e = e;
         }
 

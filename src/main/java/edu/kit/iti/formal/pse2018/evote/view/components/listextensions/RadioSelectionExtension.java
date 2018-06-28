@@ -22,7 +22,7 @@ public class RadioSelectionExtension extends ComponentExtension<JRadioButton>{
     }
 
     /**
-     * @return The index of the selected Rai
+     * @return The index of the selected RadioButton
      */
     public int getSelection(){
         ButtonModel bm = group.getSelection();
