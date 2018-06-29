@@ -1,6 +1,9 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection;
 
 import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
+import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionDataQuery;
+import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionStatusQuery;
+import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -17,8 +20,8 @@ import org.hyperledger.fabric.sdk.exception.TransactionException;
  */
 public abstract class SDKInterfaceImpl {
 
-    private AppUser appUser;
-    private HFClient hfClient;
+    protected AppUser appUser;
+    protected HFClient hfClient;
     private ElectionStatusListener electionStatusListener;
 
     /**
@@ -93,7 +96,21 @@ public abstract class SDKInterfaceImpl {
         }
     }
 
+    /**
+     * Requests an election status update from the network.
+     */
     public void dispatchElectionOverCheck() {
+        ElectionStatusQuery query = new ElectionStatusQuery(this.hfClient);
+        query.query();
+    }
 
+    /**
+     * Requests the election data from the network.
+     * @return election data stored in the network
+     */
+    public ElectionDataIF getElectionData() {
+        ElectionDataQuery query = new ElectionDataQuery(this.hfClient);
+        query.query();
+        return query.getResult();
     }
 }
