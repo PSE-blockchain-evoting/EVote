@@ -4,8 +4,8 @@ import org.hyperledger.fabric.sdk.HFClient;
 
 public abstract class QueryTransaction extends Transaction{
 
-    public QueryTransaction(HFClient client, String[] args) {
-        super(client, args);
+    public QueryTransaction(HFClient client) {
+        super(client);
     }
 
     protected abstract void parseResultString(String result);

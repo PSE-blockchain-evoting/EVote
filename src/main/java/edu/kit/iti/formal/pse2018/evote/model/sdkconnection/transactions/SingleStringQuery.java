@@ -6,8 +6,8 @@ public abstract class SingleStringQuery extends QueryTransaction {
 
     private String result;
 
-    public SingleStringQuery(HFClient client, String[] args) {
-        super(client, args);
+    public SingleStringQuery(HFClient client) {
+        super(client);
     }
 
     @Override

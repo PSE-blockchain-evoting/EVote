@@ -2,15 +2,18 @@ package edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions;
 
 import org.hyperledger.fabric.sdk.HFClient;
 
-public class ElectionDataQuery extends ElectionDataTypeQuery {
+public class VoteInvocation extends InvocationTransaction {
 
-    public ElectionDataQuery(HFClient client) {
+    private String vote;
+
+    public VoteInvocation(HFClient client, String vote) {
         super(client);
+        this.vote = vote;
     }
 
     @Override
     protected String[] buildArgumentStrings() {
-        return new String[0];
+        return new String[]{ this.vote };
     }
 
     @Override

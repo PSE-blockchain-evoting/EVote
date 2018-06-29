@@ -4,8 +4,8 @@ import org.hyperledger.fabric.sdk.HFClient;
 
 public abstract class InvocationTransaction extends Transaction {
 
-    public InvocationTransaction(HFClient client, String[] args) {
-        super(client, args);
+    public InvocationTransaction(HFClient client) {
+        super(client);
     }
 
     public void invoke() {

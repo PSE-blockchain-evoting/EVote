@@ -4,12 +4,10 @@ import org.hyperledger.fabric.sdk.HFClient;
 
 public abstract class Transaction {
 
-    protected String[] args;
     protected HFClient client;
 
-    protected Transaction(HFClient client, String[] args) {
+    protected Transaction(HFClient client) {
         this.client = client;
-        this.args = args;
     }
 
     protected abstract String[] buildArgumentStrings();

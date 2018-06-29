@@ -2,9 +2,9 @@ package edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions;
 
 import org.hyperledger.fabric.sdk.HFClient;
 
-public class ElectionDataQuery extends ElectionDataTypeQuery {
+public class ElectionStatusQuery extends SingleStringQuery {
 
-    public ElectionDataQuery(HFClient client) {
+    public ElectionStatusQuery(HFClient client) {
         super(client);
     }
 

@@ -6,8 +6,8 @@ public abstract class MultiStringQuery extends QueryTransaction {
 
     private String[] result;
 
-    public MultiStringQuery(HFClient client, String[] args) {
-        super(client, args);
+    public MultiStringQuery(HFClient client) {
+        super(client);
     }
 
     @Override
