@@ -1,12 +1,13 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions;
 
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.ElectionData;
+import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import org.hyperledger.fabric.sdk.HFClient;
 
 public abstract class ElectionDataQuery extends QueryTransaction {
 
-    private ElectionData result;
+    private ElectionDataIF result;
 
     public ElectionDataQuery(HFClient client, String[] args) {
         super(client, args);
@@ -17,7 +18,7 @@ public abstract class ElectionDataQuery extends QueryTransaction {
 
     }
 
-    public ElectionData getResult() {
+    public ElectionDataIF getResult() {
         return this.result;
     }
 }
