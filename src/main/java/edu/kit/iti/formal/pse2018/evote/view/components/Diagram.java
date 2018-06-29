@@ -9,8 +9,8 @@ import javax.swing.JComponent;
  */
 public abstract class Diagram extends JComponent {
     protected int[] data;
-    protected String[] colors;
-    protected Color[] string;
+    protected Color[] colors;
+    protected String[] string;
 
     public Diagram(){
 
@@ -24,19 +24,19 @@ public abstract class Diagram extends JComponent {
         this.data = data;
     }
 
-    public String[] getColors() {
+    public Color[] getColors() {
         return colors;
     }
 
-    public void setColors(String[] colors) {
+    public void setColors(Color[] colors) {
         this.colors = colors;
     }
 
-    public Color[] getString() {
+    public String[] getString() {
         return string;
     }
 
-    public void setString(Color[] string) {
+    public void setString(String[] string) {
         this.string = string;
     }
 
@@ -45,5 +45,5 @@ public abstract class Diagram extends JComponent {
         drawChart(graphics);
     }
 
-    protected abstract void drawChart(Graphics graphics):
+    protected abstract void drawChart(Graphics graphics);
 }

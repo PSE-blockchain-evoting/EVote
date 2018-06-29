@@ -8,7 +8,10 @@ import java.util.List;
 public interface Extendable {
 
     void addEntry(Entry e);
+
     void addNewEntry();
+
     void removeEntry(Entry e);
+
     List<Entry> getEntries();
 }

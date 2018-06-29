@@ -12,7 +12,7 @@ public abstract class ListExtension {
     protected ListExtension next;
     protected Extendable list;
 
-    public ListExtension(ListExtension next){
+    public ListExtension(ListExtension next) {
         this.next = next;
     }
 
@@ -32,19 +32,17 @@ public abstract class ListExtension {
      * An Entry is removed to List. The ListExtension is notified so it can modify its state if needed.
      * @param e The Entry that is to be removed.
      */
-    public void removeEntry(Entry e){
-        if (next == null) {
-
-        } else {
+    public void removeEntry(Entry e) {
+        if (next != null) {
             next.removeEntry(e);
         }
     }
 
     /**
      * Setting the List that is this ListExtension belongs to.
-     * @param list
+     * @param list the list this Extension belongs to.
      */
-    public final void setList(ExtendableList list){
+    public final void setList(ExtendableList list) {
         if (list == null) {
             throw new IllegalArgumentException("List is Null");
         }

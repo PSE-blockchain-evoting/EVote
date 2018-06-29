@@ -10,9 +10,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /**
- * DescriptionExtension adds a Button which will open a DescriptionDialog, where a description can be added for that row.
+ * DescriptionExtension adds a Button which will open a DescriptionDialog,
+ * where a description can be added for that row.
  */
-public class DescriptionExtension extends ComponentExtension<JButton>{
+public class DescriptionExtension extends ComponentExtension<JButton> {
 
     private LinkedList<DescriptionDialog> dds;
     private JFrame parent;

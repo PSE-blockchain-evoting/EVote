@@ -9,7 +9,7 @@ import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.TextField
 /**
  * VoterList is UI Table for specifing Voters. It supports adding and removing Voters and giving them a name.
  */
-public class VoterList extends ExtendableList{
+public class VoterList extends ExtendableList {
     private VoterList(ListExtension mod) {
         super(mod);
     }
@@ -18,7 +18,7 @@ public class VoterList extends ExtendableList{
      * Creates a Table for adding and removing voters.
      * @return a configured instance of ExtendableList
      */
-    public static VoterList createVoterList(){
+    public static VoterList createVoterList() {
 
         RadioSelectionExtension rse = new RadioSelectionExtension(new TextFieldExtension(new RemovableExtension(null)));
         NumberedExtension ne = new NumberedExtension(rse);

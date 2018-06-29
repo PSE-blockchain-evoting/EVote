@@ -16,7 +16,7 @@ public class TextFieldExtension extends ComponentExtension<JTextField> {
         return new JTextField();
     }
 
-    public String getText(int i){
+    public String getText(int i) {
         assert (0 <= i && i < components.size());
         return components.get(i).getText();
     }

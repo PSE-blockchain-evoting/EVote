@@ -40,18 +40,18 @@ public abstract class ComponentExtension<Type extends JComponent> extends ListEx
         removeData(i);
     }
 
-    protected void removeData(int i){
+    protected void removeData(int i) {
         components.remove(i);
     }
 
     protected abstract Type createNewType();
 
     /**
-     * Finds the index of an entry,
+     * Finds the index of an entry.
      * @param e The Entry so search,
      * @return The index of e.
      */
-    protected int searchIndex(Entry e){
+    protected int searchIndex(Entry e) {
         int n = 0;
         for (Entry e1 : list.getEntries()) {
             if (e1 == e) {

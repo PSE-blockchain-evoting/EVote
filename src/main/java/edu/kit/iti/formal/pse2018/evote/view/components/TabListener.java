@@ -15,7 +15,7 @@ public class TabListener implements ActionListener {
         this.id = id;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
     }
 

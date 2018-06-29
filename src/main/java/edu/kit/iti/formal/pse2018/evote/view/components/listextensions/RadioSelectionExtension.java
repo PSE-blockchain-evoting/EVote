@@ -7,7 +7,7 @@ import javax.swing.JRadioButton;
 /**
  * RadioSelectionExtension adds an RadioButton to each Entry. All RadioButtons belong to same Group.
  */
-public class RadioSelectionExtension extends ComponentExtension<JRadioButton>{
+public class RadioSelectionExtension extends ComponentExtension<JRadioButton> {
 
     private ButtonGroup group;
 
@@ -25,16 +25,17 @@ public class RadioSelectionExtension extends ComponentExtension<JRadioButton>{
     }
 
     /**
-     * @return The index of the selected RadioButton
+     * Get the index of the current selected RadioButton.
+     * @return The index of the selected RadioButton.
      */
-    public int getSelection(){
+    public int getSelection() {
         ButtonModel bm = group.getSelection();
         if (bm == null) {
             return -1;
         }
 
         for (int i = 0; i < components.size(); i++) {
-            if(components.get(i).getModel() == bm){
+            if (components.get(i).getModel() == bm) {
                 return i;
             }
         }

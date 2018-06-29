@@ -7,12 +7,12 @@ import javax.swing.JLabel;
 /**
  * TextExtension adds an JLabel to each Entry with a predefined String.
  */
-public class TextExtension extends ComponentExtension<JLabel>{
+public class TextExtension extends ComponentExtension<JLabel> {
 
     private String[] text;
 
     /**
-     * Creates an instance of TextExtension
+     * Creates an instance of TextExtension.
      *
      * @param next The next ListExtension in the chain of ListExtensions. Can be null.
      * @param text The Text the labels show. The first element in text ist shown in the first row,
@@ -26,10 +26,11 @@ public class TextExtension extends ComponentExtension<JLabel>{
     @Override
     protected JLabel createNewType() {
         int size = components.size();
-        if (size >= text.length)
+        if (size >= text.length) {
             return new JLabel("");
-        else
+        } else {
             return new JLabel(text[size]);
+        }
     }
 
     @Override
@@ -38,9 +39,9 @@ public class TextExtension extends ComponentExtension<JLabel>{
         int index = searchIndex(e);
 
         for (int i = index; i < components.size(); i++) {
-            if (i < text.length)
+            if (i < text.length) {
                 components.get(i).setText(text[i]);
-
+            }
         }
     }
 }

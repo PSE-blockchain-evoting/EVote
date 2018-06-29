@@ -16,9 +16,9 @@ public class BasicList extends JPanel {
     protected LinkedList<Entry> entries;
 
     /**
-     *  Creates a very basic List
+     *  Creates a very basic List.
      */
-    public BasicList(){
+    public BasicList() {
         this.setLayout(new BorderLayout());
         pnlScroll = new JPanel();
 
@@ -35,9 +35,10 @@ public class BasicList extends JPanel {
     }
 
     /**
+     * Gives the number entries in the list.
      * @return The number of Entries in this list.
      */
-    public int getEntryCount(){
+    public int getEntryCount() {
         return entries.size();
     }
 }

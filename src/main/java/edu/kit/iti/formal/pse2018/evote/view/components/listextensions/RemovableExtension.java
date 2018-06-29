@@ -15,8 +15,8 @@ public class RemovableExtension extends ListExtension {
     private LinkedList<JButton> btns;
 
     /**
-     * Creates a RemovableExtension instance
-     * @param next
+     * Creates a RemovableExtension instance.
+     * @param next The next ListExtension in the chain. Can be null.
      */
     public RemovableExtension(ListExtension next) {
         super(next);
@@ -39,15 +39,15 @@ public class RemovableExtension extends ListExtension {
 
     private class EntryActionListener implements ActionListener {
 
-        private Entry e;
+        private Entry entry;
 
-        public EntryActionListener(Entry e) {
-            this.e = e;
+        public EntryActionListener(Entry entry) {
+            this.entry = entry;
         }
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            list.removeEntry(e);
+            list.removeEntry(entry);
 
         }
     }
