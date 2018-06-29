@@ -19,7 +19,7 @@ public interface ElectionDataIF {
 
     public Date getEndDate();
 
-    public void getEndCondition();
+    public ElectionEndCondition getEndCondition();
 
     public int getVoterCount();
 }
