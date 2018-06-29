@@ -15,7 +15,17 @@ public class AppUser implements User, Serializable {
     private String mspID;
     private Enrollment enrollment;
 
-    public AppUser(String userName, String affiliation, Set<String> roles, String accountName, String mspID, Enrollment enrollment) {
+    /**
+     * Creates a new AppUser instance.
+     * @param userName Name of the user
+     * @param affiliation Hyperleger Organization the user is afilliated with.
+     * @param roles legacy field, always ignored
+     * @param accountName legacy field, ignored
+     * @param mspID ID of the MSP the user is registered at
+     * @param enrollment @see Hyperledger Fabric SDK: Enrollment
+     */
+    public AppUser(String userName, String affiliation, Set<String> roles, String accountName, String mspID,
+                   Enrollment enrollment) {
         this.userName = userName;
         this.affiliation = affiliation;
         this.roles = roles;

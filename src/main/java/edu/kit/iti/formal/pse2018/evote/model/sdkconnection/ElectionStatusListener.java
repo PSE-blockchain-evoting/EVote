@@ -22,13 +22,16 @@ public class ElectionStatusListener implements ChaincodeEventListener {
      * Creates a new ElectionStatusListener and registers it as chaincode listener.
      * @param sdkEventListener listener to redirect events to
      * @param channel channel to listen on
-     * @throws InvalidArgumentException never
      */
-    public ElectionStatusListener(SDKEventListener sdkEventListener, Channel channel) throws InvalidArgumentException {
+    public ElectionStatusListener(SDKEventListener sdkEventListener, Channel channel) {
         this.sdkEventListener = sdkEventListener;
         ResourceBundle bundle = ResourceBundle.getBundle("config");
-        channel.registerChaincodeEventListener(Pattern.compile(bundle.getString("chaincode_name")),
-                Pattern.compile(bundle.getString("chaincode_event_name")), this);
+        try {
+            channel.registerChaincodeEventListener(Pattern.compile(bundle.getString("chaincode_name")),
+                    Pattern.compile(bundle.getString("chaincode_event_name")), this);
+        } catch (InvalidArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**

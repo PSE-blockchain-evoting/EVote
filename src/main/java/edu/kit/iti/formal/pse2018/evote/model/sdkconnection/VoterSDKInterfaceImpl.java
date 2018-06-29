@@ -9,7 +9,7 @@ import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 public class VoterSDKInterfaceImpl extends SDKInterfaceImpl {
 
     public VoterSDKInterfaceImpl(String filePath, SDKEventListener sdkEventListener) throws IOException,
-            ClassNotFoundException, InvalidArgumentException {
+            ClassNotFoundException {
         super(filePath, sdkEventListener);
     }
 

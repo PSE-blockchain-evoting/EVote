@@ -26,12 +26,11 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl {
     private HFCAClient hfcaClient;
 
     private SupervisorSDKInterfaceImpl(String filePath, SDKEventListener listener) throws IOException,
-            ClassNotFoundException, ClassCastException, InvalidArgumentException {
+            ClassNotFoundException, ClassCastException {
         super(filePath, listener);
     }
 
-    private SupervisorSDKInterfaceImpl(AppUser appUser, SDKEventListener listener) throws MalformedURLException,
-            InvalidArgumentException {
+    private SupervisorSDKInterfaceImpl(AppUser appUser, SDKEventListener listener) {
         super(appUser, listener);
     }
 
@@ -45,7 +44,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl {
      * @throws IOException if writing to filePath failed
      */
     public static SupervisorSDKInterfaceImpl createInstance(String username, String password, String filePath,
-                SDKEventListener listener) throws IOException, InvalidArgumentException {
+                SDKEventListener listener) throws IOException {
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         CryptoSuite cryptoSuite;
         HFCAClient hfcaClient;
@@ -84,7 +83,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl {
      * @throws ClassNotFoundException if file is not a valid identity
      */
     public static SupervisorSDKInterfaceImpl createInstance(String filePath, SDKEventListener listener)
-            throws IOException, ClassNotFoundException, InvalidArgumentException {
+            throws IOException, ClassNotFoundException {
         return new SupervisorSDKInterfaceImpl(filePath, listener);
     }
 }

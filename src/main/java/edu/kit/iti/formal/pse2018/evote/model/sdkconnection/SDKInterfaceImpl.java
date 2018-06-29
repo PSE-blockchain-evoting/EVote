@@ -24,7 +24,7 @@ public abstract class SDKInterfaceImpl {
     /**
      * Sets the AppUser attribute and creates ElectionStatusListener and HFClient.
      */
-    protected SDKInterfaceImpl(AppUser appUser, SDKEventListener listener) throws InvalidArgumentException {
+    protected SDKInterfaceImpl(AppUser appUser, SDKEventListener listener)  {
         this.appUser = appUser;
         this.hfClient = HFClient.createNewInstance();
         createChannel();
@@ -41,7 +41,7 @@ public abstract class SDKInterfaceImpl {
      * @throws ClassCastException if file is not a valid AppUser
      */
     protected SDKInterfaceImpl(String filePath, SDKEventListener listener) throws IOException, ClassNotFoundException,
-            ClassCastException, InvalidArgumentException {
+            ClassCastException {
         FileInputStream fis = new FileInputStream(filePath);
         ObjectInputStream ois = new ObjectInputStream(fis);
         this.appUser = (AppUser)ois.readObject();
@@ -50,31 +50,46 @@ public abstract class SDKInterfaceImpl {
                 hfClient.getChannel(bundle.getString("channel_name")));
     }
 
-    private void createChannel() throws InvalidArgumentException {
+    private void createChannel() {
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         Channel channel = hfClient.getChannel(bundle.getString("channel_name"));
         String[] names = bundle.getStringArray("peer_names");
         String[] urls = bundle.getStringArray("peer_urls");
         assert names.length == urls.length;
-        for (int i = 0; i < names.length; i++) {
-            channel.addPeer(hfClient.newPeer(names[i], urls[i])); //TODO: Wrap this exception
+        try {
+            for (int i = 0; i < names.length; i++) {
+                channel.addPeer(hfClient.newPeer(names[i], urls[i]));
+            }
+        } catch (InvalidArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
         names = bundle.getStringArray("orderer_names");
         urls = bundle.getStringArray("orderer_urls");
         assert names.length == urls.length;
-        for (int i = 0; i < names.length; i++) {
-            channel.addOrderer(hfClient.newOrderer(names[i], urls[i])); //TODO: Wrap this exception
+        try {
+            for (int i = 0; i < names.length; i++) {
+                channel.addOrderer(hfClient.newOrderer(names[i], urls[i]));
+            }
+        } catch (InvalidArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
         names = bundle.getStringArray("eventhub_names");
         urls = bundle.getStringArray("eventhub_urls");
         assert names.length == urls.length;
-        for (int i = 0; i < names.length; i++) {
-            channel.addEventHub(hfClient.newEventHub(names[i], urls[i])); //TODO: Wrap this exception
+        try {
+            for (int i = 0; i < names.length; i++) {
+                channel.addEventHub(hfClient.newEventHub(names[i], urls[i]));
+            }
+        } catch (InvalidArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
+
         try {
             channel.initialize();
         } catch (TransactionException e) {
             throw new RuntimeException(); //TODO: Replace with custom exception
+        } catch (InvalidArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
