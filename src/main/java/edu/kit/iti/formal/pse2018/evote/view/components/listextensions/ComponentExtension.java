@@ -5,6 +5,10 @@ import edu.kit.iti.formal.pse2018.evote.view.components.Entry;
 import java.util.LinkedList;
 import javax.swing.JComponent;
 
+/**
+ * ComponentExtension extends the ListExtension for the functionality always adding a defined Component to an Entry.
+ * @param <Type> The JComponent to add an Entry
+ */
 public abstract class ComponentExtension<Type extends JComponent> extends ListExtension {
 
     protected LinkedList<Type> components;

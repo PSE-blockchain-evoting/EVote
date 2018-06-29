@@ -4,6 +4,9 @@ import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.*;
 
 import javax.swing.JFrame;
 
+/**
+ * CandidateList provides a configured ExtendableList with the purpose of adding and removing Candidates and giving each Candidate a description.
+ */
 public class CandidateList extends ExtendableList{
 
     private CandidateList(ListExtension e) {

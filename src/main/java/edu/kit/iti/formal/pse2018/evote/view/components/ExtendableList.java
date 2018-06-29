@@ -4,6 +4,9 @@ import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.ListExten
 
 import java.util.List;
 
+/**
+ * ExtendableList extends BasicsList and adds plugin functionality based on ListExtensions.
+ */
 public class ExtendableList extends BasicList implements Extendable {
 
     protected ListExtension mod;

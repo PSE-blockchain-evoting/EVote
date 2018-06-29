@@ -4,6 +4,9 @@ import edu.kit.iti.formal.pse2018.evote.view.components.Entry;
 
 import javax.swing.JLabel;
 
+/**
+ * NumberedExtension will give each Entry a JLabel which displays in which row that specific Entry is.
+ */
 public class NumberedExtension extends ComponentExtension<JLabel>{
 
     /**

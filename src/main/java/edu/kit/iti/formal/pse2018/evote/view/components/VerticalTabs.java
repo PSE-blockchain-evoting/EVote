@@ -5,6 +5,10 @@ import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
+/**
+ * VerticalTabs is a JComponent which provides a Tab menu. The Tabs are drawn on the right side. Each tab
+ * has a corresponding JPanel which will be drawn if the respective Tab is pressed/selected.
+ */
 public class VerticalTabs extends JPanel {
 
     private GroupLayout mainLayout;

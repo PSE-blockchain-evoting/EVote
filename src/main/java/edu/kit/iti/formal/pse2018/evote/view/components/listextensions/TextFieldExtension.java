@@ -2,6 +2,9 @@ package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
 import javax.swing.JTextField;
 
+/**
+ * TextFieldExtension will add a JTextField to an Entry.
+ */
 public class TextFieldExtension extends ComponentExtension<JTextField> {
 
     public TextFieldExtension(ListExtension next) {

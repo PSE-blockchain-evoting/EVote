@@ -4,13 +4,15 @@ import edu.kit.iti.formal.pse2018.evote.view.components.Entry;
 import edu.kit.iti.formal.pse2018.evote.view.components.Extendable;
 import edu.kit.iti.formal.pse2018.evote.view.components.ExtendableList;
 
+/**
+ * The ListExtension provides the basic functionality for a class to be used as an Extension in ExtendableLists.
+ */
 public abstract class ListExtension {
 
     protected ListExtension next;
     protected Extendable list;
 
     public ListExtension(ListExtension next){
-        this.list = list;
         this.next = next;
     }
 

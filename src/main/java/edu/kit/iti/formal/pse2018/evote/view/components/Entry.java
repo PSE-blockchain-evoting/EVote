@@ -4,6 +4,9 @@ import java.util.Arrays;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+/**
+ * This class represents a row in a BasicList.
+ */
 public class Entry extends JPanel {
 
     public Entry(int i) {

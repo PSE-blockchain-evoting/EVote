@@ -6,6 +6,10 @@ import java.util.LinkedList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+/**
+ * BasicList is a very basic implementation of
+ * NOTE: This Class can't be used alone. Use ExtendableList instead.
+ */
 public class BasicList extends JPanel {
 
     protected JPanel pnlScroll;
@@ -13,7 +17,6 @@ public class BasicList extends JPanel {
 
     /**
      *  Creates a very basic List
-     *  NOTE: This Class shouldn't be used. Use ExtendableList instead.
      */
     public BasicList(){
         this.setLayout(new BorderLayout());
@@ -29,5 +32,12 @@ public class BasicList extends JPanel {
         this.add(scp);
 
         entries = new LinkedList<>();
+    }
+
+    /**
+     * @return The number of Entries in this list.
+     */
+    public int getEntryCount(){
+        return entries.size();
     }
 }

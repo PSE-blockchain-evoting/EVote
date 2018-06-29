@@ -12,6 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle;
 
+/**
+ * DescriptionDialog is a JDialog which will allow a User to add a description about something.
+ */
 public class DescriptionDialog extends JDialog {
 
     private JLabel lblDescription;

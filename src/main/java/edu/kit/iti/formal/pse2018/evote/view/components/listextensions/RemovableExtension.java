@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import javax.swing.JButton;
 
+/**
+ * Removable Extension adds a JButton to each entry which, when clicked, will remove that specific Entry.
+ */
 public class RemovableExtension extends ListExtension {
 
     private LinkedList<JButton> btns;

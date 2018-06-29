@@ -4,6 +4,9 @@ import edu.kit.iti.formal.pse2018.evote.view.components.Entry;
 
 import javax.swing.JLabel;
 
+/**
+ * TextExtension adds an JLabel to each Entry with a predefined String.
+ */
 public class TextExtension extends ComponentExtension<JLabel>{
 
     private String[] text;

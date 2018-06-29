@@ -4,6 +4,9 @@ import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JRadioButton;
 
+/**
+ * RadioSelectionExtension adds an RadioButton to each Entry. All RadioButtons belong to same Group.
+ */
 public class RadioSelectionExtension extends ComponentExtension<JRadioButton>{
 
     private ButtonGroup group;
