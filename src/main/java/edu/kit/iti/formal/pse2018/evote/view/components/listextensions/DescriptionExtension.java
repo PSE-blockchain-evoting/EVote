@@ -40,7 +40,7 @@ public class DescriptionExtension extends ComponentExtension<JButton> {
         DescriptionDialog dd = new DescriptionDialog(parent);
         dds.add(dd);
 
-        ResourceBundle lang = ResourceBundle.getBundle("res/AdminConfig");
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
         JButton btnNew = new JButton(lang.getString("btnDescriptionText"));
         btnNew.addActionListener(new ActionListener() {
             @Override

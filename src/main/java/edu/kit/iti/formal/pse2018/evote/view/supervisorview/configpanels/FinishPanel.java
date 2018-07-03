@@ -3,8 +3,11 @@ package edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels;
 import edu.kit.iti.formal.pse2018.evote.view.components.ExtendableList;
 import edu.kit.iti.formal.pse2018.evote.view.components.PieChart;
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
+import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ConfigGUI;
 
+import java.awt.Color;
 import java.awt.LayoutManager2;
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,13 +27,14 @@ public class FinishPanel extends ConfigPanel {
 
     PieChart chart;
 
-    public FinishPanel(JPanel container, VerticalTabs vt) {
-        super(container, vt);
+    public FinishPanel(JPanel container, ConfigGUI gui, VerticalTabs vt) {
+        super(container, gui, vt);
     }
 
     @Override
     protected void initComponents() {
         chart = new PieChart();
+        chart.setBorder(BorderFactory.createLineBorder(Color.GREEN));
         chart.setData(PieChart.TEST_DATA);
         chart.setColors(PieChart.TEST_COLOR);
         lblCandidates = new JLabel("Kandidat");

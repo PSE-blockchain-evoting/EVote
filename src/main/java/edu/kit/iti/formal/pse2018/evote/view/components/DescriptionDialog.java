@@ -30,7 +30,7 @@ public class DescriptionDialog extends JDialog {
     public DescriptionDialog(JFrame parent) {
         super(parent);
 
-        ResourceBundle lang = ResourceBundle.getBundle("res/AdminConfig");
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
 
         this.setTitle(lang.getString("DescriptionTitle"));
         this.setModal(true);
@@ -85,7 +85,7 @@ public class DescriptionDialog extends JDialog {
      * @param b If true is shows the DescriptionDialog, if false it hides it.
      */
     public void setVisible(String name, boolean b) {
-        ResourceBundle lang = ResourceBundle.getBundle("res/AdminConfig");
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
         lblDescription.setText(lang.getString("lblDescriptionAboutCandidateText") + name + ":");
         super.setVisible(b);
     }

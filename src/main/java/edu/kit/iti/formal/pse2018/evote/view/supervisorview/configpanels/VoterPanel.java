@@ -2,6 +2,7 @@ package edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
 import edu.kit.iti.formal.pse2018.evote.view.components.VoterList;
+import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ConfigGUI;
 
 import java.awt.LayoutManager2;
 import java.awt.event.ActionEvent;
@@ -17,8 +18,8 @@ public class VoterPanel extends ConfigPanel {
     private VoterList vl;
     private JButton btnAdd;
 
-    public VoterPanel(JPanel container, VerticalTabs vt) {
-        super(container, vt);
+    public VoterPanel(JPanel container, ConfigGUI gui, VerticalTabs vt) {
+        super(container, gui, vt);
     }
 
     @Override
@@ -26,7 +27,7 @@ public class VoterPanel extends ConfigPanel {
         vl = VoterList.createVoterList();
         vl.addNewEntry();
 
-        ResourceBundle lang = ResourceBundle.getBundle("res/AdminConfig");
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
         btnAdd = new JButton(lang.getString("btnVoterAddText"));
         btnAdd.addActionListener(new ActionListener() {
             @Override

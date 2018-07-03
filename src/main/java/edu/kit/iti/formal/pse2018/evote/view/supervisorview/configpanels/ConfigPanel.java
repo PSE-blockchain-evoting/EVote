@@ -1,6 +1,8 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
+import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ConfigGUI;
+
 import java.awt.LayoutManager2;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -32,10 +34,10 @@ public abstract class ConfigPanel extends JPanel {
      * @param vt The VerticalTabs in which this Panel in placed.
      */
     @SuppressWarnings({"checkstyle:linelength", "checkstyle:Indentation"})
-    public ConfigPanel(JPanel container, VerticalTabs vt) {
+    public ConfigPanel(JPanel container, ConfigGUI gui, VerticalTabs vt) {
         this.vt = vt;
 
-        ResourceBundle lang = ResourceBundle.getBundle("res/AdminConfig");
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
         btnCancel = new JButton(lang.getString("btnCancelText"));
         btnContinue = new JButton(lang.getString("btnContinueText"));
         btnContinue.addActionListener(new ActionListener() {
@@ -44,13 +46,11 @@ public abstract class ConfigPanel extends JPanel {
                 vt.nextTab();
             }
         });
+
         pnlMain = new JPanel();
-        //pnlMain.setBorder(BorderFactory.createLineBorder(Color.MAGENTA));
         pnlButtons = new JPanel();
-        //pnlButtons.setBorder(BorderFactory.createLineBorder(Color.GREEN));
         pnlButtons.add(btnCancel);
         pnlButtons.add(btnContinue);
-
 
         GroupLayout containerLayout = new GroupLayout(container);
 

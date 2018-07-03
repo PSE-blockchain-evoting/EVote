@@ -41,7 +41,7 @@ public abstract class Diagram extends JComponent {
     }
 
     @Override
-    protected void printComponent(Graphics graphics) {
+    protected void paintComponent(Graphics graphics) {
         drawChart(graphics);
     }
 

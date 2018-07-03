@@ -1,6 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
+import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ConfigGUI;
 
 import java.awt.LayoutManager2;
 import java.util.ResourceBundle;
@@ -27,12 +28,12 @@ public class GeneralConfigPanel extends ConfigPanel {
     protected JTextArea txaDescription;
 
 
-    public GeneralConfigPanel(JPanel container, VerticalTabs vt) {
-        super(container, vt);
+    public GeneralConfigPanel(JPanel container, ConfigGUI gui, VerticalTabs vt) {
+        super(container, gui, vt);
     }
 
     protected void initComponents() {
-        ResourceBundle lang = ResourceBundle.getBundle("res/AdminConfig");
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
 
         lblName = new JLabel(lang.getString("lblNameText") + ":");
         lblName.setHorizontalAlignment(SwingConstants.RIGHT);

@@ -2,6 +2,7 @@ package edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.CandidateList;
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
+import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ConfigGUI;
 
 import java.awt.LayoutManager2;
 import java.awt.event.ActionEvent;
@@ -21,13 +22,13 @@ public class CandidatePanel extends ConfigPanel {
     private CandidateList candidates;
     private JButton btnAdd;
 
-    public CandidatePanel(JPanel container, VerticalTabs vt) {
-        super(container, vt);
+    public CandidatePanel(JPanel container, ConfigGUI gui, VerticalTabs vt) {
+        super(container, gui, vt);
     }
 
     @Override
     protected void initComponents() {
-        ResourceBundle lang = ResourceBundle.getBundle("res/AdminConfig");
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
 
         JFrame parent = (JFrame)getTopLevelAncestor();
         candidates = CandidateList.createCandidateList(parent);
