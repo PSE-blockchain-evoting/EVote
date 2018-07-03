@@ -13,7 +13,8 @@ import java.awt.Stroke;
 public class PieChart extends Diagram {
 
     public static final int[] TEST_DATA = {100, 75, 32, 10, 8, 3, 2};
-    public static final Color[] TEST_COLOR = {Color.BLACK, Color.RED, Color.YELLOW, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK};
+    public static final Color[] TEST_COLOR = {Color.BLACK, Color.RED, Color.YELLOW,
+            Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK};
 
     @Override
     protected void drawChart(Graphics graphics) {
@@ -29,7 +30,9 @@ public class PieChart extends Diagram {
         g.setColor(Color.CYAN);
 
         int sum = 0;
-        for (int i = 0; i < data.length; i++) { sum += data[i]; }
+        for (int i = 0; i < data.length; i++) {
+            sum += data[i];
+        }
 
         double ratio = 360.0 / sum;
 

@@ -22,6 +22,7 @@ public abstract class Diagram extends JComponent {
 
     public void setData(int[] data) {
         this.data = data;
+        this.repaint();
     }
 
     public Color[] getColors() {
@@ -30,6 +31,7 @@ public abstract class Diagram extends JComponent {
 
     public void setColors(Color[] colors) {
         this.colors = colors;
+        this.repaint();
     }
 
     public String[] getString() {
@@ -38,6 +40,7 @@ public abstract class Diagram extends JComponent {
 
     public void setString(String[] string) {
         this.string = string;
+        this.repaint();
     }
 
     @Override

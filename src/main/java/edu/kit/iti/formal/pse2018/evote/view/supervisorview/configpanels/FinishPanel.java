@@ -1,7 +1,9 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels;
 
+import edu.kit.iti.formal.pse2018.evote.view.components.Diagram;
 import edu.kit.iti.formal.pse2018.evote.view.components.ExtendableList;
 import edu.kit.iti.formal.pse2018.evote.view.components.PieChart;
+import edu.kit.iti.formal.pse2018.evote.view.components.StackedBarChart;
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ConfigGUI;
 
@@ -25,7 +27,7 @@ public class FinishPanel extends ConfigPanel {
     JLabel lblDescription;
     JLabel lblCandidates;
 
-    PieChart chart;
+    Diagram chart;
 
     public FinishPanel(JPanel container, ConfigGUI gui, VerticalTabs vt) {
         super(container, gui, vt);
@@ -33,10 +35,10 @@ public class FinishPanel extends ConfigPanel {
 
     @Override
     protected void initComponents() {
-        chart = new PieChart();
+        chart = new StackedBarChart();
         chart.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-        chart.setData(PieChart.TEST_DATA);
-        chart.setColors(PieChart.TEST_COLOR);
+        chart.setData(StackedBarChart.TEST_DATA);
+        chart.setColors(StackedBarChart.TEST_COLOR);
         lblCandidates = new JLabel("Kandidat");
     }
 
