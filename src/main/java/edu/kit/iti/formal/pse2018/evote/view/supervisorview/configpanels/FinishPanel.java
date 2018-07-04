@@ -34,7 +34,6 @@ public class FinishPanel extends ConfigPanel {
 
     @Override
     protected void initComponents() {
-        gui.getElection
         candidates = new ExtendableList(null);
 
         lblCandidates = new JLabel("Kandidat");
