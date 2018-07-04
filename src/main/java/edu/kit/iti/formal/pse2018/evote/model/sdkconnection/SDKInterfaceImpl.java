@@ -8,12 +8,16 @@ import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ResourceBundle;
 
 import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.HFClient;
+import org.hyperledger.fabric.sdk.exception.CryptoException;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.TransactionException;
+import org.hyperledger.fabric.sdk.security.CryptoSuite;
+import org.hyperledger.fabric_ca.sdk.HFCAClient;
 
 /**
  * Abstract SDKConnection interface with shared functionality between supervisor and voter.
@@ -29,7 +33,7 @@ public abstract class SDKInterfaceImpl {
      */
     protected SDKInterfaceImpl(AppUser appUser, SDKEventListener listener)  {
         this.appUser = appUser;
-        this.hfClient = HFClient.createNewInstance();
+        createHFClient();
         createChannel();
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         this.electionStatusListener = new ElectionStatusListener(listener,
@@ -48,40 +52,63 @@ public abstract class SDKInterfaceImpl {
         FileInputStream fis = new FileInputStream(filePath);
         ObjectInputStream ois = new ObjectInputStream(fis);
         this.appUser = (AppUser)ois.readObject();
+        createHFClient();
+        createChannel();
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         this.electionStatusListener = new ElectionStatusListener(listener,
                 hfClient.getChannel(bundle.getString("channel_name")));
     }
 
+    private void createHFClient() {
+        this.hfClient = HFClient.createNewInstance();
+        CryptoSuite cryptoSuite;
+        try {
+            cryptoSuite = CryptoSuite.Factory.getCryptoSuite();
+        } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | CryptoException
+                | InvalidArgumentException | NoSuchMethodException | InvocationTargetException e) {
+            throw new RuntimeException(); //TODO: Use Exception from package
+        }
+        try {
+            this.hfClient.setCryptoSuite(cryptoSuite);
+        } catch (CryptoException | InvalidArgumentException e) {
+            throw new RuntimeException(); //TODO: Use Exception from package
+        }
+        try {
+            this.hfClient.setUserContext(this.appUser);
+        } catch (InvalidArgumentException e) {
+            throw new RuntimeException(); //TODO: Use Exception from package
+        }
+    }
+
     private void createChannel() {
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         Channel channel = hfClient.getChannel(bundle.getString("channel_name"));
-        String[] names = bundle.getStringArray("peer_names");
-        String[] urls = bundle.getStringArray("peer_urls");
+        String[] names = bundle.getString("peer_names").split(",");
+        String[] urls = bundle.getString("peer_urls").split(",");
         assert names.length == urls.length;
         try {
             for (int i = 0; i < names.length; i++) {
-                channel.addPeer(hfClient.newPeer(names[i], urls[i]));
+                channel.addPeer(hfClient.newPeer(names[i].trim(), urls[i].trim()));
             }
         } catch (InvalidArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-        names = bundle.getStringArray("orderer_names");
-        urls = bundle.getStringArray("orderer_urls");
+        names = bundle.getString("orderer_names").split(",");
+        urls = bundle.getString("orderer_urls").split(",");
         assert names.length == urls.length;
         try {
             for (int i = 0; i < names.length; i++) {
-                channel.addOrderer(hfClient.newOrderer(names[i], urls[i]));
+                channel.addOrderer(hfClient.newOrderer(names[i].trim(), urls[i].trim()));
             }
         } catch (InvalidArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-        names = bundle.getStringArray("eventhub_names");
-        urls = bundle.getStringArray("eventhub_urls");
+        names = bundle.getString("eventhub_names").split(",");
+        urls = bundle.getString("eventhub_urls").split(",");
         assert names.length == urls.length;
         try {
             for (int i = 0; i < names.length; i++) {
-                channel.addEventHub(hfClient.newEventHub(names[i], urls[i]));
+                channel.addEventHub(hfClient.newEventHub(names[i].trim(), urls[i].trim()));
             }
         } catch (InvalidArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());

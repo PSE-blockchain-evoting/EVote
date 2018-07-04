@@ -1,7 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.utils;
 
 import java.util.Date;
-import java.util.List;
 
 public interface ElectionDataIF {
 
@@ -11,9 +10,9 @@ public interface ElectionDataIF {
 
     public VotingSystemType getVotingSystem();
 
-    public int getCandidates();
+    public String[] getCandidates();
 
-    public List<String> getCandidateDescriptions();
+    public String[] getCandidateDescriptions();
 
     public Date getStartDate();
 
