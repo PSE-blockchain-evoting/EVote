@@ -6,6 +6,9 @@ import edu.kit.iti.formal.pse2018.evote.utils.VotingSystemType;
 
 import java.util.Date;
 
+/**
+ * Data Transfer Object for metadata pertaining a election.
+ */
 public class ElectionData implements ElectionDataIF {
 
     private String name;
@@ -17,6 +20,32 @@ public class ElectionData implements ElectionDataIF {
     private Date endDate;
     private ElectionEndCondition endCondition;
     private int voterCount;
+
+    /**
+     * Creates a new ElectionData object.
+     * @param name election name
+     * @param description election description
+     * @param votingSystem election voting system
+     * @param candidates election candidate names
+     * @param candidateDescriptions election candidate descriptions
+     * @param startDate election start date
+     * @param endDate election end date
+     * @param endCondition additional end condition
+     * @param voterCount number of voters
+     */
+    public ElectionData(String name, String description, VotingSystemType votingSystem, String[] candidates,
+                        String[] candidateDescriptions, Date startDate, Date endDate,
+                        ElectionEndCondition endCondition, int voterCount) {
+        this.name = name;
+        this.description = description;
+        this.votingSystem = votingSystem;
+        this.candidates = candidates;
+        this.candidateDescriptions = candidateDescriptions;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.endCondition = endCondition;
+        this.voterCount = voterCount;
+    }
 
     @Override
     public String getName() {

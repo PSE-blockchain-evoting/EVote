@@ -122,7 +122,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
     public boolean createElection(ElectionDataIF electionData) {
         InitializationInvocation inv = new InitializationInvocation(this.hfClient, electionData);
         inv.invoke();
-        return true; //TODO: Give a meaningfull result
+        return true; //TODO: Give a meaningful result
     }
 
     @Override
