@@ -5,15 +5,14 @@ import edu.kit.iti.formal.pse2018.evote.utils.ElectionEndCondition;
 import edu.kit.iti.formal.pse2018.evote.utils.VotingSystemType;
 
 import java.util.Date;
-import java.util.List;
 
 public class ElectionData implements ElectionDataIF {
 
     private String name;
     private String description;
     private VotingSystemType votingSystem;
-    private int candidates;
-    private List<String> candidateDescriptions;
+    private String[] candidates;
+    private String[] candidateDescriptions;
     private Date startDate;
     private Date endDate;
     private ElectionEndCondition endCondition;
@@ -35,12 +34,12 @@ public class ElectionData implements ElectionDataIF {
     }
 
     @Override
-    public int getCandidates() {
+    public String[] getCandidates() {
         return this.candidates;
     }
 
     @Override
-    public List<String> getCandidateDescriptions() {
+    public String[] getCandidateDescriptions() {
         return this.candidateDescriptions;
     }
 
