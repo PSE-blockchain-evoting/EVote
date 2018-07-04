@@ -1,4 +1,10 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 
-public class SupervisorAuthentication {
+import edu.kit.iti.formal.pse2018.evote.view.components.SupervisorGUIPanel;
+
+public class SupervisorAuthentication extends SupervisorGUIPanel {
+
+    public SupervisorAuthentication(SupervisorAdapter adapter) {
+        super();
+    }
 }

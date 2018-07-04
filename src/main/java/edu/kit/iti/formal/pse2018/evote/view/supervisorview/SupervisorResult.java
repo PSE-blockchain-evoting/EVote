@@ -1,4 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 
-public class SupervisorResult {
+import edu.kit.iti.formal.pse2018.evote.view.components.SupervisorGUIPanel;
+
+public class SupervisorResult extends SupervisorGUIPanel {
 }

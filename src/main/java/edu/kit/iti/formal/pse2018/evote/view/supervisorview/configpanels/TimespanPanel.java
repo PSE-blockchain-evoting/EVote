@@ -2,6 +2,7 @@ package edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ConfigGUI;
+import edu.kit.iti.formal.pse2018.evote.view.supervisorview.SupervisorAdapter;
 
 import java.awt.LayoutManager2;
 import java.util.ResourceBundle;
@@ -24,8 +25,8 @@ public class TimespanPanel extends ConfigPanel {
     private JTextField txfEndDate;
     private JComboBox<String> cbxExtraCond;
 
-    public TimespanPanel(JPanel container, ConfigGUI gui, VerticalTabs vt) {
-        super(container, gui, vt);
+    public TimespanPanel(JPanel container, ConfigGUI gui, VerticalTabs vt, SupervisorAdapter adapter) {
+        super(container, gui, vt, adapter);
     }
 
     @Override

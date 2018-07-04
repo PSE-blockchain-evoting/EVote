@@ -22,6 +22,9 @@ import javax.swing.JFrame;
  * ConfigGUI is a JFrame which allows the configuration of an election by the user.
  */
 public class ConfigGUI extends JFrame {
+
+    private SupervisorAdapter adapter;
+
     private VerticalTabs tabsLayout;
 
     private GeneralConfigPanel generalConfigPanel;
@@ -33,19 +36,8 @@ public class ConfigGUI extends JFrame {
     /**
      * Creates an instance of ConfigGUI
      */
-    public ConfigGUI(){
-        //File f = new File("src/main/java/edu/kit/iti/formal/pse2018/evote/SupervisorConfig_de_DE.properties");
-        //try {
-        //    BufferedReader br = new BufferedReader(new FileReader(f.getAbsoluteFile()));
-        //    while (br.ready()) {
-        //        System.out.println(br.readLine());
-        //    }
-        //} catch (FileNotFoundException e) {
-        //    e.printStackTrace();
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //}
-        //System.out.println(f.exists());
+    public ConfigGUI(SupervisorAdapter adapter){
+        this.adapter = adapter;
 
         tabsLayout = new VerticalTabs(5);
 
@@ -53,15 +45,15 @@ public class ConfigGUI extends JFrame {
 
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
 
-        generalConfigPanel = new GeneralConfigPanel(tabsLayout.getTabPanel(0), this, tabsLayout);
+        generalConfigPanel = new GeneralConfigPanel(tabsLayout.getTabPanel(0), this, tabsLayout, adapter);
         tabsLayout.setTabText(0, lang.getString("GeneralTab"));
-        timespanPanel= new TimespanPanel(tabsLayout.getTabPanel(1), this, tabsLayout);
+        timespanPanel= new TimespanPanel(tabsLayout.getTabPanel(1), this, tabsLayout, adapter);
         tabsLayout.setTabText(1, lang.getString("TimespanTab"));
-        candidatePanel = new CandidatePanel(tabsLayout.getTabPanel(2), this, tabsLayout);
+        candidatePanel = new CandidatePanel(tabsLayout.getTabPanel(2), this, tabsLayout, adapter);
         tabsLayout.setTabText(2, lang.getString("CandidateTab"));
-        voterPanel = new VoterPanel(tabsLayout.getTabPanel(3), this, tabsLayout);
+        voterPanel = new VoterPanel(tabsLayout.getTabPanel(3), this, tabsLayout, adapter);
         tabsLayout.setTabText(3, lang.getString("VoterTab"));
-        finishPanel = new FinishPanel(tabsLayout.getTabPanel(4), this, tabsLayout);
+        finishPanel = new FinishPanel(tabsLayout.getTabPanel(4), this, tabsLayout, adapter);
         tabsLayout.setTabText(4, lang.getString("FinishTab"));
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

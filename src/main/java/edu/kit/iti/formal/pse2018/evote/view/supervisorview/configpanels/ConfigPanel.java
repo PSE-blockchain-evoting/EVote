@@ -2,6 +2,7 @@ package edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ConfigGUI;
+import edu.kit.iti.formal.pse2018.evote.view.supervisorview.SupervisorAdapter;
 
 import java.awt.LayoutManager2;
 import java.awt.event.ActionEvent;
@@ -18,6 +19,7 @@ import javax.swing.LayoutStyle;
  */
 public abstract class ConfigPanel extends JPanel {
 
+    protected SupervisorAdapter adapter;
     protected VerticalTabs vt;
 
     protected JPanel pnlMain;
@@ -34,7 +36,8 @@ public abstract class ConfigPanel extends JPanel {
      * @param vt The VerticalTabs in which this Panel in placed.
      */
     @SuppressWarnings({"checkstyle:linelength", "checkstyle:Indentation"})
-    public ConfigPanel(JPanel container, ConfigGUI gui, VerticalTabs vt) {
+    public ConfigPanel(JPanel container, ConfigGUI gui, VerticalTabs vt, SupervisorAdapter adapter) {
+        this.adapter = adapter;
         this.vt = vt;
 
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");

@@ -6,6 +6,7 @@ import edu.kit.iti.formal.pse2018.evote.view.components.PieChart;
 import edu.kit.iti.formal.pse2018.evote.view.components.StackedBarChart;
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ConfigGUI;
+import edu.kit.iti.formal.pse2018.evote.view.supervisorview.SupervisorAdapter;
 
 import java.awt.Color;
 import java.awt.LayoutManager2;
@@ -20,16 +21,18 @@ import javax.swing.JTextArea;
  */
 public class FinishPanel extends ConfigPanel {
 
-    ExtendableList candidates;
-    ExtendableList voters;
-    JTextArea txaDescription;
-    JLabel lblTimeFrame;
-    JLabel lblDescription;
-    JLabel lblCandidates;
+    private SupervisorAdapter adapter;
+
+    private ExtendableList candidates;
+    private ExtendableList voters;
+    private JTextArea txaDescription;
+    private JLabel lblTimeFrame;
+    private JLabel lblDescription;
+    private JLabel lblCandidates;
 
 
-    public FinishPanel(JPanel container, ConfigGUI gui, VerticalTabs vt) {
-        super(container, gui, vt);
+    public FinishPanel(JPanel container, ConfigGUI gui, VerticalTabs vt, SupervisorAdapter adapter) {
+        super(container, gui, vt, adapter);
     }
 
     @Override
