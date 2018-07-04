@@ -11,9 +11,9 @@ public interface ElectionDataIF {
 
     public VotingSystemType getVotingSystem();
 
-    public int getCandidates();
+    public String[] getCandidates();
 
-    public List<String> getCandidateDescriptions();
+    public String[] getCandidateDescriptions();
 
     public Date getStartDate();
 
