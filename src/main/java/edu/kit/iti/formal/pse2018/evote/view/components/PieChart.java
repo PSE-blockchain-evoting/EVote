@@ -51,4 +51,11 @@ public class PieChart extends Diagram {
         //    cur += data[i];
         //}
     }
+
+    protected void integrityChecks() {
+        if(colors != null && data != null)
+            assert (colors.length >= data.length);
+        if(string != null && data != null)
+            assert (string.length >= data.length);
+    }
 }

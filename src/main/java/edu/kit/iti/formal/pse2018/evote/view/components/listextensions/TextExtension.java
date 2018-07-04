@@ -44,4 +44,14 @@ public class TextExtension extends ComponentExtension<JLabel> {
             }
         }
     }
+
+    void setText(String[] s) {
+        for (int i = 0; i < components.size(); i++) {
+            if (i < s.length) {
+                components.get(i).setText(text[i]);
+            } else {
+                components.get(i).setText("");
+            }
+        }
+    }
 }

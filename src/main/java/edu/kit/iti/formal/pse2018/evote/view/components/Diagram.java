@@ -20,8 +20,13 @@ public abstract class Diagram extends JComponent {
         return data;
     }
 
+    /**
+     * Sets a new data sets and redraws diagram.
+     * @param data The new data.
+     */
     public void setData(int[] data) {
         this.data = data;
+        integrityChecks();
         this.repaint();
     }
 
@@ -29,8 +34,13 @@ public abstract class Diagram extends JComponent {
         return colors;
     }
 
+    /**
+     * Sets a new Colors and redraws diagram.
+     * @param colors The new colors.
+     */
     public void setColors(Color[] colors) {
         this.colors = colors;
+        integrityChecks();
         this.repaint();
     }
 
@@ -38,8 +48,13 @@ public abstract class Diagram extends JComponent {
         return string;
     }
 
+    /**
+     * Sets a new Strings and redraws diagram.
+     * @param string The new strings.
+     */
     public void setString(String[] string) {
         this.string = string;
+        integrityChecks();
         this.repaint();
     }
 
@@ -49,4 +64,6 @@ public abstract class Diagram extends JComponent {
     }
 
     protected abstract void drawChart(Graphics graphics);
+
+    protected abstract void integrityChecks();
 }

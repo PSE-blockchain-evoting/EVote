@@ -27,7 +27,6 @@ public class FinishPanel extends ConfigPanel {
     JLabel lblDescription;
     JLabel lblCandidates;
 
-    Diagram chart;
 
     public FinishPanel(JPanel container, ConfigGUI gui, VerticalTabs vt) {
         super(container, gui, vt);
@@ -35,10 +34,9 @@ public class FinishPanel extends ConfigPanel {
 
     @Override
     protected void initComponents() {
-        chart = new StackedBarChart();
-        chart.setBorder(BorderFactory.createLineBorder(Color.GREEN));
-        chart.setData(StackedBarChart.TEST_DATA);
-        chart.setColors(StackedBarChart.TEST_COLOR);
+        gui.getElection
+        candidates = new ExtendableList(null);
+
         lblCandidates = new JLabel("Kandidat");
     }
 

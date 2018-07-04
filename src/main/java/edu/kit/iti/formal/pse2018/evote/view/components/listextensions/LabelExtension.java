@@ -1,4 +1,4 @@
-package edu.kit.iti.formal.pse2018.evote.view.components;
+package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.ComponentExtension;
 import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.ListExtension;

@@ -1,11 +1,8 @@
 package edu.kit.iti.formal.pse2018.evote.view.components;
 
-import edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels.GeneralConfigPanel;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.util.Date;
 
 /**
  * StackedBarChart is a JComponent which will draw a stacked bar chart on the given data.
@@ -49,8 +46,24 @@ public class StackedBarChart extends Diagram {
                 g.fillRect(x, y, length, barHeight);
                 x += length;
             }
+
             y += barDist + barHeight;
             x = 0;
+        }
+    }
+
+    @Override
+    protected void integrityChecks() {
+        if (data != null) {
+            int col = getColumns();
+            int rows = getRows();
+            assert (rows > 0);
+
+            if (colors != null)
+                assert (colors.length >= col);
+
+            if (string != null)
+                assert (string.length >= col);
         }
     }
 
