@@ -13,6 +13,8 @@ public class ExportConfigListener extends SupervisorEventListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-
+        String path = gui.getExportPath();
+        model.exportConfig(path);
+        gui.loadConfigData();
     }
 }

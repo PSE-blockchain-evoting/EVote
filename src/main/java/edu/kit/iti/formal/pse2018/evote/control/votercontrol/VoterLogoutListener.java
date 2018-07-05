@@ -12,5 +12,7 @@ public class VoterLogoutListener extends VoterEventListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {}
+    public void actionPerformed(ActionEvent actionEvent) {
+        gui.exit();
+    }
 }

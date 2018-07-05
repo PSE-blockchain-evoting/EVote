@@ -17,11 +17,10 @@ public class VotedListener extends VoterEventListener {
         boolean voted = model.vote(vote);
 
         if (voted) {
-            gui.showSuccess("Stimme erfolreich abgegeben!");
+            gui.showSuccess("Stimme erfolgreich abgegeben!");
+            gui.showWait();
         } else {
             gui.showError("Stimme ist NICHT abgegeben!");
         }
-
-        gui.showWait();
     }
 }

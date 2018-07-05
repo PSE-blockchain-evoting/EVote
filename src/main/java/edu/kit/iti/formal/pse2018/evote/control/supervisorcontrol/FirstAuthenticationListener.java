@@ -5,9 +5,9 @@ import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 
 import java.awt.event.ActionEvent;
 
-public class FirstAuthentificationListener extends SupervisorEventListener {
+public class FirstAuthenticationListener extends SupervisorEventListener {
 
-    public FirstAuthentificationListener(SupervisorControlToViewIF gui, SupervisorControlToModelIF model) {
+    public FirstAuthenticationListener(SupervisorControlToViewIF gui, SupervisorControlToModelIF model) {
         super(gui, model);
     }
 

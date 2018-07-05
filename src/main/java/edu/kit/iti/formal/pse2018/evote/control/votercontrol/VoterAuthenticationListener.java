@@ -5,9 +5,9 @@ import edu.kit.iti.formal.pse2018.evote.view.VoterControlToViewIF;
 
 import java.awt.event.ActionEvent;
 
-public class VoterAuthentificationListener extends VoterEventListener {
+public class VoterAuthenticationListener extends VoterEventListener {
 
-    public VoterAuthentificationListener(VoterControlToViewIF gui, VoterControlToModelIF model) {
+    public VoterAuthenticationListener(VoterControlToViewIF gui, VoterControlToModelIF model) {
         super(gui, model);
     }
 
@@ -18,6 +18,8 @@ public class VoterAuthentificationListener extends VoterEventListener {
 
         if (b) {
             gui.showChoice();
+        } else {
+            gui.showError("Authentication war nicht erfolgreich!");
         }
     }
 }

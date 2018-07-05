@@ -1,31 +1,40 @@
 package edu.kit.iti.formal.pse2018.evote.control.votercontrol;
 
 import edu.kit.iti.formal.pse2018.evote.control.VoterViewToControlIF;
+import edu.kit.iti.formal.pse2018.evote.model.VoterControlToModelIF;
+import edu.kit.iti.formal.pse2018.evote.view.VoterControlToViewIF;
 
 import java.awt.event.ActionListener;
 
 public class VoterControl implements VoterViewToControlIF {
 
-    private VoterEventListener listener;
+    private VotedListener votedListener;
+    private VoterAuthenticationListener authListener;
+    private VoterLogoutListener logoutListener;
+
+    /**
+     *
+     * @param gui
+     * @param model
+     */
+    public VoterControl(VoterControlToViewIF gui, VoterControlToModelIF model) {
+        this.votedListener = new VotedListener(gui, model);
+        this.authListener = new VoterAuthenticationListener(gui, model);
+        this.logoutListener = new VoterLogoutListener(gui, model);
+    }
 
     @Override
     public ActionListener getVotedListener() {
-        return null;
+        return votedListener;
     }
 
     @Override
     public ActionListener getAuthenticationListener() {
-        return null;
+        return authListener;
     }
 
     @Override
     public ActionListener getLogoutListener() {
-        return null;
+        return logoutListener;
     }
-
-    public void logout() {}
-
-    public void voted() {}
-
-    public void setState() {}
 }
