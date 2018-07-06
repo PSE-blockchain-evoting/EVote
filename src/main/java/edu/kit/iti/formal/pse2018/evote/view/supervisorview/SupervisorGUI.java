@@ -19,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 
 /**
  * This class creates the Main GUI for the supervisor.
@@ -122,7 +121,7 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
         componentManager = SupervisorVSComponentManagerBuilder.generateComponentManager(vs, adapter);
 
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
-        SupervisorGUIPanel p = new SupervisorResult(adapter);
+        SupervisorGUIPanel p = new SupervisorResult(adapter, componentManager);
 
         layout.replace(currentPanel, p);
         currentPanel = p;

@@ -8,7 +8,7 @@ import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.awt.event.ActionListener;
 
-public class SupervisorAdapter{
+public class SupervisorAdapter {
     private SupervisorViewToControlIF control;
     private SupervisorViewToModelIF model;
 

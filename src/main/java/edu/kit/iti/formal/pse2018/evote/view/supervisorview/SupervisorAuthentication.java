@@ -19,8 +19,8 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
     private GroupLayout layout;
 
     /**
-     * Creates an instance of SupervisorAuthentication
-     * @param adapter
+     * Creates an instance of SupervisorAuthentication.
+     * @param adapter The Adapter to the Control and Model interfaces
      */
     public SupervisorAuthentication(SupervisorAdapter adapter) {
         super(adapter);
@@ -28,14 +28,14 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
         buildLayout();
     }
 
-    private void initComponents(){
+    private void initComponents() {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
         txfPath = new JTextField();
         btnSearch = new JButton(lang.getString("btnSearchCertText"));
         btnConfirm = new JButton(lang.getString("btnConfirmCertText"));
     }
 
-    private void buildLayout(){
+    private void buildLayout() {
         layout = new GroupLayout(this);
 
         layout.setHorizontalGroup(layout.createParallelGroup()
@@ -55,7 +55,8 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
         layout.setVerticalGroup(layout.createSequentialGroup()
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup()
-                        .addComponent(txfPath, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txfPath, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE,
+                                GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSearch)
                 )
                 .addGap(10, 100, 100)
@@ -66,7 +67,7 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
         this.setLayout(layout);
     }
 
-    public String getImportPath(){
-
+    public String getImportPath() {
+        return null;
     }
 }

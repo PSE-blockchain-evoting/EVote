@@ -1,11 +1,8 @@
 package edu.kit.iti.formal.pse2018.evote.view.components;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Shape;
-import java.awt.Stroke;
 
 /**
  * PieChart is a JComponent which draws a PieChart based on the given data.
@@ -14,7 +11,7 @@ public class PieChart extends Diagram {
 
     public static final int[] TEST_DATA = {100, 75, 32, 10, 8, 3, 2};
     public static final Color[] TEST_COLOR = {Color.BLACK, Color.RED, Color.YELLOW,
-            Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK};
+        Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK};
 
     @Override
     protected void drawChart(Graphics graphics) {
@@ -53,9 +50,12 @@ public class PieChart extends Diagram {
     }
 
     protected void integrityChecks() {
-        if(colors != null && data != null)
+        if (colors != null && data != null) {
             assert (colors.length >= data.length);
-        if(string != null && data != null)
+        }
+
+        if (string != null && data != null) {
             assert (string.length >= data.length);
+        }
     }
 }

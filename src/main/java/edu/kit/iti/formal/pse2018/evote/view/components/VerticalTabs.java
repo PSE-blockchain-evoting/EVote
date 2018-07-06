@@ -30,11 +30,12 @@ public class VerticalTabs extends JPanel {
     private int selected = 0;
 
     /**
-     * Creates the VerticalTabs Component. This Component creates Layout with tabs on left side, which all have unique JPanel.
+     * Creates the VerticalTabs Component. This Component creates Layout with tabs on left side,
+     * which all have unique JPanel.
      * The respective Tab JPanel can be requested by getTabPanel().
-     * @param tabcount
+     * @param tabcount The amount of tabs the layout has to create.
      */
-    public VerticalTabs(int tabcount, int navWidthMin, int navWidth){
+    public VerticalTabs(int tabcount, int navWidthMin, int navWidth) {
         this.navWidth = navWidth;
         this.navWidthMin = navWidthMin;
         assert (tabcount > 0);

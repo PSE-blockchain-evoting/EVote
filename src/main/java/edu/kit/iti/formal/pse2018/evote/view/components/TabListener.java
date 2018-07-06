@@ -10,7 +10,7 @@ public class TabListener implements ActionListener {
     private VerticalTabs vt;
     private int id;
 
-    public TabListener(int id, VerticalTabs vt){
+    public TabListener(int id, VerticalTabs vt) {
         this.vt = vt;
         this.id = id;
     }

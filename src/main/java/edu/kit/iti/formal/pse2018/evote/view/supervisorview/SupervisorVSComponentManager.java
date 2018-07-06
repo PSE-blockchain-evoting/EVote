@@ -10,10 +10,11 @@ public abstract class SupervisorVSComponentManager {
     protected Diagram chart;
     protected ExtendableList table;
 
-    public SupervisorVSComponentManager(SupervisorAdapter adapter){
+    public SupervisorVSComponentManager(SupervisorAdapter adapter) {
         this.adapter = adapter;
     }
 
     public abstract Diagram createResultDiagram();
+
     public abstract ExtendableList createResultTable();
 }

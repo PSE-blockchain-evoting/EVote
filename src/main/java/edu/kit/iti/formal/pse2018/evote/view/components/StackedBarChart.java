@@ -59,11 +59,13 @@ public class StackedBarChart extends Diagram {
             int rows = getRows();
             assert (rows > 0);
 
-            if (colors != null)
+            if (colors != null) {
                 assert (colors.length >= col);
+            }
 
-            if (string != null)
+            if (string != null) {
                 assert (string.length >= col);
+            }
         }
     }
 

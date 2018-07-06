@@ -1,16 +1,11 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels;
 
-import edu.kit.iti.formal.pse2018.evote.view.components.Diagram;
 import edu.kit.iti.formal.pse2018.evote.view.components.ExtendableList;
-import edu.kit.iti.formal.pse2018.evote.view.components.PieChart;
-import edu.kit.iti.formal.pse2018.evote.view.components.StackedBarChart;
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ConfigGUI;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.SupervisorAdapter;
 
-import java.awt.Color;
 import java.awt.LayoutManager2;
-import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -48,11 +43,9 @@ public class FinishPanel extends ConfigPanel {
         GroupLayout gl = new GroupLayout(container);
 
         gl.setHorizontalGroup(gl.createParallelGroup()
-            //.addComponent(chart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         gl.setVerticalGroup(gl.createSequentialGroup()
-                //.addComponent(chart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         return gl;
     }

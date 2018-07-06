@@ -1,12 +1,11 @@
 package edu.kit.iti.formal.pse2018.evote.view;
 
-import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ConfigGUI;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.SupervisorGUI;
 
-import javax.swing.UIManager;
-import javax.swing.plaf.FontUIResource;
 import java.awt.Font;
 import java.util.Locale;
+import javax.swing.UIManager;
+import javax.swing.plaf.FontUIResource;
 
 public class Main {
 
