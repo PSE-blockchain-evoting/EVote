@@ -48,11 +48,11 @@ public class FinishPanel extends ConfigPanel {
         GroupLayout gl = new GroupLayout(container);
 
         gl.setHorizontalGroup(gl.createParallelGroup()
-            .addComponent(chart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            //.addComponent(chart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         gl.setVerticalGroup(gl.createSequentialGroup()
-                .addComponent(chart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                //.addComponent(chart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         return gl;
     }

@@ -16,6 +16,7 @@ public class VerticalTabs extends JPanel {
     private JPanel nav;                //Navigation side bar. Contains all tabs
     private GroupLayout navLayout;
     private int navWidth = 150;
+    private int navWidthMin = 150;
 
     private JPanel tabPanelContainer;
     private CardLayout tabLayout;
@@ -33,7 +34,9 @@ public class VerticalTabs extends JPanel {
      * The respective Tab JPanel can be requested by getTabPanel().
      * @param tabcount
      */
-    public VerticalTabs(int tabcount){
+    public VerticalTabs(int tabcount, int navWidthMin, int navWidth){
+        this.navWidth = navWidth;
+        this.navWidthMin = navWidthMin;
         assert (tabcount > 0);
 
         this.tabcount = tabcount;
@@ -66,7 +69,7 @@ public class VerticalTabs extends JPanel {
         mainLayout = new GroupLayout(this);
         mainLayout.setHorizontalGroup(
                 mainLayout.createSequentialGroup()
-                    .addComponent(nav, 50, navWidth, navWidth)
+                    .addComponent(nav, navWidthMin, navWidth, navWidth)
                     .addComponent(tabPanelContainer)
         );
         mainLayout.setVerticalGroup(
