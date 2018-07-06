@@ -6,6 +6,7 @@ import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorViewToModelIF;
 import edu.kit.iti.formal.pse2018.evote.model.statemanagement.SupervisorElection;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
+import edu.kit.iti.formal.pse2018.evote.utils.VotingSystemType;
 import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 
 import java.awt.Color;
@@ -26,6 +27,8 @@ import javax.swing.border.Border;
 public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
 
     private SupervisorAdapter adapter;
+
+    private SupervisorVSComponentManager componentManager;
 
     private ConfigGUI config;
 
@@ -115,6 +118,9 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
 
     @Override
     public void showResults() {
+        VotingSystemType vs = adapter.getElectionData().getVotingSystem();
+        componentManager = SupervisorVSComponentManagerBuilder.generateComponentManager(vs, adapter);
+
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
         SupervisorGUIPanel p = new SupervisorResult(adapter);
 

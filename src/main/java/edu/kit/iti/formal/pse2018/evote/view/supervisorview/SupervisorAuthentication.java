@@ -65,4 +65,8 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
 
         this.setLayout(layout);
     }
+
+    public String getImportPath(){
+
+    }
 }
