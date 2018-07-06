@@ -13,5 +13,5 @@ public interface SupervisorSDKInterface extends SDKInterface {
 
     public void createUser(String name, String filePath) throws IOException;
 
-    public boolean createElection(ElectionDataIF electionData);
+    public void createElection(ElectionDataIF electionData);
 }
