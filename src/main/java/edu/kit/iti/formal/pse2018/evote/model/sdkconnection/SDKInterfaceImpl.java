@@ -15,6 +15,7 @@ import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.HFClient;
 import org.hyperledger.fabric.sdk.exception.CryptoException;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
+import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.hyperledger.fabric.sdk.exception.TransactionException;
 import org.hyperledger.fabric.sdk.security.CryptoSuite;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
@@ -128,7 +129,13 @@ public abstract class SDKInterfaceImpl {
      */
     public void dispatchElectionOverCheck() {
         ElectionStatusQuery query = new ElectionStatusQuery(this.hfClient);
-        query.query();
+        try {
+            query.query();
+        } catch (ProposalException e) {
+            throw new RuntimeException(); //TODO: Replace with custom exception
+        } catch (InvalidArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
@@ -137,7 +144,13 @@ public abstract class SDKInterfaceImpl {
      */
     public ElectionDataIF getElectionData() {
         ElectionDataQuery query = new ElectionDataQuery(this.hfClient);
-        query.query();
+        try {
+            query.query();
+        } catch (ProposalException e) {
+            throw new RuntimeException(); //TODO: Replace with custom exception
+        } catch (InvalidArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
         return query.getResult();
     }
 }
