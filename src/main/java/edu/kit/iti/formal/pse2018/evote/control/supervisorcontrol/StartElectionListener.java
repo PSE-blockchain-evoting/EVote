@@ -4,6 +4,7 @@ import edu.kit.iti.formal.pse2018.evote.model.SupervisorControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 
 public class StartElectionListener extends SupervisorEventListener {
 
@@ -13,12 +14,13 @@ public class StartElectionListener extends SupervisorEventListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorControl");
         boolean b = model.startElection();
 
         if (b) {
-            gui.showSuccess("Die Wahl wurde erfolgreich gestartet");
+            gui.showSuccess(lang.getString("startElectionSuccess"));
         } else {
-            gui.showError("Die Wahl könnte nicht gestartet");
+            gui.showError(lang.getString("startElectionBad"));
         }
     }
 }

@@ -19,9 +19,9 @@ public class SupervisorControl implements SupervisorViewToControlIF {
     private SupervisorAuthenticationListener authenticationListener;
 
     /**
-     *
-     * @param gui
-     * @param model
+     * Create Controller for Supervisor.
+     * @param gui SupervisorView
+     * @param model SupervisorModel
      */
     public SupervisorControl(SupervisorControlToViewIF gui, SupervisorControlToModelIF model) {
         this.confirmedConfigListener = new ConfirmedConfigListener(gui, model);

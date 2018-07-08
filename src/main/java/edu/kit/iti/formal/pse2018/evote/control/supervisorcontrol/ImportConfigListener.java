@@ -17,6 +17,7 @@ public class ImportConfigListener extends SupervisorEventListener {
     public void actionPerformed(ActionEvent actionEvent) {
         String path = gui.getImportPath();
         model.importConfig(path);
+        gui.startConfigMenu();
         gui.loadConfigData();
     }
 }

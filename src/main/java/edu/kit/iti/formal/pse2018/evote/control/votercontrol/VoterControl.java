@@ -13,9 +13,9 @@ public class VoterControl implements VoterViewToControlIF {
     private VoterLogoutListener logoutListener;
 
     /**
-     *
-     * @param gui
-     * @param model
+     * Create Controller for Voter.
+     * @param gui VoterView
+     * @param model VoterModel
      */
     public VoterControl(VoterControlToViewIF gui, VoterControlToModelIF model) {
         this.votedListener = new VotedListener(gui, model);

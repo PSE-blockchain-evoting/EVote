@@ -4,6 +4,7 @@ import edu.kit.iti.formal.pse2018.evote.model.VoterControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.view.VoterControlToViewIF;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 
 public class VotedListener extends VoterEventListener {
 
@@ -13,14 +14,15 @@ public class VotedListener extends VoterEventListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        ResourceBundle lang = ResourceBundle.getBundle("VoterControl");
         String vote = gui.getVote();
         boolean voted = model.vote(vote);
 
         if (voted) {
-            gui.showSuccess("Stimme erfolgreich abgegeben!");
+            gui.showSuccess(lang.getString("votedSuccess"));
             gui.showWait();
         } else {
-            gui.showError("Stimme ist NICHT abgegeben!");
+            gui.showError(lang.getString("votedBad"));
         }
     }
 }

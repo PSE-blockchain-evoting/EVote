@@ -12,5 +12,7 @@ public class NewConfigListener extends SupervisorEventListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {}
+    public void actionPerformed(ActionEvent actionEvent) {
+        gui.startConfigMenu();
+    }
 }

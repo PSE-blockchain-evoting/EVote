@@ -14,6 +14,6 @@ public interface ControlToViewIF {
 
     public void showSuccess(String message);
 
-    public void electionOver();
+    public boolean electionOver();
 
 }

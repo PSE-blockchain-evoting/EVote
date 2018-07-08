@@ -13,6 +13,6 @@ public class SupervisorLogoutListener extends SupervisorEventListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-
+        gui.exit();
     }
 }
