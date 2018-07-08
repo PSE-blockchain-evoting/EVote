@@ -6,6 +6,9 @@ import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 import edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol.SupervisorControl;
 import org.junit.Test;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import static org.junit.Assert.assertEquals;
 
 public class SupervisorControlTest {
@@ -24,6 +27,13 @@ public class SupervisorControlTest {
 		control.getFirstAuthenticationListener().actionPerformed(null);
 		assertEquals(State.AUTH_PAGE, view.getState());
 	}
+
+	@Test
+	public void bundle() {
+        Locale.setDefault(new Locale("de", "DE"));
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorControl");
+	    assertEquals("Konfiguration wurde erfolgreich akzeptiert!", lang.getString("confirmedConfigSuccess"));
+    }
 }
 
 enum State {
