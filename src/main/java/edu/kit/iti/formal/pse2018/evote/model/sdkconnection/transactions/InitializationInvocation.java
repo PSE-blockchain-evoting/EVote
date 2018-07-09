@@ -20,6 +20,6 @@ public class InitializationInvocation extends InvocationTransaction {
 
     @Override
     protected String getFunctionName() {
-        return null;
+        return "initializationInvokation";
     }
 }
