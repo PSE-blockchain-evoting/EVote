@@ -12,6 +12,9 @@ import org.hyperledger.fabric.sdk.QueryByChaincodeRequest;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 
+/**
+ * Base class for transactions which request data from the ledger.
+ */
 public abstract class QueryTransaction extends Transaction {
 
     public QueryTransaction(HFClient client) {
