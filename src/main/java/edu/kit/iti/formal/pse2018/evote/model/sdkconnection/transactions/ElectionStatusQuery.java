@@ -15,6 +15,6 @@ public class ElectionStatusQuery extends SingleStringQuery {
 
     @Override
     protected String getFunctionName() {
-        return null;
+        return "electionStatusQuery";
     }
 }

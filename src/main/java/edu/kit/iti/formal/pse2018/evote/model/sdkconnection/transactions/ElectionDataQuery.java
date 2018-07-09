@@ -15,6 +15,6 @@ public class ElectionDataQuery extends ElectionDataTypeQuery {
 
     @Override
     protected String getFunctionName() {
-        return null;
+        return "electionDataQuery";
     }
 }
