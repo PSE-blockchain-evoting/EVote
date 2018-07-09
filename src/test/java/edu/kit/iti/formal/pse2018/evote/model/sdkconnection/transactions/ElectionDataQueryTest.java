@@ -37,6 +37,6 @@ public class ElectionDataQueryTest {
         calendar.set(2006, Calendar.JANUARY, 4, 15, 4, 5);
         assertEquals(calendar.getTime().toString(), result.getEndDate().toString());
         ElectionEndCondition condition = new VoterPercentileCondition(60);
-        assertEquals(condition.asString(), result.getEndCondition().asString());
+        assertEquals(condition.asJsonObject().toString(), result.getEndCondition().asJsonObject().toString());
     }
 }
