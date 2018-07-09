@@ -10,7 +10,5 @@ public interface ViewToModelIF {
 
     public void setElectionEndListener(ElectionStatusListener listener);
 
-    public String getVotingSystem();
-
     public int[] getResults();
 }
