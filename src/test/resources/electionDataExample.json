@@ -1,0 +1,22 @@
+{
+  "name": "CooleWahl",
+  "description": "Diese Wahl is sehr cool",
+  "votingSystem": "ABSOLUTEMAJORITY",
+  "candidates": [
+    "hans",
+    "peter",
+    "werner"
+  ],
+  "candidateDescriptions": [
+    "cooler dude",
+    "nicer mensch",
+    "sicker kerl"
+  ],
+  "startDate": "1136210645000",
+  "endDate": "1136383445000",
+  "endCondition": {
+    "type": "VoterPercentileCondition",
+    "percentage": 60
+  },
+  "voterCount": 3
+}
