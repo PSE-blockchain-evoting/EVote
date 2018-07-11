@@ -1,5 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
+import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.util.LinkedList;
@@ -7,13 +8,16 @@ import java.util.List;
 
 public abstract class Election {
 
-    private List<Candidate> candidateList = new LinkedList<>();
-    private List<Voter> voterList = new LinkedList<>();
+    protected List<Candidate> candidateList = new LinkedList<>();
+    protected List<Voter> voterList = new LinkedList<>();
 
-    private ElectionDataIF electionDataIF;
+    protected SDKEventListenerImpl sdkEventListenerImpl;
 
-    public void setElectionData(ElectionDataIF electionDataIF) {
-        this.electionDataIF = electionDataIF;
+    protected ElectionDataIF electionDataIF;
+
+    public Election(ElectionStatusListener electionStatusListener) {
+        sdkEventListenerImpl = new SDKEventListenerImpl(this);
+        sdkEventListenerImpl.setElectionStatusListener(electionStatusListener);
     }
 
     public ElectionDataIF getElectionData() {
@@ -25,7 +29,7 @@ public abstract class Election {
     }
 
     public String getWinner() {
-     //TODO: IMPLEMENT
+        //TODO: IMPLEMENT
         return null;
     }
 
@@ -34,9 +38,10 @@ public abstract class Election {
         return null;
     }
 
-    public void getResults() {
-        //TODO: IMPLEMENT
 
+    public int[] getResults() {
+        //TODO: IMPLEMENT
+        return null;
     }
 
 }

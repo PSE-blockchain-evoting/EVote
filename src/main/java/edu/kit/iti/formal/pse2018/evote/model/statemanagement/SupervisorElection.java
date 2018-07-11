@@ -4,44 +4,29 @@ import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorSDKInterface;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorViewToModelIF;
+import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.SupervisorSDKInterfaceImpl;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigIssues;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.ResourceBundle;
 
-public class SupervisorElection implements SupervisorControlToModelIF, SupervisorViewToModelIF {
 
-    private SupervisorSDKInterface supervisorSDKInterface = new SupervisorSDKInterface() {
-        @Override
-        public String[] getAllVotes() {
-            return new String[0];
-        }
+public class SupervisorElection extends Election implements SupervisorControlToModelIF, SupervisorViewToModelIF {
 
-        @Override
-        public void destroyElection() {
+    private SupervisorSDKInterface supervisorSDKInterface;
 
-        }
+    private ConfigIssues configIssues;
 
-        @Override
-        public void createUser(String name, String filePath) throws IOException {
+    public SupervisorElection(ElectionStatusListener electionStatusListener){
+        super(electionStatusListener);
+    }
 
-        }
+    private void checkElectionConfiguration(ElectionDataIF electionDataIF){
 
-        @Override
-        public boolean createElection(ElectionDataIF electionData) {
-            return false;
-        }
+        if (!electionDataIF.getName().contains("\\w]"))
 
-        @Override
-        public void dispatchElectionOverCheck() {
-
-        }
-
-        @Override
-        public ElectionDataIF getElectionData() {
-            return null;
-        }
-    };
+    }
 
 
     @Override
@@ -51,22 +36,56 @@ public class SupervisorElection implements SupervisorControlToModelIF, Superviso
 
     @Override
     public void exportConfig(String path) {
+        File f = new File(path + File.separator + "ElectionConfiguration");
 
+        f.getParentFile().mkdirs();
+        try {
+            f.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            FileWriter fileWriter = new FileWriter(f);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            bufferedWriter.write("Election Name:" + electionDataIF.getName()+ "\n");
+            bufferedWriter.write("Election Description" + electionDataIF.getDescription()+ "\n");
+            bufferedWriter.write("");
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void setVoters(String[] names) {
-
+        for (String voterName : names)
+            voterList.add(new Voter(voterName));
     }
 
     @Override
-    public boolean setElectionData(ElectionDataIF electionData) {
-        return false;
+    public boolean setElectionData(ElectionDataIF electionDataIF) {
+        this.electionDataIF = electionDataIF;
+        String [] candidatesTemp = electionDataIF.getCandidates();
+        String [] descriptionsTemp = electionDataIF.getCandidateDescriptions();
+
+        for (int i = 0; i < candidatesTemp.length - 1; i++){
+            candidateList.add(new Candidate(candidatesTemp[i], descriptionsTemp[i]));
+        }
+        return true;
     }
 
     @Override
     public boolean firstAuthentication(String username, String password) {
-        return false;
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("config.properties");
+        String filePath = resourceBundle.getString("electionSupervisor_Certificate");
+
+        try {
+            supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(username, password, filePath, sdkEventListenerImpl);
+        }
+        catch (IOException e) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -81,12 +100,20 @@ public class SupervisorElection implements SupervisorControlToModelIF, Superviso
 
     @Override
     public boolean authenticate(String path) {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("config.properties");
+        String filePath = resourceBundle.getString("electionSupervisor_Certificate");
+
+        try {
+            supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(filePath, sdkEventListenerImpl);
+        } catch (IOException | ClassNotFoundException e) {
+            return false;
+        }
         return false;
     }
 
     @Override
     public ElectionDataIF getElectionData() {
-        return null;
+        return electionDataIF;
     }
 
     @Override
@@ -102,11 +129,6 @@ public class SupervisorElection implements SupervisorControlToModelIF, Superviso
     @Override
     public String getVotingSystem() {
         return null;
-    }
-
-    @Override
-    public int[] getResults() {
-        return new int[0];
     }
 
     @Override
