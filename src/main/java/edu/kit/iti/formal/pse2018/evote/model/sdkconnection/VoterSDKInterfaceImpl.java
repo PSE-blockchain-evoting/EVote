@@ -8,6 +8,7 @@ import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.VoteInv
 import java.io.IOException;
 
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
+import org.hyperledger.fabric.sdk.exception.ProposalException;
 
 public class VoterSDKInterfaceImpl extends SDKInterfaceImpl implements VoterSDKInterface {
 
@@ -19,13 +20,16 @@ public class VoterSDKInterfaceImpl extends SDKInterfaceImpl implements VoterSDKI
     /**
      * Votes for the current User.
      * @param vote the vote to cast
-     * @return true if voting was successful
      */
-    public boolean vote(String vote) {
+    public void vote(String vote) {
         VoteInvocation inv = new VoteInvocation(this.hfClient, vote);
-        inv.invoke();
-        return true; //TODO: Meaningful return value
-
+        try {
+            inv.invoke();
+        } catch (ProposalException e) {
+            throw new RuntimeException(); //TODO: Replace with custom exception
+        } catch (InvalidArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
@@ -34,7 +38,13 @@ public class VoterSDKInterfaceImpl extends SDKInterfaceImpl implements VoterSDKI
      */
     public String getOwnVote() {
         OwnVoteQuery query = new OwnVoteQuery(this.hfClient);
-        query.query();
+        try {
+            query.query();
+        } catch (ProposalException e) {
+            throw new RuntimeException(); //TODO: Replace with custom exception
+        } catch (InvalidArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
         return query.getResult();
     }
 }

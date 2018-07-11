@@ -1,7 +1,20 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions;
 
-import org.hyperledger.fabric.sdk.HFClient;
+import java.util.Collection;
+import java.util.ResourceBundle;
 
+import org.hyperledger.fabric.sdk.ChaincodeID;
+import org.hyperledger.fabric.sdk.ChaincodeResponse;
+import org.hyperledger.fabric.sdk.Channel;
+import org.hyperledger.fabric.sdk.HFClient;
+import org.hyperledger.fabric.sdk.ProposalResponse;
+import org.hyperledger.fabric.sdk.QueryByChaincodeRequest;
+import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
+import org.hyperledger.fabric.sdk.exception.ProposalException;
+
+/**
+ * Base class for transactions which request data from the ledger.
+ */
 public abstract class QueryTransaction extends Transaction {
 
     public QueryTransaction(HFClient client) {
@@ -10,7 +23,24 @@ public abstract class QueryTransaction extends Transaction {
 
     protected abstract void parseResultString(String result);
 
-    public void query() {
-
+    /**
+     * Queries the ledger through the peer(s).
+     * @throws ProposalException @see Hyperledger
+     * @throws InvalidArgumentException @see Hyperledger
+     */
+    public void query() throws ProposalException, InvalidArgumentException {
+        ResourceBundle bundle = ResourceBundle.getBundle("config");
+        Channel channel = this.client.getChannel(bundle.getString("channel_name"));
+        QueryByChaincodeRequest request = client.newQueryProposalRequest();
+        ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName(bundle.getString("chaincode_name")).build();
+        request.setChaincodeID(chaincodeID);
+        request.setFcn(getFunctionName());
+        request.setArgs(buildArgumentStrings());
+        Collection<ProposalResponse> responses = channel.queryByChaincode(request);
+        if (responses.stream().anyMatch(proposalResponse ->
+                proposalResponse.getStatus() != ChaincodeResponse.Status.SUCCESS)) {
+            throw new RuntimeException("Query proposal failed"); //TODO: Custom exception
+        }
+        parseResultString(responses.iterator().next().getProposalResponse().getPayload().toStringUtf8());
     }
 }
