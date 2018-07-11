@@ -1,7 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions;
 
-import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.ElectionData;
-import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
+import edu.kit.iti.formal.pse2018.evote.model.ElectionData;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionEndCondition;
 import edu.kit.iti.formal.pse2018.evote.utils.VoterPercentileCondition;
 import edu.kit.iti.formal.pse2018.evote.utils.VotingSystemType;
@@ -11,8 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
-
-import javax.json.JsonObject;
 
 import org.hyperledger.fabric.sdk.HFClient;
 import org.junit.Test;
