@@ -48,4 +48,13 @@ public class ExtendableList extends BasicList implements Extendable {
             pnlScroll.getRootPane().repaint();
         }
     }
+
+    /**
+     * Deletes every entry in the list.
+     */
+    public void clear() {
+        while (entries.size() > 0) {
+            removeEntry(entries.getLast());
+        }
+    }
 }

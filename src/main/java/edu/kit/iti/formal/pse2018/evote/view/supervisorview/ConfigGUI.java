@@ -1,8 +1,9 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 
+import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
+import edu.kit.iti.formal.pse2018.evote.view.ElectionDataImpl;
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels.CandidatePanel;
-import edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels.ConfigPanel;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels.FinishPanel;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels.GeneralConfigPanel;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels.TimespanPanel;
@@ -10,14 +11,6 @@ import edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels.VoterPa
 
 import java.awt.Color;
 import java.awt.Font;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
@@ -26,7 +19,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 
 /**
  * ConfigGUI is a JFrame which allows the configuration of an election by the user.
@@ -60,6 +52,7 @@ public class ConfigGUI extends JFrame {
         this.adapter = adapter;
 
         tabsLayout = new VerticalTabs(5, sideBarWidthMin, sideBarWidth);
+        tabsLayout.setTabFont((Font) UIManager.get("General.font"));
 
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
 
@@ -73,6 +66,15 @@ public class ConfigGUI extends JFrame {
         tabsLayout.setTabText(3, lang.getString("VoterTab"));
         finishPanel = new FinishPanel(tabsLayout.getTabPanel(4), this, tabsLayout, adapter);
         tabsLayout.setTabText(4, lang.getString("FinishTab"));
+
+        ActiveListener[] l = new ActiveListener[5];
+        l[0] = generalConfigPanel;
+        l[1] = timespanPanel;
+        l[2] = candidatePanel;
+        l[3] = voterPanel;
+        l[4] = finishPanel;
+
+        tabsLayout.setActiveListener(l);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle(lang.getString("Title"));
@@ -105,5 +107,66 @@ public class ConfigGUI extends JFrame {
                 .addComponent(tabsLayout)
         );
         this.getContentPane().setLayout(layout);
+    }
+
+    public void showConfigIssues() {
+
+    }
+
+    public void loadConfigData() {
+
+    }
+
+    /**
+     * Access the entered Election Data.
+     *
+     * @return The Election Data.
+     */
+    public ElectionDataIF getElectionData() {
+        ElectionDataImpl data = new ElectionDataImpl();
+
+        data.setName(generalConfigPanel.getElectionName());
+        data.setDesc(generalConfigPanel.getElectionDescription());
+        data.setType(generalConfigPanel.getVotingSystem());
+        data.setStart(timespanPanel.getStartDate());
+        data.setEnd(timespanPanel.getEndDate());
+        data.setEec(timespanPanel.getEndCondition());
+        data.setCandidates(candidatePanel.getCandidateNames());
+        data.setCandidatesDesc(candidatePanel.getCandidateDescriptions());
+        data.setVoterCount(voterPanel.getVoters().length);
+
+        return data;
+    }
+
+    /**
+     * Set ElectionData in the ConfigGUI.
+     *
+     * @param data The data to set.
+     */
+    public void setElectionData(ElectionDataIF data) {
+        generalConfigPanel.setElectionName(data.getName());
+        generalConfigPanel.setElectionDescription(data.getDescription());
+        generalConfigPanel.setVotingSystem(data.getVotingSystem());
+        timespanPanel.setStartDate(data.getStartDate());
+        timespanPanel.setEndDate(data.getEndDate());
+        timespanPanel.setEndCondition(data.getEndCondition());
+        candidatePanel.setCandidateNames(data.getCandidates());
+        candidatePanel.setCandidateDescriptions(data.getCandidateDescriptions());
+    }
+
+    public void setVoters(String[] voters) {
+        voterPanel.setVoters(voters);
+    }
+
+    public String[] getVoters() {
+        return voterPanel.getVoters();
+    }
+
+    @Override
+    public void setTitle(String s) {
+        super.setTitle(s);
+        if (lblTitle != null) {
+            lblTitle.setText(s);
+        }
     }
 }

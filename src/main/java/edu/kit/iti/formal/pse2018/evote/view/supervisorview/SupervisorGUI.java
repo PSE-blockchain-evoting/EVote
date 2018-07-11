@@ -54,14 +54,14 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
         adapter = new SupervisorAdapter(control, model);
 
         currentPanel = new SupervisorAuthentication(adapter);
-        showFrontpage();
+        showAuthentication();
 
         this.setSize(800, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
 
         config = new ConfigGUI(adapter);
-        this.setVisible(true);
+        config.setVisible(true);
     }
 
     private void initComponents() {

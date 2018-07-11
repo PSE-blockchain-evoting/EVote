@@ -104,6 +104,10 @@ public class DescriptionDialog extends JDialog {
         }
     }
 
+    public void setDescription(String desc) {
+        txaDescription.setText(desc);
+    }
+
     public String getDescription() {
         return txaDescription.getText();
     }

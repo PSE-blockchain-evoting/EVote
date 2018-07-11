@@ -62,4 +62,12 @@ public class VoterPanel extends ConfigPanel {
         );
         return gl;
     }
+
+    public String[] getVoters() {
+        return vl.getVoters();
+    }
+
+    public void setVoters(String[] voters) {
+        vl.setVoters(voters);
+    }
 }

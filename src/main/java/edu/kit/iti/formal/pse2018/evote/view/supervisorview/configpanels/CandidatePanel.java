@@ -31,7 +31,7 @@ public class CandidatePanel extends ConfigPanel {
     protected void initComponents() {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
 
-        JFrame parent = (JFrame)getTopLevelAncestor();
+        JFrame parent = (JFrame) getTopLevelAncestor();
         candidates = CandidateList.createCandidateList(parent);
         candidates.addNewEntry();
 
@@ -51,21 +51,37 @@ public class CandidatePanel extends ConfigPanel {
 
         gl.setHorizontalGroup(
                 gl.createSequentialGroup()
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, 100)
-                    .addGroup(gl.createParallelGroup()
-                        .addComponent(candidates, 0, 1, Short.MAX_VALUE)
-                        .addComponent(btnAdd)
-                    )
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, 100)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, 100)
+                        .addGroup(gl.createParallelGroup()
+                                .addComponent(candidates, 0, 1, Short.MAX_VALUE)
+                                .addComponent(btnAdd)
+                        )
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, 100)
         );
 
         gl.setVerticalGroup(
                 gl.createSequentialGroup()
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, 100)
-                    .addComponent(candidates, 0, 1, Short.MAX_VALUE)
-                    .addComponent(btnAdd)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, 100)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, 100)
+                        .addComponent(candidates, 0, 1, Short.MAX_VALUE)
+                        .addComponent(btnAdd)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, GroupLayout.DEFAULT_SIZE, 100)
         );
         return gl;
+    }
+
+    public String[] getCandidateNames() {
+        return candidates.getCandidateNames();
+    }
+
+    public void setCandidateNames(String[] names) {
+        candidates.setCandidateNames(names);
+    }
+
+    public String[] getCandidateDescriptions() {
+        return candidates.getCandidateDescriptions();
+    }
+
+    public void setCandidateDescriptions(String[] descs) {
+        candidates.setCandidateDescriptions(descs);
     }
 }

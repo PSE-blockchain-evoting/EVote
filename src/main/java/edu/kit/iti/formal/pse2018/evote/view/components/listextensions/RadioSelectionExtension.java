@@ -1,5 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
+import java.awt.Font;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JRadioButton;
@@ -11,14 +12,15 @@ public class RadioSelectionExtension extends ComponentExtension<JRadioButton> {
 
     private ButtonGroup group;
 
-    public RadioSelectionExtension(ListExtension next) {
-        super(next);
+    public RadioSelectionExtension(ListExtension next, Font font) {
+        super(next, font);
         group = new ButtonGroup();
     }
 
     @Override
     protected JRadioButton createNewType() {
         JRadioButton rb = new JRadioButton();
+        rb.setFont(font);
         group.add(rb);
 
         return rb;

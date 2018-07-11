@@ -1,6 +1,9 @@
 package edu.kit.iti.formal.pse2018.evote.view.components;
 
+import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ActiveListener;
+
 import java.awt.CardLayout;
+import java.awt.Font;
 import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -27,6 +30,8 @@ public class VerticalTabs extends JPanel {
     private String[] tabName;
     private int tabHeight = 100;
 
+    private ActiveListener[] listener;
+
     private int selected = 0;
 
     /**
@@ -40,11 +45,11 @@ public class VerticalTabs extends JPanel {
         this.navWidthMin = navWidthMin;
         assert (tabcount > 0);
 
+        this.listener = listener;
+
         this.tabcount = tabcount;
-        //this.setBorder(BorderFactory.createLineBorder(Color.RED));
 
         nav = new JPanel();
-        //nav.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 
         tabs = new JToggleButton[tabcount];
         panels = new JPanel[tabcount];
@@ -106,13 +111,11 @@ public class VerticalTabs extends JPanel {
         System.out.println("Selecting: " + i);
         assert (0 <= i && i < tabcount);
 
-        //If this if condition is running the first tab isn't pressed when program is started
-        //if(selected == i){
-        //    return;
-        //}
+        if (listener != null) {
+            listener[selected].onDeactivate();
+            listener[i].onActive();
+        }
         selected = i;
-
-        //TODO: call state change listener
 
         for (JToggleButton tb : tabs) {
             tb.setSelected(false);
@@ -144,5 +147,20 @@ public class VerticalTabs extends JPanel {
 
     public void nextTab() {
         setSelected((selected + 1) % tabcount);
+    }
+
+    public void setActiveListener(ActiveListener[] listener) {
+        assert (listener.length >= tabcount);
+        this.listener = listener;
+    }
+
+    /**
+     * Set the font of the tab buttons.
+     * @param f The font of choice.
+     */
+    public void setTabFont(Font f) {
+        for (JToggleButton b : tabs) {
+            b.setFont(f);
+        }
     }
 }

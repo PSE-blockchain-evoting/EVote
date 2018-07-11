@@ -1,6 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
+import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ActiveListener;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.ConfigGUI;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.SupervisorAdapter;
 
@@ -17,9 +18,11 @@ import javax.swing.LayoutStyle;
  * ConfigPanel is the generalization of the different ConfigPanel required for configuring an election.
  * It is meant to be used in combination with VerticalTabs.
  */
-public abstract class ConfigPanel extends JPanel {
+public abstract class ConfigPanel extends JPanel implements ActiveListener {
 
     protected SupervisorAdapter adapter;
+    protected ConfigGUI gui;
+
     protected VerticalTabs vt;
 
     protected JPanel pnlMain;
@@ -29,14 +32,15 @@ public abstract class ConfigPanel extends JPanel {
 
     protected LayoutManager2 layout;
 
-
     /**
      * Creates an instance of ConfigPanel.
+     *
      * @param container The Container in which to place the components of this ConfigPanel
-     * @param vt The VerticalTabs in which this Panel in placed.
+     * @param vt        The VerticalTabs in which this Panel in placed.
      */
     @SuppressWarnings({"checkstyle:linelength", "checkstyle:Indentation"})
     public ConfigPanel(JPanel container, ConfigGUI gui, VerticalTabs vt, SupervisorAdapter adapter) {
+        this.gui = gui;
         this.adapter = adapter;
         this.vt = vt;
 
@@ -59,17 +63,17 @@ public abstract class ConfigPanel extends JPanel {
 
         containerLayout.setHorizontalGroup(
                 containerLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                    .addComponent(pnlMain, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-                    .addGroup(containerLayout.createSequentialGroup()
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlButtons, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    )
+                        .addComponent(pnlMain, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
+                        .addGroup(containerLayout.createSequentialGroup()
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(pnlButtons, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        )
         );
 
         containerLayout.setVerticalGroup(
                 containerLayout.createSequentialGroup()
                         .addComponent(pnlMain, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-                        .addComponent(pnlButtons,   GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlButtons, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         );
 
         container.setLayout(containerLayout);
@@ -82,8 +86,17 @@ public abstract class ConfigPanel extends JPanel {
 
     }
 
+    @Override
+    public void onActive(){
+
+    }
+
+    @Override
+    public void onDeactivate(){
+
+    }
+
     protected abstract void initComponents();
 
     protected abstract LayoutManager2 buildLayout(JPanel container);
-
 }

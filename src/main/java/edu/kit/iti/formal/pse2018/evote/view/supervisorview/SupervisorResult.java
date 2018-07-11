@@ -19,6 +19,7 @@ public class SupervisorResult extends SupervisorGUIPanel {
         table = manager.createResultTable();
     }
 
+    @Override
     public void updateResults(int[] results, String winner){
 
     }

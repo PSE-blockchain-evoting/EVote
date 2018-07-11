@@ -2,6 +2,9 @@ package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.Entry;
 
+import java.awt.Font;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JLabel;
 
 /**
@@ -9,7 +12,7 @@ import javax.swing.JLabel;
  */
 public class TextExtension extends ComponentExtension<JLabel> {
 
-    private String[] text;
+    private List<String> text;
 
     /**
      * Creates an instance of TextExtension.
@@ -18,19 +21,35 @@ public class TextExtension extends ComponentExtension<JLabel> {
      * @param text The Text the labels show. The first element in text ist shown in the first row,
      *             the second in the second row, etc.
      */
-    public TextExtension(ListExtension next, String[] text) {
-        super(next);
-        this.text = text;
+    public TextExtension(ListExtension next, Font font, String[] text) {
+        super(next, font);
+        if (text == null) {
+            this.text = new ArrayList<String>();
+        } else {
+            this.text = new ArrayList<String>();
+            for (int i = 0; i < text.length; i++) {
+                this.text.add(text[i]);
+            }
+        }
     }
 
     @Override
     protected JLabel createNewType() {
         int size = components.size();
-        if (size >= text.length) {
-            return new JLabel("");
+        JLabel lbl;
+        if (size >= text.size()) {
+            lbl = new JLabel("");
         } else {
-            return new JLabel(text[size]);
+            lbl = new JLabel(text.get(size));
         }
+        lbl.setFont(font);
+        return lbl;
+    }
+
+    @Override
+    public void addEntry(Entry e) {
+        super.addEntry(e);
+        text.add("");
     }
 
     @Override
@@ -39,19 +58,40 @@ public class TextExtension extends ComponentExtension<JLabel> {
         int index = searchIndex(e);
 
         for (int i = index; i < components.size(); i++) {
-            if (i < text.length) {
-                components.get(i).setText(text[i]);
+            if (i < text.size()) {
+                components.get(i).setText(text.get(i));
             }
         }
     }
 
-    void setText(String[] s) {
-        for (int i = 0; i < components.size(); i++) {
-            if (i < s.length) {
-                components.get(i).setText(text[i]);
-            } else {
-                components.get(i).setText("");
-            }
+    /**
+     * get the text of an Entry.
+     *
+     * @param i the index of the Entry.
+     * @return The Text in the specified Entry.
+     */
+    public String getText(int i) {
+        assert (0 <= i && i < components.size());
+        return components.get(i).getText();
+    }
+
+    /**
+     * Set the text of an Entry.
+     *
+     * @param i    the index of the Entry.
+     * @param text The text to set.
+     */
+    public void setText(int i, String text) {
+        while (i >= components.size()) {
+            list.addNewEntry();
         }
+        while (i >= this.text.size()) {
+            this.text.add("");
+        }
+
+        System.out.println(components);
+        System.out.println(this.text);
+        this.text.set(i, text);
+        components.get(i).setText(text);
     }
 }

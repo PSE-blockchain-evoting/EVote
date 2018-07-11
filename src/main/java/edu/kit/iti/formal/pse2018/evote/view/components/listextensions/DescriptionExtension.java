@@ -2,6 +2,7 @@ package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.DescriptionDialog;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -20,11 +21,12 @@ public class DescriptionExtension extends ComponentExtension<JButton> {
 
     /**
      * Creates a DescriptionExtension.
-     * @param next The next ListExtension in the chain.
+     *
+     * @param next   The next ListExtension in the chain.
      * @param parent The JFrame parent for the used JDialog Description Windows.
      */
-    public DescriptionExtension(ListExtension next, JFrame parent) {
-        super(next);
+    public DescriptionExtension(ListExtension next, Font font, JFrame parent) {
+        super(next, font);
         this.parent = parent;
         dds = new LinkedList<>();
     }
@@ -42,6 +44,7 @@ public class DescriptionExtension extends ComponentExtension<JButton> {
 
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
         JButton btnNew = new JButton(lang.getString("btnDescriptionText"));
+        btnNew.setFont(font);
         btnNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
@@ -57,5 +60,25 @@ public class DescriptionExtension extends ComponentExtension<JButton> {
         });
 
         return btnNew;
+    }
+
+    /**
+     * Set the description of an Entry.
+     *
+     * @param i    The index of the Entry.
+     * @param desc The new description-
+     */
+    public void setDescription(int i, String desc) {
+        dds.get(i).setDescription(desc);
+    }
+
+    /**
+     * Access the Description of an Entry.
+     *
+     * @param i the index of the Entry.
+     * @return The description of the Entry.
+     */
+    public String getDescription(int i) {
+        return dds.get(i).getDescription();
     }
 }

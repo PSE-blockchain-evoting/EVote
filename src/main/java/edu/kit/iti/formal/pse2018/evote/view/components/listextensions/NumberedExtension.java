@@ -2,6 +2,7 @@ package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.Entry;
 
+import java.awt.Font;
 import javax.swing.JLabel;
 
 /**
@@ -13,8 +14,8 @@ public class NumberedExtension extends ComponentExtension<JLabel> {
      * Creates a new NumberedExtension Instance.
      * @param next the next Extension in the chain. Can be null.
      */
-    public NumberedExtension(ListExtension next) {
-        super(next);
+    public NumberedExtension(ListExtension next, Font font) {
+        super(next, font);
     }
 
     @Override
@@ -33,6 +34,7 @@ public class NumberedExtension extends ComponentExtension<JLabel> {
     protected JLabel createNewType() {
         int nr = list.getEntries().size();
         JLabel lblNew = new JLabel(genText(nr));
+        lblNew.setFont(font);
 
         return lblNew;
     }

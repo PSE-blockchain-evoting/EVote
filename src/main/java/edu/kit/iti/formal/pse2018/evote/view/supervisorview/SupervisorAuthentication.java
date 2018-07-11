@@ -1,8 +1,11 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 
@@ -15,6 +18,7 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
     private JTextField txfPath;
     private JButton btnSearch;
     private JButton btnConfirm;
+    private JFileChooser fcSearch;
 
     private GroupLayout layout;
 
@@ -30,8 +34,19 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
 
     private void initComponents() {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
+        fcSearch = new JFileChooser();
         txfPath = new JTextField();
         btnSearch = new JButton(lang.getString("btnSearchCertText"));
+        btnSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                int ret = fcSearch.showOpenDialog(btnSearch);
+                if (ret == JFileChooser.APPROVE_OPTION) {
+                    String path = fcSearch.getSelectedFile().getPath();
+                    txfPath.setText(path);
+                }
+            }
+        });
         btnConfirm = new JButton(lang.getString("btnConfirmCertText"));
     }
 
@@ -67,7 +82,8 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
         this.setLayout(layout);
     }
 
+    @Override
     public String getImportPath() {
-        return null;
+        return txfPath.getText();
     }
 }

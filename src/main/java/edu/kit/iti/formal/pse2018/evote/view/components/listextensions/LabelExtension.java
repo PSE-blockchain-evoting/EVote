@@ -1,8 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
-import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.ComponentExtension;
-import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.ListExtension;
-
+import java.awt.Font;
 import javax.swing.JLabel;
 
 /**
@@ -13,13 +11,15 @@ public class LabelExtension extends ComponentExtension<JLabel> {
     private static final String TEXT = "Hello World";
     private String text;
 
-    public LabelExtension(ListExtension next, String text) {
-        super(next);
+    public LabelExtension(ListExtension next, Font font, String text) {
+        super(next, font);
         this.text = text;
     }
 
     @Override
     protected JLabel createNewType() {
-        return new JLabel(TEXT);
+        JLabel lbl = new JLabel(TEXT);
+        lbl.setFont(font);
+        return lbl;
     }
 }
