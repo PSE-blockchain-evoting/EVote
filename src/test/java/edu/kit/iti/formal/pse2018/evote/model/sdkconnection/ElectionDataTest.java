@@ -1,5 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection;
 
+import edu.kit.iti.formal.pse2018.evote.model.ElectionData;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionEndCondition;
 import edu.kit.iti.formal.pse2018.evote.utils.TimeOnlyCondition;
 import edu.kit.iti.formal.pse2018.evote.utils.VotingSystemType;
