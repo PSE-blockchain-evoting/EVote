@@ -8,7 +8,7 @@ public interface ViewToModelIF {
 
     public String getWinner();
 
-    public void setElectionEndListener(ElectionStatusListener listener);
+    public void setElectionStatusListener(ElectionStatusListener listener);
 
     public int[] getResults();
 }

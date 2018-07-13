@@ -1,5 +1,9 @@
 package edu.kit.iti.formal.pse2018.evote.model;
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 public interface SupervisorControlToModelIF extends ControlToModelIF {
@@ -12,11 +16,12 @@ public interface SupervisorControlToModelIF extends ControlToModelIF {
 
     public boolean setElectionData(ElectionDataIF electionData);
 
-    public boolean firstAuthentication(String username, String password);
+    public boolean firstAuthentication(String username, String password) throws NetworkException,
+            AuthenticationException, InternalSDKException, NetworkConfigException;
 
     public String[] getVotes();
 
-    public boolean startElection();
+    public void startElection() throws NetworkException, NetworkConfigException;
 
     public void destroyElection();
 }

@@ -70,7 +70,7 @@ public class SupervisorAdapter {
     }
 
     public void setElectionEndListener(ElectionStatusListener listener) {
-        model.setElectionEndListener(listener);
+        model.setElectionStatusListener(listener);
     }
 
     public int[] getResults() {

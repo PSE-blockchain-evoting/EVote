@@ -1,5 +1,9 @@
 package edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol;
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 
@@ -17,11 +21,16 @@ public class FirstAuthenticationListener extends SupervisorEventListener {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorControl");
         String name = gui.getUsername();
         String password = gui.getPassword();
-        boolean b = model.firstAuthentication(name, password);
-
-        if (b) {
+        try {
+            model.firstAuthentication(name, password);
             gui.showFrontpage();
-        } else {
+        } catch (NetworkException e) {
+            gui.showError(lang.getString("authFailed"));
+        } catch (AuthenticationException e) {
+            gui.showError(lang.getString("authFailed"));
+        } catch (InternalSDKException e) {
+            gui.showError(lang.getString("authFailed"));
+        } catch (NetworkConfigException e) {
             gui.showError(lang.getString("authFailed"));
         }
     }
