@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -40,6 +41,8 @@ public class FinishPanel extends ConfigPanel {
     private JLabel lblVoters;
     private ExtendableList voters;
     private TextExtension teVoters;
+
+    private JFileChooser jfcExport;
 
     private JLabel lblIssues;
 
@@ -80,16 +83,20 @@ public class FinishPanel extends ConfigPanel {
         lblIssues.setVerticalAlignment(SwingConstants.NORTH);
 
         btnExport = new JButton(lang.getString("btnExportText"));
+        btnExport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                jfcExport.showOpenDialog(null);
+                adapter.getExportConfigListener().actionPerformed(actionEvent);
+            }
+        });
         btnContinue.setText(lang.getString("btnConfirmConfigText"));
         for (ActionListener l : btnContinue.getActionListeners()) {
             btnContinue.removeActionListener(l);
         }
-        btnContinue.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                System.exit(0);
-            }
-        });
+        btnContinue.addActionListener(adapter.getStartElectionListener());
+
+        jfcExport = new JFileChooser();
 
         lblTimeFrame.setFont(f);
         lblVotingSystem.setFont(f);
@@ -101,6 +108,7 @@ public class FinishPanel extends ConfigPanel {
         lblIssues.setFont(f);
         btnExport.setFont(f);
         btnContinue.setFont(f);
+        jfcExport.setFont(f);
     }
 
     @SuppressWarnings({"checkstyle:linelength", "checkstyle:Indentation"})
@@ -189,5 +197,10 @@ public class FinishPanel extends ConfigPanel {
     @Override
     public void onActive() {
         updateData();
+        adapter.getConfirmedConfigListener().actionPerformed(null);
+    }
+
+    public String getExportPath() {
+        return jfcExport.getSelectedFile().getAbsolutePath();
     }
 }

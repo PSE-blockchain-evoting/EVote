@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -129,46 +130,49 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
 
     @Override
     public void startConfigMenu() {
-
+        config = new ConfigGUI(adapter);
+        config.setVisible(true);
+        this.setVisible(false);
     }
 
     @Override
     public void loadConfigData() {
+        config.loadConfigData();
     }
 
     @Override
     public String[] getVoters() {
-        return new String[0];
+        return config.getVoters();
     }
 
     @Override
     public ElectionDataIF getElectionData() {
-        return null;
+        return config.getElectionData();
     }
 
     @Override
     public String getImportPath() {
-        return null;
+        return currentPanel.getImportPath();
     }
 
     @Override
     public String getExportPath() {
-        return null;
+        return config.getExportPath();
     }
 
     @Override
     public void showConfigIssues() {
-
+        config.showConfigIssues();
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return currentPanel.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return null;
+        return currentPanel.getUsername();
     }
 
     @Override
@@ -183,26 +187,26 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
 
     @Override
     public String getAuthenticationPath() {
-        return null;
+        return currentPanel.getCertPath();
     }
 
     @Override
     public void showError(String message) {
-
+        JOptionPane.showMessageDialog(this, message);
     }
 
     @Override
     public void showWarning(String message) {
-
+        JOptionPane.showMessageDialog(this, message);
     }
 
     @Override
     public void showSuccess(String message) {
-
+        JOptionPane.showMessageDialog(this, message);
     }
 
     @Override
     public void electionOver() {
-
+        showResults();
     }
 }

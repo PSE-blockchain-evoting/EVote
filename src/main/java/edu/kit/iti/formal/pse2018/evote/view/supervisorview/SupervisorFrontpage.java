@@ -31,8 +31,9 @@ public class SupervisorFrontpage extends SupervisorGUIPanel {
     private void initComponents() {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
         btnImport = new JButton(lang.getString("btnImportText"));
+        btnImport.addActionListener(adapter.getImportConfigListener());
         btnNew = new JButton(lang.getString("btnNewText"));
-
+        btnNew.addActionListener(adapter.getNewConfigListener());
     }
 
     private void buildLayout() {

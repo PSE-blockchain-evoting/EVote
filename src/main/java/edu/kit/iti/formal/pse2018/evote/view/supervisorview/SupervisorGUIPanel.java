@@ -28,4 +28,15 @@ public abstract class SupervisorGUIPanel extends JPanel {
         throw new WrongMethodTypeException();
     }
 
+    public String getCertPath() {
+        throw new WrongMethodTypeException();
+    }
+
+    public String getUsername() {
+        throw new WrongMethodTypeException();
+    }
+
+    public String getPassword() {
+        throw new WrongMethodTypeException();
+    }
 }

@@ -63,6 +63,7 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
         pfPassword = new JPasswordField();
         pfPassword.setFont(f);
         btnConfirmPassword = new JButton(lang.getString("btnConfirmPasswordText"));
+        btnConfirmPassword.addActionListener(adapter.getFirstAuthenticationListener());
         btnConfirmPassword.setFont(f);
 
         lblCertAuth = new JLabel(lang.getString("lblCertAuthText") + ":");
@@ -85,6 +86,7 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
         });
         btnConfirmCert = new JButton(lang.getString("btnConfirmCertText"));
         btnConfirmCert.setFont(f);
+        btnConfirmCert.addActionListener(adapter.getAuthenticationListener());
     }
 
     private void buildLayout() {
@@ -154,5 +156,21 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
     @Override
     public String getImportPath() {
         return txfPath.getText();
+    }
+
+    @Override
+    public String getCertPath() {
+        return txfPath.getText();
+    }
+
+    @Override
+    public String getUsername() {
+        return txfUsername.getText();
+    }
+
+    @Override
+    public String getPassword() {
+        char[] ch = pfPassword.getPassword();
+        return new String(ch);
     }
 }

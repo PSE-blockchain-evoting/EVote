@@ -110,11 +110,28 @@ public class ConfigGUI extends JFrame {
     }
 
     public void showConfigIssues() {
-
+        //TODO
     }
 
-    public void loadConfigData() {
 
+    /**
+     * Loads the ElectionData from model and presents it in the ConfigGUI.
+     */
+    public void loadConfigData() {
+        ElectionDataIF data = adapter.getElectionData();
+        String[] voters = adapter.getVoters();
+
+        generalConfigPanel.setElectionName(data.getName());
+        generalConfigPanel.setElectionDescription(data.getDescription());
+        generalConfigPanel.setVotingSystem(data.getVotingSystem());
+        timespanPanel.setStartDate(data.getStartDate());
+        timespanPanel.setEndDate(data.getEndDate());
+        timespanPanel.setEndCondition(data.getEndCondition());
+        candidatePanel.setCandidateNames(data.getCandidates());
+        candidatePanel.setCandidateDescriptions(data.getCandidateDescriptions());
+        voterPanel.setVoters(voters);
+
+        tabsLayout.setSelected(4);
     }
 
     /**
@@ -168,5 +185,9 @@ public class ConfigGUI extends JFrame {
         if (lblTitle != null) {
             lblTitle.setText(s);
         }
+    }
+
+    public String getExportPath() {
+        return finishPanel.getExportPath();
     }
 }
