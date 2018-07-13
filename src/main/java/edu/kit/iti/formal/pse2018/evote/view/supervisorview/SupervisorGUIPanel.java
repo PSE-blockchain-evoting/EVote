@@ -17,7 +17,6 @@ public abstract class SupervisorGUIPanel extends JPanel {
      */
     public SupervisorGUIPanel(SupervisorAdapter adapter) {
         this.adapter = adapter;
-
     }
 
     public void updateResults(int[] results, String winner) {

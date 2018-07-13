@@ -116,7 +116,8 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
 
     @Override
     public void showResults() {
-        VotingSystemType vs = adapter.getElectionData().getVotingSystem();
+        ElectionDataIF data = adapter.getElectionData();
+        VotingSystemType vs = data.getVotingSystem();
         componentManager = SupervisorVSComponentManagerBuilder.generateComponentManager(vs, adapter);
 
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
@@ -125,7 +126,7 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
         layout.replace(currentPanel, p);
         currentPanel = p;
 
-        lblTitle.setText(lang.getString("supervisorResultTitle"));
+        lblTitle.setText(data.getName());
     }
 
     @Override
@@ -177,7 +178,7 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
 
     @Override
     public void updateResult() {
-
+        currentPanel.updateResults(adapter.getResults(), adapter.getWinner());
     }
 
     @Override
