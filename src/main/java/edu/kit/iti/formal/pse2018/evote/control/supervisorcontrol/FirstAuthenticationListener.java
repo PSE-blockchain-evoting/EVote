@@ -4,6 +4,7 @@ import edu.kit.iti.formal.pse2018.evote.model.SupervisorControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 
 public class FirstAuthenticationListener extends SupervisorEventListener {
 
@@ -13,6 +14,7 @@ public class FirstAuthenticationListener extends SupervisorEventListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorControl");
         String name = gui.getUsername();
         String password = gui.getPassword();
         boolean b = model.firstAuthentication(name, password);
@@ -20,7 +22,7 @@ public class FirstAuthenticationListener extends SupervisorEventListener {
         if (b) {
             gui.showFrontpage();
         } else {
-            //TODO: USe right function here
+            gui.showError(lang.getString("authFailed"));
         }
     }
 }
