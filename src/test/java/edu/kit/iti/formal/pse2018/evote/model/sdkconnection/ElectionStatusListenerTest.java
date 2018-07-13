@@ -5,6 +5,7 @@ import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.ElectionStatusListen
 
 import org.hyperledger.fabric.sdk.ChaincodeEvent;
 import org.hyperledger.fabric.sdk.Channel;
+import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.*;
 public class ElectionStatusListenerTest {
 
     @Test
-    public void received_end() {
+    public void received_end() throws InvalidArgumentException {
         SDKEventListener eventListener = mock(SDKEventListener.class);
         Channel channel = mock(Channel.class);
         ElectionStatusListener electionStatusListener = new ElectionStatusListener(eventListener, channel);
@@ -28,7 +29,7 @@ public class ElectionStatusListenerTest {
     }
 
     @Test
-    public void received_running() {
+    public void received_running() throws InvalidArgumentException {
         SDKEventListener eventListener = mock(SDKEventListener.class);
         Channel channel = mock(Channel.class);
         ElectionStatusListener electionStatusListener = new ElectionStatusListener(eventListener, channel);
