@@ -81,4 +81,9 @@ public class SupervisorElection implements SupervisorViewToModelIF, SupervisorCo
     public boolean startElection() {
         return false;
     }
+
+    @Override
+    public void destroyElection() {
+        
+    }
 }
