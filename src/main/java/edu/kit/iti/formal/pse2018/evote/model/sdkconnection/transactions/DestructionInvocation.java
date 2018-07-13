@@ -15,6 +15,6 @@ public class DestructionInvocation extends InvocationTransaction {
 
     @Override
     protected String getFunctionName() {
-        return null;
+        return "destructionInvokation";
     }
 }
