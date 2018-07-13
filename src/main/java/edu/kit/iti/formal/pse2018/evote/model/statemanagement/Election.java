@@ -20,6 +20,10 @@ public abstract class Election {
         sdkEventListenerImpl.setElectionStatusListener(electionStatusListener);
     }
 
+    public void setElectionStatusListener(ElectionStatusListener listener) {
+        sdkEventListenerImpl.setElectionStatusListener(listener);
+    }
+
     public ElectionDataIF getElectionData() {
         return electionDataIF;
     }
@@ -43,5 +47,6 @@ public abstract class Election {
         //TODO: IMPLEMENT
         return null;
     }
+
 
 }

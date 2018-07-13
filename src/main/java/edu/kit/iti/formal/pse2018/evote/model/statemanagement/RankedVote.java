@@ -10,12 +10,13 @@ public class RankedVote extends Vote {
     public RankedVote(String vote) { //TODO: IS THIS CORRECT? CHECK THE SUPER-CONSTRUCTOR
         super(vote);
     }
+
     @Override
     String asString() {
         return null;
     }
 
-    public RankedVote loadVote(String vote){
+    public RankedVote loadVote(String vote) {
         //TODO: IMPLEMENT
         return null;
     }

@@ -7,7 +7,7 @@ public abstract class VotingSystem {
         this.election = election;
     }
 
-    public int[] determineResults(){
+    public int[] determineResults() {
         //TODO: ACHIM FRAGEN WAS HIER PASSIEREN SOLL
         return null;
     }

@@ -7,12 +7,13 @@ public class SingularVote extends Vote {
     public SingularVote(String vote) { //TODO: CHECK IF THIS IS CORRECT - SEE SUPER-CONSTRUCTOR
         super(vote);
     }
+
     @Override
     String asString() {
         return null;
     }
 
-    public SingularVote loadVote(String vote){
+    public SingularVote loadVote(String vote) {
         //TODO: IMPLEMENT
         return null;
     }

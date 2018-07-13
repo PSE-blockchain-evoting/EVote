@@ -5,6 +5,7 @@ public class RelativeMajorityVotingSystem extends MajorityVotingSystem {
     public RelativeMajorityVotingSystem(Election election) {
         super(election);
     }
+
     @Override
     Vote loadVote(String vote) {
         return null;
