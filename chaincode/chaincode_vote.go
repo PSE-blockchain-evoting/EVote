@@ -6,6 +6,7 @@ import (
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
 	"encoding/json"
+	"strconv"
 	"time"
 )
 
@@ -49,7 +50,7 @@ func (t *VoteChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 func (t *VoteChaincode) allVotesQuery(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	var resultSlice []string
 
-	stateIterator, err := stub.GetStateByRange("vote_0", "w")
+	stateIterator, err := stub.GetStateByRange("v", "w")
 	if err != nil {
 		return shim.Error("Failed to get StateIterator")
 	}
@@ -71,15 +72,127 @@ func (t *VoteChaincode) allVotesQuery(stub shim.ChaincodeStubInterface, args []s
 }
 
 func (t *VoteChaincode) electionStatusQuery(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+	var initMap map[string]*json.RawMessage
+	var endConditionMap map[string]*json.RawMessage
+
+	//Retrieve Metadata from init Block
+	stateBytes, err := stub.GetState("init")
+	if err != nil {
+		return shim.Error("Failed to get state")
+	}
+	if stateBytes == nil {
+		return shim.Error("Init set already")
+	}
+
+	err = json.Unmarshal(stateBytes, &initMap)
+	if err != nil {
+		return shim.Error("Json couldn't be parsed")
+	}
+
+	err = json.Unmarshal([]byte(*initMap["endCondition"]), &endConditionMap)
+	if err != nil {
+		return shim.Error("Json couldn't be parsed")
+	}
+
+	//Check Time for all electionEndTypes
+	timeInt, err := strconv.ParseInt(string(*initMap["endDate"]), 10, 64)
+	if err != nil {
+		return shim.Error("The given Time couldn't be parsed")
+	}
+	endTime := time.Unix(timeInt, 0)
+	now := time.Now()
+	if now.Before(endTime) {
+		stub.SetEvent("status", []byte("ended"))
+		return shim.Success(nil)
+	}
+
+	//Check for VoterPercentileCondition
+	if string(*endConditionMap["type"]) != "VoterPercentileCondition" {
+		neededPercentage, err := strconv.Atoi(string(*endConditionMap["percentage"]))
+		if err != nil {
+			return shim.Error("Failed to read percentage for VoterPercentileCondition")
+		}
+		stateIterator, err := stub.GetStateByRange("v", "w")
+		if err != nil {
+			return shim.Error("Failed to get StateIterator")
+		}
+		defer stateIterator.Close()
+
+		numVotes := 0
+		for stateIterator.HasNext() {
+			numVotes++
+			stateIterator.Next()
+		}
+
+		numAllVoters, err := strconv.Atoi(string(*initMap["voterCount"]))
+		if err != nil {
+			return shim.Error("Failed to get voterCount")
+		}
+
+		actualPercentage := numVotes / numAllVoters
+		if actualPercentage > neededPercentage {
+			stub.SetEvent("status", []byte("ended"))
+			return shim.Success(nil)
+		} else {
+			stub.SetEvent("status", []byte("running"))
+			return shim.Success(nil)
+		}
+	} else if string(*endConditionMap["type"]) != "CandidatePercentileCondition" {
+		neededPercentage, err := strconv.Atoi(string(*endConditionMap["percentage"]))
+		if err != nil {
+			return shim.Error("Failed to read percentage for VoterPercentileCondition")
+		}
+
+		stateIterator, err := stub.GetStateByRange("v", "w")
+		if err != nil {
+			return shim.Error("Failed to get StateIterator")
+		}
+		defer stateIterator.Close()
+
+		var uniqueVotes []string
+		var numVotes []int
+		for stateIterator.HasNext() {
+			queryResponse, err := stateIterator.Next()
+			if err != nil {
+				return shim.Error("Failed to get next element from state")
+			}
+			voteString := string(queryResponse.Value)
+			uniquePos := posOf(voteString,uniqueVotes)
+			if uniquePos == -1{
+				uniqueVotes = append(uniqueVotes, voteString)
+				numVotes = append(numVotes,1)
+			} else {
+				numVotes[uniquePos]+=1
+			}
+		}
+
+		numAllVoters, err := strconv.Atoi(string(*initMap["voterCount"]))
+		if err != nil {
+			return shim.Error("Failed to get voterCount")
+		}
+
+		for _, num := range numVotes {
+			actualPercentage := num / numAllVoters
+			if actualPercentage > neededPercentage {
+				stub.SetEvent("status", []byte("ended"))
+				return shim.Success(nil)
+			} else {
+				stub.SetEvent("status", []byte("running"))
+				return shim.Success(nil)
+			}
+		}
+	}
+
+	stub.SetEvent("status", []byte("running"))
 	return shim.Success(nil)
 }
 
 func (t *VoteChaincode) ownVoteQuery(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	creatorBytes, err := stub.GetCreator()
+	creatorID, err := cid.GetID(stub)
 	if err != nil {
 		return shim.Error("Failed to get creator")
 	}
-	key := "vote_" + string(creatorBytes)
+	key := "vote_" + creatorID
 	stateBytes, err := stub.GetState(key)
 	if err != nil {
 		return shim.Error("Failed to get vote")
@@ -103,15 +216,9 @@ func (t *VoteChaincode) electionDataQuery(stub shim.ChaincodeStubInterface, args
 }
 
 func (t *VoteChaincode) destructionInvokation(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	//TODO: Test this for authentication procedure
-	//Leider können wir dem bootstrap admin keine Attribute mitgeben, sonst ginge das denke ich schöner:
-	//https://github.com/hyperledger/fabric/tree/master/core/chaincode/lib/cid
-	id, err := cid.GetID(stub)
+	err := cid.AssertAttributeValue(stub, "voteAdmin", "true")
 	if err != nil {
-		return shim.Error("Failed to get requesting Id")
-	}
-	if id != "admin" {
-		return shim.Error("Requesting entity isn't admin")
+		return shim.Error("Failed to get state")
 	}
 
 	return shim.Success(nil)
@@ -121,7 +228,11 @@ func (t *VoteChaincode) destructionInvokation(stub shim.ChaincodeStubInterface, 
 func (t *VoteChaincode) initializationInvokation(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	var initMap map[string]*json.RawMessage
 	var endConditionMap map[string]*json.RawMessage
-	layout := "Mon Jan _2 15:04:05 MST 2006"
+
+	err := cid.AssertAttributeValue(stub, "voteAdmin", "true")
+	if err != nil {
+		return shim.Error("Failed to get state")
+	}
 
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting a single JSON string representing ElectionData")
@@ -137,7 +248,7 @@ func (t *VoteChaincode) initializationInvokation(stub shim.ChaincodeStubInterfac
 		return shim.Error("Init set already")
 	}
 
-	err = json.Unmarshal([]byte(stateBytes), &initMap)
+	err = json.Unmarshal([]byte(initJson), &initMap)
 	if err != nil {
 		return shim.Error("Json couldn't be parsed")
 	}
@@ -146,7 +257,7 @@ func (t *VoteChaincode) initializationInvokation(stub shim.ChaincodeStubInterfac
 		return shim.Error("Json couldn't be parsed")
 	}
 
-	_, err = time.Parse(layout, string(*initMap["endDate"]))
+	_, err = strconv.ParseInt(string(*initMap["endDate"]), 10, 64)
 	if err != nil {
 		return shim.Error("The given Time couldn't be parsed")
 	}
@@ -177,11 +288,11 @@ func (t *VoteChaincode) voteInvokation(stub shim.ChaincodeStubInterface, args []
 	}
 	var voteJson = args[0]
 
-	creatorBytes, err := stub.GetCreator()
+	creatorID, err := cid.GetID(stub)
 	if err != nil {
 		return shim.Error("Failed to get creator")
 	}
-	key := "vote_" + string(creatorBytes)
+	key := "vote_" + creatorID
 	stateBytes, err := stub.GetState(key)
 	if err != nil {
 		return shim.Error("Failed to get state")
@@ -196,6 +307,16 @@ func (t *VoteChaincode) voteInvokation(stub shim.ChaincodeStubInterface, args []
 	}
 
 	return shim.Success(nil)
+}
+
+//Utility function
+func posOf(search string,array []string) int {
+	for p, v := range array {
+		if v == search {
+			return p
+		}
+	}
+	return -1
 }
 
 func main() {
