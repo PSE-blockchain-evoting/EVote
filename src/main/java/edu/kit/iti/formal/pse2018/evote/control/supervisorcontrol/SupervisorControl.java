@@ -1,57 +1,82 @@
 package edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol;
 
 import edu.kit.iti.formal.pse2018.evote.control.SupervisorViewToControlIF;
-import edu.kit.iti.formal.pse2018.evote.model.SupervisorViewToModelIF;
-import edu.kit.iti.formal.pse2018.evote.view.supervisorview.SupervisorGUI;
+import edu.kit.iti.formal.pse2018.evote.model.SupervisorControlToModelIF;
+import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 
 import java.awt.event.ActionListener;
 
 public class SupervisorControl implements SupervisorViewToControlIF {
-    public SupervisorControl(SupervisorGUI supervisorGUI, SupervisorViewToModelIF model) {
+
+    private ConfirmedConfigListener confirmedConfigListener;
+    private ExportConfigListener expConfigListener;
+    private ImportConfigListener impConfigListener;
+    private FinishElectionListener finishElectionListener;
+    private NewConfigListener newConfigListener;
+    private StartElectionListener startElectionListener;
+    private SupervisorLogoutListener logoutListener;
+    private FirstAuthenticationListener firstAuthenticationListener;
+    private SupervisorAuthenticationListener authenticationListener;
+
+    /**
+     * Create Controller for Supervisor.
+     * @param gui SupervisorView
+     * @param model SupervisorModel
+     */
+    public SupervisorControl(SupervisorControlToViewIF gui, SupervisorControlToModelIF model) {
+        this.confirmedConfigListener = new ConfirmedConfigListener(gui, model);
+        this.expConfigListener = new ExportConfigListener(gui, model);
+        this.impConfigListener = new ImportConfigListener(gui, model);
+        this.finishElectionListener = new FinishElectionListener(gui, model);
+        this.newConfigListener = new NewConfigListener(gui, model);
+        this.startElectionListener = new StartElectionListener(gui, model);
+        this.logoutListener = new SupervisorLogoutListener(gui, model);
+        this.firstAuthenticationListener = new FirstAuthenticationListener(gui, model);
+        this.authenticationListener = new SupervisorAuthenticationListener(gui, model);
     }
 
     @Override
     public ActionListener getFinishElectionListener() {
-        return null;
+        return finishElectionListener;
     }
 
     @Override
     public ActionListener getImportConfigListener() {
-        return null;
+        return impConfigListener;
     }
 
     @Override
     public ActionListener getExportConfigListener() {
-        return null;
+        return expConfigListener;
     }
 
     @Override
     public ActionListener getFirstAuthenticationListener() {
-        return null;
+        return firstAuthenticationListener;
     }
 
     @Override
     public ActionListener getConfirmedConfigListener() {
-        return null;
+        return confirmedConfigListener;
     }
 
     @Override
     public ActionListener getNewConfigListener() {
-        return null;
+        return newConfigListener;
     }
 
     @Override
     public ActionListener getStartElectionListener() {
-        return null;
+        return startElectionListener;
     }
 
     @Override
     public ActionListener getAuthenticationListener() {
-        return null;
+        return authenticationListener;
     }
 
     @Override
     public ActionListener getLogoutListener() {
-        return null;
+        return logoutListener;
     }
 }
