@@ -1,5 +1,9 @@
 package edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol;
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 
@@ -15,12 +19,17 @@ public class SupervisorAuthenticationListener extends SupervisorEventListener {
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         String authPath = gui.getAuthenticationPath();
-        boolean b = model.authenticate(authPath);
-        if (b) {
+        try {
+            model.authenticate(authPath);
             gui.showFrontpage();
-        } else {
+        } catch (NetworkException e) {
+            gui.showError("authFailed");
+        } catch (AuthenticationException e) {
+            gui.showError("authFailed");
+        } catch (InternalSDKException e) {
+            gui.showError("authFailed");
+        } catch (NetworkConfigException e) {
             gui.showError("authFailed");
         }
-
     }
 }

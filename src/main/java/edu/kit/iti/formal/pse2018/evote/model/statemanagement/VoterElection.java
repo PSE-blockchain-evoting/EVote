@@ -1,5 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
 import edu.kit.iti.formal.pse2018.evote.model.VoterControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.model.VoterSDKInterface;
@@ -22,13 +24,13 @@ public class VoterElection extends Election implements VoterViewToModelIF, Voter
 
 
     @Override
-    public boolean vote(String vote) {
+    public boolean vote(String vote) throws NetworkException, NetworkConfigException {
         voterSDKInterface.vote(vote);
         return true;
     }
 
     @Override
-    public boolean authenticate(String path) {
-        return false;
+    public void authenticate(String path) {
+        //TODO
     }
 }

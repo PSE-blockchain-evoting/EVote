@@ -1,5 +1,9 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorSDKInterface;
@@ -115,8 +119,9 @@ public class SupervisorElection extends Election implements SupervisorControlToM
     }
 
     @Override
-    public boolean firstAuthentication(String username, String password) {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("config.properties");
+    public boolean firstAuthentication(String username, String password) throws NetworkException,
+            AuthenticationException, InternalSDKException, NetworkConfigException {
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
 
         try {
@@ -134,21 +139,22 @@ public class SupervisorElection extends Election implements SupervisorControlToM
     }
 
     @Override
-    public void startElection() {
+    public void startElection() throws NetworkException, NetworkConfigException {
         supervisorSDKInterface.createElection(electionDataIF);
     }
 
     @Override
-    public boolean authenticate(String path) {
+    public void destroyElection() {
+        //TODO
+    }
+
+    @Override
+    public void authenticate(String path) throws NetworkException, AuthenticationException,
+            InternalSDKException, NetworkConfigException {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("config.properties");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
 
-        try {
-            supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(filePath, sdkEventListenerImpl);
-        } catch (IOException | ClassNotFoundException e) {
-            return false;
-        }
-        return false;
+        supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(filePath, sdkEventListenerImpl);
     }
 
     @Override

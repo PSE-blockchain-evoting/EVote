@@ -68,18 +68,18 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
             cryptoSuite = CryptoSuite.Factory.getCryptoSuite();
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | CryptoException
                 | InvalidArgumentException | NoSuchMethodException | InvocationTargetException e) {
-            throw new RuntimeException(); //TODO: Use Exception from package
+            throw new InternalSDKException(e.getMessage());
         }
         try {
             hfcaClient = HFCAClient.createNewInstance(bundle.getString("ca_url"), null);
         } catch (MalformedURLException e) {
-            throw new RuntimeException(); //TODO: Wrap exception
+            throw new NetworkException(e.getMessage());
         }
         hfcaClient.setCryptoSuite(cryptoSuite);
         try {
             enrollment = hfcaClient.enroll(username, password);
         } catch (EnrollmentException | org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException e) {
-            throw new RuntimeException(); //TODO: Use Exception from package
+            throw new NetworkConfigException(e.getMessage());
         }
         AppUser appUser = new AppUser(username, bundle.getString("affiliation"), new HashSet<>(), username,
                 bundle.getString("mspID"), enrollment);
