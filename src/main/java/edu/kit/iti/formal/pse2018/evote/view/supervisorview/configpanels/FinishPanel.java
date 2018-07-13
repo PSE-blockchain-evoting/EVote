@@ -11,6 +11,8 @@ import edu.kit.iti.formal.pse2018.evote.view.supervisorview.SupervisorAdapter;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.LayoutManager2;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
@@ -78,9 +80,16 @@ public class FinishPanel extends ConfigPanel {
         lblIssues.setVerticalAlignment(SwingConstants.NORTH);
 
         btnExport = new JButton(lang.getString("btnExportText"));
-        btnContinue = new JButton(lang.getString("btnConfirmConfigText"));
-
-        System.out.println(lblIssues.getFont());
+        btnContinue.setText(lang.getString("btnConfirmConfigText"));
+        for (ActionListener l : btnContinue.getActionListeners()) {
+            btnContinue.removeActionListener(l);
+        }
+        btnContinue.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.exit(0);
+            }
+        });
 
         lblTimeFrame.setFont(f);
         lblVotingSystem.setFont(f);

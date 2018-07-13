@@ -108,7 +108,6 @@ public class VerticalTabs extends JPanel {
      * @param i the tab to select.
      */
     public void setSelected(int i) {
-        System.out.println("Selecting: " + i);
         assert (0 <= i && i < tabcount);
 
         if (listener != null) {

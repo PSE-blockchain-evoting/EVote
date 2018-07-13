@@ -139,11 +139,18 @@ public class GeneralConfigPanel extends ConfigPanel {
      */
     public VotingSystemType getVotingSystem() {
         VotingSystemType t;
-        switch (cbxVotingSystem.getSelectedIndex()){
-            case 0: t = VotingSystemType.ABSOLUTEMAJORITY; break;
-            case 1: t = VotingSystemType.RELATIVEMAJORITY; break;
-            case 2: t = VotingSystemType.INSTANTRUNOFF;    break;
-            default: throw new IllegalStateException("Unknown VotingSystem selected.");
+        switch (cbxVotingSystem.getSelectedIndex()) {
+            case 0:
+                t = VotingSystemType.ABSOLUTEMAJORITY;
+                break;
+            case 1:
+                t = VotingSystemType.RELATIVEMAJORITY;
+                break;
+            case 2:
+                t = VotingSystemType.INSTANTRUNOFF;
+                break;
+            default:
+                throw new IllegalStateException("Unknown VotingSystem selected.");
         }
         return t;
     }

@@ -39,14 +39,6 @@ public class PieChart extends Diagram {
             g.fillArc(x0, y0, size, size, (int)Math.round(ratio * cur), (int)Math.round(data[i] * ratio));
             cur += data[i];
         }
-
-        //cur = 0;
-        //g.setColor(Color.BLACK);
-        //g.setStroke(new BasicStroke(4));
-        //for (int i = 0; i < data.length; i++) {
-        //    g.drawArc(x0, y0, size, size, (int)Math.round(ratio * cur), (int)Math.round(data[i] * ratio));
-        //    cur += data[i];
-        //}
     }
 
     protected void integrityChecks() {

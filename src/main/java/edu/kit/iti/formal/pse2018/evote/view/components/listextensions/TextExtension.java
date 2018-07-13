@@ -89,8 +89,6 @@ public class TextExtension extends ComponentExtension<JLabel> {
             this.text.add("");
         }
 
-        System.out.println(components);
-        System.out.println(this.text);
         this.text.set(i, text);
         components.get(i).setText(text);
     }
