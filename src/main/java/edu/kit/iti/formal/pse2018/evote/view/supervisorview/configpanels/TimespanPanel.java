@@ -19,9 +19,9 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.SpinnerDateModel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
@@ -39,7 +39,7 @@ public class TimespanPanel extends ConfigPanel {
     private JSpinner spnEndTime;
     private JXDatePicker dpStartDate;
     private JXDatePicker dpEndDate;
-    private JTextField spnPercentage;
+    private JSpinner spnPercentage;
     private JComboBox<String> cbxExtraCond;
 
     public TimespanPanel(JPanel container, ConfigGUI gui, VerticalTabs vt, SupervisorAdapter adapter) {
@@ -73,7 +73,7 @@ public class TimespanPanel extends ConfigPanel {
         dpStartDate = new JXDatePicker();
         dpEndDate = new JXDatePicker();
 
-        spnPercentage = new JTextField(10);
+        spnPercentage = new JSpinner(new SpinnerNumberModel());
 
         cbxExtraCond = new JComboBox<>();
         cbxExtraCond.addItem(lang.getString("TIME_ONLY_CONDITION"));
@@ -227,9 +227,9 @@ public class TimespanPanel extends ConfigPanel {
             case 0:
                 return new TimeOnlyCondition();
             case 1:
-                return new VoterPercentileCondition();
+                return new VoterPercentileCondition((int)spnPercentage.getModel().getValue());
             case 2:
-                return new CandidatePercentileCondition();
+                return new CandidatePercentileCondition((int)spnPercentage.getModel().getValue());
             default:
                 throw new IllegalStateException("Unknown Selection: " + index);
         }

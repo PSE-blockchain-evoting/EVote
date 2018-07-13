@@ -73,10 +73,6 @@ public class SupervisorAdapter {
         model.setElectionEndListener(listener);
     }
 
-    public String getVotingSystem() {
-        return model.getVotingSystem();
-    }
-
     public int[] getResults() {
         return model.getResults();
     }

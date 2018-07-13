@@ -35,11 +35,6 @@ public class SupervisorElection implements SupervisorViewToModelIF {
     }
 
     @Override
-    public String getVotingSystem() {
-        return null;
-    }
-
-    @Override
     public int[] getResults() {
         return new int[0];
     }
