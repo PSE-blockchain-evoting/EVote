@@ -204,7 +204,7 @@ public class FinishPanel extends ConfigPanel {
         return jfcExport.getSelectedFile().getAbsolutePath();
     }
 
-    public void setConfigIssuesText(String text){
+    public void setConfigIssuesText(String text) {
         lblIssues.setText(text);
     }
 }

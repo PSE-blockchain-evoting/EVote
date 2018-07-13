@@ -117,7 +117,6 @@ public class ConfigGUI extends JFrame {
         ConfigIssues ci = adapter.getConfigIssues();
 
         String prefix = "<html><ul>";
-        String suffix = "</ul></html>";
         String startTag = "<li>";
         String endTag = "</li>";
 
@@ -144,6 +143,7 @@ public class ConfigGUI extends JFrame {
             text += startTag + vi + endTag;
         }
 
+        String suffix = "</ul></html>";
         text += suffix;
 
         finishPanel.setConfigIssuesText(text);
