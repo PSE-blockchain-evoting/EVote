@@ -18,6 +18,7 @@ public class StartElectionListener extends SupervisorEventListener {
         boolean b = model.startElection();
 
         if (b) {
+            gui.showResults();
             gui.showSuccess(lang.getString("startElectionSuccess"));
         } else {
             gui.showError(lang.getString("startElectionBad"));

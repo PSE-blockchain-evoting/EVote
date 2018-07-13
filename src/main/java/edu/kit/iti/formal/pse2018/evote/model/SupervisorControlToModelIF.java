@@ -17,4 +17,6 @@ public interface SupervisorControlToModelIF extends ControlToModelIF {
     public String[] getVotes();
 
     public boolean startElection();
+
+    public void destroyElection();
 }

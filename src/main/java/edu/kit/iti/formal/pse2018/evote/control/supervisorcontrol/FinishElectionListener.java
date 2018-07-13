@@ -14,6 +14,6 @@ public class FinishElectionListener extends SupervisorEventListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        //TODO: Implement this right
+        model.destroyElection();
     }
 }
