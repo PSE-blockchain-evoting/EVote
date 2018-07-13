@@ -2,6 +2,7 @@ package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.Diagram;
 import edu.kit.iti.formal.pse2018.evote.view.components.ExtendableList;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class SupervisorIRVComponentManager extends SupervisorVSComponentManager {
 
@@ -17,5 +18,11 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
     @Override
     public ExtendableList createResultTable() {
         return null;
+    }
+
+    @Override
+    public void updateComponents(int[] data) {
+        //TODO:
+        throw new NotImplementedException();
     }
 }

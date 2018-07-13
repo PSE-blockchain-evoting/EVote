@@ -18,5 +18,5 @@ public abstract class SupervisorVSComponentManager {
 
     public abstract ExtendableList createResultTable();
 
-    public abstract ExtendableList updateComponents(int[] data);
+    public abstract void updateComponents(int[] data);
 }

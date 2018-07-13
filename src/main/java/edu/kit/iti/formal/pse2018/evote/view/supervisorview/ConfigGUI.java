@@ -119,7 +119,6 @@ public class ConfigGUI extends JFrame {
      */
     public void loadConfigData() {
         ElectionDataIF data = adapter.getElectionData();
-        String[] voters = adapter.getVoters();
 
         generalConfigPanel.setElectionName(data.getName());
         generalConfigPanel.setElectionDescription(data.getDescription());
@@ -129,6 +128,7 @@ public class ConfigGUI extends JFrame {
         timespanPanel.setEndCondition(data.getEndCondition());
         candidatePanel.setCandidateNames(data.getCandidates());
         candidatePanel.setCandidateDescriptions(data.getCandidateDescriptions());
+        String[] voters = adapter.getVoters();
         voterPanel.setVoters(voters);
 
         tabsLayout.setSelected(4);

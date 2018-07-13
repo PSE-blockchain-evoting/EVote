@@ -6,7 +6,6 @@ import edu.kit.iti.formal.pse2018.evote.view.components.ExtendableList;
 import edu.kit.iti.formal.pse2018.evote.view.components.PieChart;
 import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.NumberedExtension;
 import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.TextExtension;
-import javax.xml.soap.Text;
 
 import java.awt.Font;
 import javax.swing.UIManager;
@@ -43,7 +42,7 @@ public class SupervisorMajorityVotingComponentManager extends SupervisorVSCompon
     }
 
     @Override
-    public ExtendableList updateComponents(int[] results) {
+    public void updateComponents(int[] results) {
         ElectionDataIF data = adapter.getElectionData();
         chart.setData(results);
 
