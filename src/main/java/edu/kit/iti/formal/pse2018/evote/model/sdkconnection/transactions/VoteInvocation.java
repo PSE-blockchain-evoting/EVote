@@ -18,6 +18,6 @@ public class VoteInvocation extends InvocationTransaction {
 
     @Override
     protected String getFunctionName() {
-        return null;
+        return "voteInvokation";
     }
 }

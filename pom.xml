@@ -36,6 +36,18 @@
             <version>2.18.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>2.0.0-beta.5</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-mockito2</artifactId>
+            <version>2.0.0-beta.5</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <finalName>evote</finalName>
@@ -80,19 +92,6 @@
                             <mainClass>edu.kit.iti.formal.pse2018.evote.view.Main</mainClass>
                         </manifest>
                     </archive>
-                </configuration>
-            </plugin>
-            <!-- Code coverage -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.7</version>
-                <configuration>
-                    <formats>
-                        <format>xml</format>
-                        <format>html</format>
-                    </formats>
-                    <check />
                 </configuration>
             </plugin>
             <!-- Language level -->

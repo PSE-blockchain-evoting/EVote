@@ -15,6 +15,6 @@ public class OwnVoteQuery extends SingleStringQuery {
 
     @Override
     protected String getFunctionName() {
-        return null;
+        return "ownVoteQuery";
     }
 }

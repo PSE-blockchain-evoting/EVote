@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 import org.hyperledger.fabric.sdk.Enrollment;
 import org.hyperledger.fabric.sdk.exception.CryptoException;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
+import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.hyperledger.fabric.sdk.security.CryptoSuite;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
 import org.hyperledger.fabric_ca.sdk.HFCAEnrollment;
@@ -102,7 +103,13 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
      */
     public String[] getAllVotes() {
         AllVotesQuery query = new AllVotesQuery(this.hfClient);
-        query.query();
+        try {
+            query.query();
+        } catch (ProposalException e) {
+            throw new RuntimeException(); //TODO: Replace with custom exception
+        } catch (InvalidArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
         return query.getResult();
     }
 
@@ -111,18 +118,28 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
      */
     public void destroyElection() {
         DestructionInvocation inv = new DestructionInvocation(this.hfClient);
-        inv.invoke();
+        try {
+            inv.invoke();
+        } catch (ProposalException e) {
+            throw new RuntimeException(); //TODO: Replace with custom exception
+        } catch (InvalidArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     /**
      * Creates a new election.
      * @param electionData to create the election with
-     * @return true if creation was successful.
      */
-    public boolean createElection(ElectionDataIF electionData) {
+    public void createElection(ElectionDataIF electionData) {
         InitializationInvocation inv = new InitializationInvocation(this.hfClient, electionData);
-        inv.invoke();
-        return true; //TODO: Give a meaningfull result
+        try {
+            inv.invoke();
+        } catch (ProposalException e) {
+            throw new RuntimeException(); //TODO: Replace with custom exception
+        } catch (InvalidArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     @Override

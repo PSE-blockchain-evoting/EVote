@@ -15,6 +15,6 @@ public class AllVotesQuery extends MultiStringQuery {
 
     @Override
     protected String getFunctionName() {
-        return null;
+        return "allVotesQuery";
     }
 }
