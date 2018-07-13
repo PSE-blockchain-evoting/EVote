@@ -1,5 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 
+import edu.kit.iti.formal.pse2018.evote.utils.ConfigIssues;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 import edu.kit.iti.formal.pse2018.evote.view.ElectionDataImpl;
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
@@ -109,8 +110,43 @@ public class ConfigGUI extends JFrame {
         this.getContentPane().setLayout(layout);
     }
 
+    /**
+     * Show the config problems in the UI.
+     */
     public void showConfigIssues() {
-        //TODO
+        ConfigIssues ci = adapter.getConfigIssues();
+
+        String prefix = "<html><ul>";
+        String suffix = "</ul></html>";
+        String startTag = "<li>";
+        String endTag = "</li>";
+
+        String text = "";
+        text += prefix;
+
+        String ni = ci.getNameIssue();
+        if (ni != null) {
+            text += startTag + ni + endTag;
+        }
+
+        String ti = ci.getTimespanIssue();
+        if (ti != null) {
+            text += startTag + ti + endTag;
+        }
+
+        String cdi = ci.getCandidateIssue();
+        if (cdi != null) {
+            text += startTag + cdi + endTag;
+        }
+
+        String vi = ci.getVoterIssue();
+        if (vi != null) {
+            text += startTag + vi + endTag;
+        }
+
+        text += suffix;
+
+        finishPanel.setConfigIssuesText(text);
     }
 
 
