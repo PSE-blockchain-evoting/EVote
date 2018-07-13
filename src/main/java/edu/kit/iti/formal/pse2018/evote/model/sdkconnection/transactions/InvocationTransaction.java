@@ -1,5 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions;
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
+
 import java.util.Collection;
 import java.util.ResourceBundle;
 
@@ -26,7 +28,7 @@ public abstract class InvocationTransaction extends Transaction {
      * @throws InvalidArgumentException @see Hyperledger
      * @throws ProposalException @see Hyperledger
      */
-    public void invoke() throws InvalidArgumentException, ProposalException {
+    public void invoke() throws InvalidArgumentException, ProposalException, NetworkException {
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         Channel channel = this.client.getChannel(bundle.getString("channel_name"));
         TransactionProposalRequest request = client.newTransactionProposalRequest();
@@ -37,7 +39,7 @@ public abstract class InvocationTransaction extends Transaction {
         Collection<ProposalResponse> responses = channel.sendTransactionProposal(request);
         if (responses.stream().anyMatch(proposalResponse ->
                 !proposalResponse.isVerified() || proposalResponse.getStatus() != ChaincodeResponse.Status.SUCCESS)) {
-            throw new RuntimeException("Invocation proposal failed"); //TODO: Custom exception
+            throw new NetworkException("Invocation proposal failed");
         }
         channel.sendTransaction(responses).join();
     }
