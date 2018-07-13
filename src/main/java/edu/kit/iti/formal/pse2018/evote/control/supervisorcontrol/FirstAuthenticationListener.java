@@ -20,7 +20,7 @@ public class FirstAuthenticationListener extends SupervisorEventListener {
         if (b) {
             gui.showFrontpage();
         } else {
-            gui.badAuthentication();
+            //TODO: USe right function here
         }
     }
 }

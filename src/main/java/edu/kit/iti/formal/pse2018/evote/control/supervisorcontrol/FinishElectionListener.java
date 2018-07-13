@@ -14,16 +14,6 @@ public class FinishElectionListener extends SupervisorEventListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        ResourceBundle lang = ResourceBundle.getBundle("SupervisorControl");
-        boolean b = gui.electionOver();
-
-        if (b) {
-            gui.showResults();
-        } else {
-            gui.showError(lang.getString("finishElectionBad"));
-        }
-
-        String[] votes = model.getVotes();
-        String winner = model.getWinner();
+        //TODO: Implement this right
     }
 }

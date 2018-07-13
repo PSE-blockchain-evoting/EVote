@@ -50,7 +50,7 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
     public SupervisorGUI() {
         ElectionStatusListener listener = new SupervisorElectionEndListenerImpl(this);
 
-        SupervisorViewToModelIF model = new SupervisorElection(listener);
+        SupervisorElection model = new SupervisorElection(listener);
         SupervisorViewToControlIF control = new SupervisorControl(this, model);
         adapter = new SupervisorAdapter(control, model);
 

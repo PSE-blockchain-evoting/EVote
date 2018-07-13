@@ -27,6 +27,4 @@ public interface SupervisorControlToViewIF extends ControlToViewIF {
     public String getUsername();
 
     public void updateResult();
-
-    public void badAuthentication();
 }

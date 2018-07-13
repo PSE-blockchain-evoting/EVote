@@ -14,13 +14,6 @@ public class SupervisorAuthenticationListener extends SupervisorEventListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        String path = gui.getAuthenticationPath();
-        boolean b = model.authenticate(path);
-
-        if (b) {
-            gui.showFrontpage();
-        } else {
-            gui.badAuthentication();
-        }
+        //TODO: Implement this properly
     }
 }
