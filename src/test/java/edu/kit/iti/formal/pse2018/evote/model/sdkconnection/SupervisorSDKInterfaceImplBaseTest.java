@@ -1,9 +1,14 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection;
 
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 
 import java.io.*;
+import java.net.MalformedURLException;
 
 import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.Enrollment;
@@ -33,8 +38,8 @@ public class SupervisorSDKInterfaceImplBaseTest {
     private SupervisorSDKInterfaceImpl objUnderTest;
 
     @Test
-    public void createInstance() throws IOException, ClassNotFoundException, EnrollmentException,
-            InvalidArgumentException {
+    public void createInstance() throws EnrollmentException, InvalidArgumentException, IOException, NetworkException,
+            AuthenticationException, InternalSDKException, NetworkConfigException, ClassNotFoundException {
         PowerMockito.mockStatic(HFCAClient.class);
         PowerMockito.mockStatic(HFClient.class);
 
@@ -59,8 +64,8 @@ public class SupervisorSDKInterfaceImplBaseTest {
     }
 
     @Test
-    public void createInstanceFromFile() throws IOException, ClassNotFoundException, EnrollmentException,
-            InvalidArgumentException {
+    public void createInstanceFromFile() throws EnrollmentException, InvalidArgumentException, IOException,
+            NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
         PowerMockito.mockStatic(HFCAClient.class);
         PowerMockito.mockStatic(HFClient.class);
 

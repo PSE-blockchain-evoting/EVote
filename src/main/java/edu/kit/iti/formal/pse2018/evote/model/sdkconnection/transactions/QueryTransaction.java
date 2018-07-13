@@ -1,5 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions;
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
+
 import java.util.Collection;
 import java.util.ResourceBundle;
 
@@ -28,7 +30,7 @@ public abstract class QueryTransaction extends Transaction {
      * @throws ProposalException @see Hyperledger
      * @throws InvalidArgumentException @see Hyperledger
      */
-    public void query() throws ProposalException, InvalidArgumentException {
+    public void query() throws ProposalException, InvalidArgumentException, NetworkException {
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         Channel channel = this.client.getChannel(bundle.getString("channel_name"));
         QueryByChaincodeRequest request = client.newQueryProposalRequest();
@@ -39,7 +41,7 @@ public abstract class QueryTransaction extends Transaction {
         Collection<ProposalResponse> responses = channel.queryByChaincode(request);
         if (responses.stream().anyMatch(proposalResponse ->
                 proposalResponse.getStatus() != ChaincodeResponse.Status.SUCCESS)) {
-            throw new RuntimeException("Query proposal failed"); //TODO: Custom exception
+            throw new NetworkException("Query proposal failed");
         }
         parseResultString(responses.iterator().next().getProposalResponse().getPayload().toStringUtf8());
     }
