@@ -1,8 +1,11 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.LayoutStyle;
 
 /**
@@ -13,6 +16,7 @@ import javax.swing.LayoutStyle;
 public class SupervisorFrontpage extends SupervisorGUIPanel {
 
     private JButton btnImport;
+    private JFileChooser fcImportPath;
     private JButton btnNew;
 
     private GroupLayout layout;
@@ -30,8 +34,15 @@ public class SupervisorFrontpage extends SupervisorGUIPanel {
 
     private void initComponents() {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
+        fcImportPath = new JFileChooser();
         btnImport = new JButton(lang.getString("btnImportText"));
-        btnImport.addActionListener(adapter.getImportConfigListener());
+        btnImport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                fcImportPath.showOpenDialog(SupervisorFrontpage.this);
+                adapter.getImportConfigListener().actionPerformed(actionEvent);
+            }
+        });
         btnNew = new JButton(lang.getString("btnNewText"));
         btnNew.addActionListener(adapter.getNewConfigListener());
     }
@@ -61,5 +72,10 @@ public class SupervisorFrontpage extends SupervisorGUIPanel {
         );
 
         this.setLayout(layout);
+    }
+
+    @Override
+    public String getImportPath() {
+        return fcImportPath.getSelectedFile().getAbsolutePath();
     }
 }
