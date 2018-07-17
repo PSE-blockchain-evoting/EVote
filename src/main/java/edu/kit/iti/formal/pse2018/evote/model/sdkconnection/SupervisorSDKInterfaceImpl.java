@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.hyperledger.fabric.sdk.Enrollment;
+import org.hyperledger.fabric.sdk.HFClient;
 import org.hyperledger.fabric.sdk.exception.CryptoException;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
@@ -172,5 +173,10 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
         FileOutputStream fos = new FileOutputStream(filePath);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(appUser);
+    }
+
+    //TODO: REMOVE!!
+    public HFClient getHFClient() {
+        return this.hfClient;
     }
 }
