@@ -28,6 +28,7 @@ public class SupervisorMajorityVotingComponentManager extends SupervisorVSCompon
         canName = new TextExtension(canRes, f, null);
         NumberedExtension ne = new NumberedExtension(canName, f);
         table = new ExtendableList(ne);
+        ne.setList(table);
         chart = new PieChart();
     }
 
