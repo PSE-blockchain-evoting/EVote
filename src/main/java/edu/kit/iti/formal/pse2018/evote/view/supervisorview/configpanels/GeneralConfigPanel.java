@@ -40,6 +40,7 @@ public class GeneralConfigPanel extends ConfigPanel {
 
     protected void initComponents() {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
+        ResourceBundle viewLang = ResourceBundle.getBundle("View");
 
         lblName = new JLabel(lang.getString("lblNameText") + ":");
         lblName.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -49,9 +50,9 @@ public class GeneralConfigPanel extends ConfigPanel {
         lblDescription.setHorizontalAlignment(SwingConstants.RIGHT);
         txfName = new JTextField();
         cbxVotingSystem = new JComboBox<>();
-        cbxVotingSystem.addItem(lang.getString(VotingSystemType.ABSOLUTEMAJORITY.name()));
-        cbxVotingSystem.addItem(lang.getString(VotingSystemType.RELATIVEMAJORITY.name()));
-        cbxVotingSystem.addItem(lang.getString(VotingSystemType.INSTANTRUNOFF.name()));
+        cbxVotingSystem.addItem(viewLang.getString(VotingSystemType.ABSOLUTEMAJORITY.name()));
+        cbxVotingSystem.addItem(viewLang.getString(VotingSystemType.RELATIVEMAJORITY.name()));
+        cbxVotingSystem.addItem(viewLang.getString(VotingSystemType.INSTANTRUNOFF.name()));
         txaDescription = new JTextArea();
         txaDescription.setLineWrap(true);
         spDescription = new JScrollPane(txaDescription);
