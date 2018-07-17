@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class ModelMock implements SupervisorControlToModelIF, SupervisorViewToModelIF {
 
-    public ModelMock(ElectionStatusListener l){
+    public ModelMock(ElectionStatusListener l) {
 
     }
 
@@ -41,7 +41,8 @@ public class ModelMock implements SupervisorControlToModelIF, SupervisorViewToMo
     }
 
     @Override
-    public boolean firstAuthentication(String username, String password) throws NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
+    public boolean firstAuthentication(String username, String password) throws NetworkException,
+            AuthenticationException, InternalSDKException, NetworkConfigException {
         return true;
     }
 
@@ -59,7 +60,8 @@ public class ModelMock implements SupervisorControlToModelIF, SupervisorViewToMo
     }
 
     @Override
-    public void authenticate(String path) throws NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
+    public void authenticate(String path) throws NetworkException, AuthenticationException,
+            InternalSDKException, NetworkConfigException {
     }
 
     @Override

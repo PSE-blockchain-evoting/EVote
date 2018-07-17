@@ -1,10 +1,8 @@
 package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 public class GapExtension extends ComponentExtension<JPanel> {
@@ -14,7 +12,7 @@ public class GapExtension extends ComponentExtension<JPanel> {
      * to Entries of the list and manages them.
      *
      * @param next The next ListExtension in the chain of ListExtensions. Can be null.
-     * @param font
+     * @param font The font used.
      */
     public GapExtension(ListExtension next, Font font) {
         super(next, font);
