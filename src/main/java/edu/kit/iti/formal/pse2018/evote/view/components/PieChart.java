@@ -11,10 +11,17 @@ public class PieChart extends Diagram {
 
     public static final int[] TEST_DATA = {100, 75, 32, 10, 8, 3, 2};
     public static final Color[] TEST_COLOR = {Color.BLACK, Color.RED, Color.YELLOW,
-        Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK};
+            Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK};
 
     @Override
     protected void drawChart(Graphics graphics) {
+        if (data == null) {
+            return;
+        }
+        if (colors == null) {
+            colors = TEST_COLOR;
+        }
+
         Graphics2D g = (Graphics2D) graphics;
 
         int width = getWidth();
@@ -35,8 +42,8 @@ public class PieChart extends Diagram {
 
         double cur = 0;
         for (int i = 0; i < data.length; i++) {
-            g.setColor(colors[i]);
-            g.fillArc(x0, y0, size, size, (int)Math.round(ratio * cur), (int)Math.round(data[i] * ratio));
+            g.setColor(colors[i % colors.length]);
+            g.fillArc(x0, y0, size, size, (int) Math.round(ratio * cur), (int) Math.round(data[i] * ratio));
             cur += data[i];
         }
     }
