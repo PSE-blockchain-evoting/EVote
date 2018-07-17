@@ -100,7 +100,12 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
 
     private void createChannel() throws NetworkConfigException, NetworkException {
         ResourceBundle bundle = ResourceBundle.getBundle("config");
-        Channel channel = hfClient.getChannel(bundle.getString("channel_name"));
+        Channel channel;
+        try {
+            channel = hfClient.newChannel(bundle.getString("channel_name"));
+        } catch (InvalidArgumentException e) {
+            throw new NetworkConfigException(e.getMessage());
+        }
         String[] names = bundle.getString("peer_names").split(",");
         String[] urls = bundle.getString("peer_urls").split(",");
         assert names.length == urls.length;
