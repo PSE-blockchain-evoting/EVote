@@ -11,6 +11,7 @@ import edu.kit.iti.formal.pse2018.evote.model.SupervisorSDKInterface;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -34,7 +35,7 @@ public class SDKConnectionITTest {
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
-    @BeforeClass
+    @Before
     public void setup() throws IOException, NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
         eventListener = mock(SDKEventListener.class);
         ResourceBundle testBundle = ResourceBundle.getBundle("testConfig");
