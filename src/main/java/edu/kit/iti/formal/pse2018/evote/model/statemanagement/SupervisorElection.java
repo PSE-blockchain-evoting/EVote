@@ -71,6 +71,26 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         return value;
     }
 
+    /**
+     * sets all meta-data from the election within the collections in the {@code AbsoluteMajorityVoting}-Class.
+     * @param electionDataIF this contains the election meta-data
+     * @return true, if the meta-data complies with election standards
+     */
+    public boolean setElectionData(ElectionDataIF electionDataIF) {
+        if (!checkElectionConfiguration(electionDataIF)) {
+            return false;
+        }
+
+        this.electionDataIF = electionDataIF;
+        String [] candidatesTemp = electionDataIF.getCandidates();
+        String [] descriptionsTemp = electionDataIF.getCandidateDescriptions();
+
+        for (int i = 0; i < candidatesTemp.length - 1; i++) {
+            candidateList[i] = (new Candidate(candidatesTemp[i], descriptionsTemp[i]));
+        }
+        return true;
+    }
+
 
     @Override
     public void importConfig(String path) {
@@ -101,21 +121,9 @@ public class SupervisorElection extends Election implements SupervisorControlToM
 
     @Override
     public void setVoters(String[] names) {
-        for (String voterName : names) {
-            voterList.add(new Voter(voterName));
-        }
-    }
+        for (int i = 0; i < voterList.length - 1; i++) {
 
-    @Override
-    public boolean setElectionData(ElectionDataIF electionDataIF) {
-        this.electionDataIF = electionDataIF;
-        String [] candidatesTemp = electionDataIF.getCandidates();
-        String [] descriptionsTemp = electionDataIF.getCandidateDescriptions();
-
-        for (int i = 0; i < candidatesTemp.length - 1; i++) {
-            candidateList.add(new Candidate(candidatesTemp[i], descriptionsTemp[i]));
         }
-        return true;
     }
 
     @Override

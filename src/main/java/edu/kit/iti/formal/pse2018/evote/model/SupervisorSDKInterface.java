@@ -10,8 +10,6 @@ import java.util.List;
 
 public interface SupervisorSDKInterface extends SDKInterface {
 
-    public String[] getAllVotes() throws NetworkException, NetworkConfigException;
-
     public void destroyElection() throws NetworkException, NetworkConfigException;
 
     public void createUser(String name, String filePath) throws IOException, EnrollmentException;
