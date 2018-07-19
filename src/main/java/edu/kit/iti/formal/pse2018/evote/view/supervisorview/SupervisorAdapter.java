@@ -75,7 +75,7 @@ public class SupervisorAdapter {
         model.setElectionStatusListener(listener);
     }
 
-    public int[] getResults() throws NetworkConfigException, NetworkException {
+    public int[] getResults() {
         return model.getResults();
     }
 }

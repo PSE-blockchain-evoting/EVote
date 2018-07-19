@@ -25,7 +25,7 @@ public abstract class MajorityVotingSystem extends VotingSystem {
     }
 
     @Override
-    public int[] determineResults() throws NetworkException, NetworkConfigException {
+    public int[] determineResults() {
         String[] orderedCandidateArray = election.electionDataIF.getCandidates();
 
         String[] candidateVotes = election.getVotes();

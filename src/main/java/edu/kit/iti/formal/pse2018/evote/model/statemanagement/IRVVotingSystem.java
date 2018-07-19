@@ -1,8 +1,5 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
-
 public class IRVVotingSystem extends VotingSystem {
 
     public IRVVotingSystem(Election election) {
@@ -10,7 +7,7 @@ public class IRVVotingSystem extends VotingSystem {
     }
 
     @Override
-    int[] determineResults() throws NetworkException, NetworkConfigException {
+    int[] determineResults() {
         return new int[0];
     }
 

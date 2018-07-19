@@ -1,8 +1,5 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
-
 public class AbsoluteMajorityVotingSystem extends MajorityVotingSystem {
 
     public AbsoluteMajorityVotingSystem(Election election) {
@@ -10,7 +7,7 @@ public class AbsoluteMajorityVotingSystem extends MajorityVotingSystem {
     }
 
     @Override
-    Candidate determineWinner() throws NetworkException, NetworkConfigException {
+    Candidate determineWinner() {
         int[] voteCount = determineResults();
         int winnerIndex = 0;
         int totalNumberOfVotes = election.getVotes().length;

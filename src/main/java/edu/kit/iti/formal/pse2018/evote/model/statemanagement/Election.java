@@ -46,17 +46,12 @@ public abstract class Election {
     /**
      * returns an array that contains every vote as String.
      * @return the array containing every vote
-     * @throws NetworkException interior network error
-     * @throws NetworkConfigException interior network config error
      */
-    public String[] getVotes() throws NetworkException, NetworkConfigException {
-        if (votes == null) {
-            votes = sdkInterfaceImpl.getAllVotes();
-        }
+    public String[] getVotes() {
         return votes;
     }
 
-    public int[] getResults() throws NetworkException, NetworkConfigException {
+    public int[] getResults() {
         return votingSystem.determineResults();
     }
 
