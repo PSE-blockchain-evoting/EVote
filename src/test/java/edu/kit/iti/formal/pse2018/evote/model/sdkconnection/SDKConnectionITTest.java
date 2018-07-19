@@ -35,8 +35,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.mockito.Mockito.*;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(ResourceBundle.class)
 //@Ignore
 public class SDKConnectionITTest {
 
@@ -48,9 +46,6 @@ public class SDKConnectionITTest {
 
     public void setup() throws IOException, NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
         eventListener = mock(SDKEventListener.class);
-        ResourceBundle testBundle = ResourceBundle.getBundle("testConfig");
-        PowerMockito.mockStatic(ResourceBundle.class);
-        when(ResourceBundle.getBundle("config")).thenReturn(testBundle);
         sdkInterface = SupervisorSDKInterfaceImpl.createInstance("admin", "adminpw", tempFolder.newFile("adminIdent").getAbsolutePath(), eventListener);
     }
 
@@ -77,6 +72,12 @@ public class SDKConnectionITTest {
             protected String getFunctionName() {
                 return "cidtest";
             }
+
+            @Override
+            protected void parseResultString(String result) {
+                super.parseResultString(result);
+                System.out.println(result);
+            }
         };
         query.query();
         System.out.println(query.getResult());
@@ -85,8 +86,8 @@ public class SDKConnectionITTest {
     @Test
     public void all() throws NetworkConfigException, NetworkException, AuthenticationException, InternalSDKException, IOException, EnrollmentException, InvalidArgumentException, ProposalException {
         setup();
-        createUserTest();
-        createElectionTest();
+        //createUserTest();
+        //createElectionTest();
         queryTestQuery();
     }
 

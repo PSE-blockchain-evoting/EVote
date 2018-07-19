@@ -2,6 +2,8 @@ package edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions;
 
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
@@ -39,10 +41,17 @@ public abstract class QueryTransaction extends Transaction {
         request.setFcn(getFunctionName());
         request.setArgs(buildArgumentStrings());
         Collection<ProposalResponse> responses = channel.queryByChaincode(request);
+        responses.forEach(proposalResponse -> {
+            try {
+                System.out.println(Arrays.toString(proposalResponse.getChaincodeActionResponsePayload()));
+            } catch (InvalidArgumentException e) {
+                e.printStackTrace();
+            }
+        });
         if (responses.stream().anyMatch(proposalResponse ->
                 proposalResponse.getStatus() != ChaincodeResponse.Status.SUCCESS)) {
             throw new NetworkException("Query proposal failed");
         }
-        parseResultString(responses.iterator().next().getProposalResponse().getPayload().toStringUtf8());
+        parseResultString(new String(responses.iterator().next().getChaincodeActionResponsePayload()));
     }
 }
