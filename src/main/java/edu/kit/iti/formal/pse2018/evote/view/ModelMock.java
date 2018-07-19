@@ -7,6 +7,8 @@ import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorViewToModelIF;
+import edu.kit.iti.formal.pse2018.evote.model.VoterControlToModelIF;
+import edu.kit.iti.formal.pse2018.evote.model.VoterViewToModelIF;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigIssues;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 import edu.kit.iti.formal.pse2018.evote.utils.TimeOnlyCondition;
@@ -14,7 +16,10 @@ import edu.kit.iti.formal.pse2018.evote.utils.VotingSystemType;
 
 import java.util.Date;
 
-public class ModelMock implements SupervisorControlToModelIF, SupervisorViewToModelIF {
+public class ModelMock implements SupervisorControlToModelIF,
+        SupervisorViewToModelIF, VoterViewToModelIF, VoterControlToModelIF {
+
+    private String ownVote = null;
 
     public ModelMock(ElectionStatusListener l) {
 
@@ -106,5 +111,17 @@ public class ModelMock implements SupervisorControlToModelIF, SupervisorViewToMo
     @Override
     public ConfigIssues getConfigIssues() {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean vote(String vote) throws NetworkException, NetworkConfigException {
+        ownVote = vote;
+        return true;
+    }
+
+    @Override
+    public String getOwnVote() {
+        //return "{\"candidate\":\"Bitcoin\"}";
+        return ownVote;
     }
 }

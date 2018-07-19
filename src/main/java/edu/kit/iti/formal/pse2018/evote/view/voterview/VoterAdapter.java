@@ -12,7 +12,7 @@ public class VoterAdapter {
     private VoterViewToModelIF model;
     private VoterViewToControlIF control;
 
-    public VoterAdapter(VoterViewToControlIF control, VoterViewToModelIF model){
+    public VoterAdapter(VoterViewToControlIF control, VoterViewToModelIF model) {
         this.model = model;
         this.control = control;
     }

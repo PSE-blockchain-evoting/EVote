@@ -20,6 +20,7 @@ public class VoterAuthentication extends VoterGUIPanel {
     private JButton btnSearch;
     private JButton btnConfirmCert;
     private JFileChooser fcSearch;
+    private JButton btnExit;
 
     private GroupLayout layout;
 
@@ -56,6 +57,10 @@ public class VoterAuthentication extends VoterGUIPanel {
         btnConfirmCert.setFont(f);
 
         fcSearch = new JFileChooser();
+
+        btnExit = new JButton(lang.getString("btnExitText"));
+        btnExit.setFont(f);
+        btnExit.addActionListener(adapter.getLogoutListener());
     }
 
     private void buildLayout() {
@@ -64,9 +69,9 @@ public class VoterAuthentication extends VoterGUIPanel {
         layout.setAutoCreateContainerGaps(true);
         layout.setAutoCreateGaps(true);
 
-        layout.setHorizontalGroup(layout.createSequentialGroup()
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup()
+        layout.setHorizontalGroup(layout.createParallelGroup()
+                .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup()
                                 .addComponent(lblCertAuth)
                                 .addGroup(layout.createSequentialGroup()
@@ -75,12 +80,16 @@ public class VoterAuthentication extends VoterGUIPanel {
                                 )
                                 .addComponent(btnConfirmCert)
                         )
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
                 )
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
+                .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnExit)
+                )
         );
 
         layout.setVerticalGroup(layout.createSequentialGroup()
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, 100)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(lblCertAuth)
                         .addGroup(layout.createParallelGroup()
@@ -90,7 +99,8 @@ public class VoterAuthentication extends VoterGUIPanel {
                         )
                         .addComponent(btnConfirmCert)
                 )
-                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, 100)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
+                .addComponent(btnExit)
         );
 
         layout.linkSize(SwingConstants.VERTICAL, btnSearch, txfPath);
