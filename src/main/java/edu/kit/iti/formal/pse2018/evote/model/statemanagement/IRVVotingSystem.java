@@ -39,7 +39,7 @@ public class IRVVotingSystem extends VotingSystem {
 
     /**
      * create instance of IRVVotingSystem.
-     * @param election
+     * @param election Election with participating Candidates
      */
     public IRVVotingSystem(Election election) {
         super(election);
