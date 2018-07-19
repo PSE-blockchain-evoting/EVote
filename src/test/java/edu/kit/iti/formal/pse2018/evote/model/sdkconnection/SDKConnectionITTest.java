@@ -35,7 +35,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.mockito.Mockito.*;
 
-//@Ignore
+//THIS TEST ONLY WORKS WITH A RUNNING NETWORK
+@Ignore
 public class SDKConnectionITTest {
 
     private SupervisorSDKInterfaceImpl sdkInterface;
@@ -62,7 +63,7 @@ public class SDKConnectionITTest {
     }
 
     public void queryTestQuery() throws NetworkException, ProposalException, InvalidArgumentException {
-        SingleStringQuery query = new SingleStringQuery(sdkInterface.getHFClient()) {
+        SingleStringQuery query = new SingleStringQuery(sdkInterface.hfClient) {
             @Override
             protected String[] buildArgumentStrings() {
                 return new String[0];
@@ -71,12 +72,6 @@ public class SDKConnectionITTest {
             @Override
             protected String getFunctionName() {
                 return "cidtest";
-            }
-
-            @Override
-            protected void parseResultString(String result) {
-                super.parseResultString(result);
-                System.out.println(result);
             }
         };
         query.query();
