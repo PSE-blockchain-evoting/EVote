@@ -165,9 +165,4 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(appUser);
     }
-
-    //TODO: REMOVE!!
-    public HFClient getHFClient() {
-        return this.hfClient;
-    }
 }
