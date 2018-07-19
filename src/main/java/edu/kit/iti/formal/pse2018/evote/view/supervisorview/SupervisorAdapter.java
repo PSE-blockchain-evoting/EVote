@@ -1,6 +1,8 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 
 import edu.kit.iti.formal.pse2018.evote.control.SupervisorViewToControlIF;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorViewToModelIF;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigIssues;
@@ -73,7 +75,7 @@ public class SupervisorAdapter {
         model.setElectionStatusListener(listener);
     }
 
-    public int[] getResults() {
+    public int[] getResults() throws NetworkConfigException, NetworkException {
         return model.getResults();
     }
 }

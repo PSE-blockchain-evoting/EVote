@@ -17,7 +17,6 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import org.hyperledger.fabric.sdk.Enrollment;
@@ -98,22 +97,6 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
     public static SupervisorSDKInterfaceImpl createInstance(String filePath, SDKEventListener listener)
             throws NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
         return new SupervisorSDKInterfaceImpl(filePath, listener);
-    }
-
-    /**
-     * Gets all votes from the network.
-     * @return all votes
-     */
-    public String[] getAllVotes() throws NetworkException, NetworkConfigException {
-        AllVotesQuery query = new AllVotesQuery(this.hfClient);
-        try {
-            query.query();
-        } catch (ProposalException e) {
-            throw new NetworkException(e.getMessage());
-        } catch (InvalidArgumentException e) {
-            throw new NetworkConfigException(e.getMessage());
-        }
-        return query.getResult();
     }
 
     /**

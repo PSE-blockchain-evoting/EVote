@@ -6,6 +6,7 @@ import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 import edu.kit.iti.formal.pse2018.evote.model.SDKInterface;
+import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.AllVotesQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionDataQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionStatusQuery;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
@@ -170,4 +171,21 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
         }
         return query.getResult();
     }
+
+    /**
+     * Gets all votes from the network.
+     * @return all votes
+     */
+    public String[] getAllVotes() throws NetworkException, NetworkConfigException {
+        AllVotesQuery query = new AllVotesQuery(this.hfClient);
+        try {
+            query.query();
+        } catch (ProposalException e) {
+            throw new NetworkException(e.getMessage());
+        } catch (InvalidArgumentException e) {
+            throw new NetworkConfigException(e.getMessage());
+        }
+        return query.getResult();
+    }
+
 }
