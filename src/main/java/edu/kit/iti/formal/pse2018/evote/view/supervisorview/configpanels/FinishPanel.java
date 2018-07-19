@@ -164,6 +164,7 @@ public class FinishPanel extends ConfigPanel {
 
     private void updateData() {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
+        ResourceBundle viewLang = ResourceBundle.getBundle("View");
 
         ElectionDataIF data = gui.getElectionData();
         Date startDate = data.getStartDate();
@@ -174,7 +175,7 @@ public class FinishPanel extends ConfigPanel {
         lblTimeFrame.setText(lang.getString("lblTimespanPrefix") + start
                 + lang.getString("lblTimespanMiddle") + " " + end);
         lblVotingSystem.setText(lang.getString("lblVotingSystemPrefix") + " "
-                + lang.getString(data.getVotingSystem().name()));
+                + viewLang.getString(data.getVotingSystem().name()));
         lblCandidates.setText(lang.getString("lblCandidateText"));
 
         lblVoters.setText(lang.getString("lblVoterText"));

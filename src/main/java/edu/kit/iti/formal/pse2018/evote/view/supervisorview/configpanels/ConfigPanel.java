@@ -46,6 +46,12 @@ public abstract class ConfigPanel extends JPanel implements ActiveListener {
 
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
         btnCancel = new JButton(lang.getString("btnCancelText"));
+        btnCancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                gui.setVisible(false);
+            }
+        });
         btnContinue = new JButton(lang.getString("btnContinueText"));
         btnContinue.addActionListener(new ActionListener() {
             @Override
