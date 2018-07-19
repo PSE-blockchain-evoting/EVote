@@ -4,16 +4,22 @@ import edu.kit.iti.formal.pse2018.evote.control.VoterViewToControlIF;
 import edu.kit.iti.formal.pse2018.evote.control.votercontrol.VoterControl;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
 import edu.kit.iti.formal.pse2018.evote.model.statemanagement.VoterElection;
+import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 import edu.kit.iti.formal.pse2018.evote.view.VoterControlToViewIF;
+import edu.kit.iti.formal.pse2018.evote.view.components.ImagePanel;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.io.File;
+import java.io.IOException;
 import java.util.ResourceBundle;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -34,7 +40,7 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
 
     private GroupLayout layout;
 
-    private int titleBarHeight = 100;
+    private int titleBarHeight = 125;
     private int titleBarHeightMin = 50;
     private int logoWidth = 150;
     private int logoWidthMin = 50;
@@ -62,8 +68,13 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
         lblTitle = new JLabel();
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitle.setFont((Font) UIManager.get("Title.font"));
-        pnlLogo = new JPanel();
-        pnlLogo.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        try {
+            pnlLogo = new ImagePanel(ImageIO.read(new File("src/main/resources/logo.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+            pnlLogo = new JPanel();
+            pnlLogo.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        }
     }
 
     private void buildLayout() {
@@ -109,7 +120,7 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
         }
 
         ResourceBundle lang = ResourceBundle.getBundle("VoterView");
-        currentPanel = new VoterWait(adapter);
+        currentPanel = new VoterWait(adapter, componentManager);
         buildLayout();
         lblTitle.setText(lang.getString("WaitTitle"));
     }
@@ -121,9 +132,11 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
         }
 
         ResourceBundle lang = ResourceBundle.getBundle("VoterView");
-        currentPanel = new VoterChoice(adapter);
+        ElectionDataIF data = adapter.getElectionData();
+        componentManager = VoterVSComponentManagerBuilder.generateComponentManager(data.getVotingSystem(), adapter);
+        currentPanel = new VoterChoice(adapter, componentManager);
         buildLayout();
-        lblTitle.setText(lang.getString("ChoiceTitle"));
+        lblTitle.setText(data.getName());
     }
 
     @Override
@@ -133,9 +146,13 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
         }
 
         ResourceBundle lang = ResourceBundle.getBundle("VoterView");
-        currentPanel = new VoterResult(adapter);
+        if (componentManager == null) {
+            componentManager = VoterVSComponentManagerBuilder.generateComponentManager(
+                    adapter.getElectionData().getVotingSystem(), adapter);
+        }
+        currentPanel = new VoterResult(adapter, componentManager);
         buildLayout();
-        lblTitle.setText(lang.getString("ResultTitle"));
+        lblTitle.setText(adapter.getElectionData().getName());
     }
 
     @Override
@@ -145,32 +162,32 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
 
     @Override
     public String getVote() {
-        return null;
+        return currentPanel.getVote();
     }
 
 
     @Override
     public String getAuthenticationPath() {
-        return null;
+        return currentPanel.getAuthenticationPath();
     }
 
     @Override
     public void showError(String message) {
-
+        JOptionPane.showMessageDialog(this, message);
     }
 
     @Override
     public void showWarning(String message) {
-
+        JOptionPane.showMessageDialog(this, message);
     }
 
     @Override
     public void showSuccess(String message) {
-
+        JOptionPane.showMessageDialog(this, message);
     }
 
     @Override
     public void electionOver() {
-
+        showResults();
     }
 }

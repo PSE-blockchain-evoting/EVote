@@ -21,4 +21,6 @@ public abstract class VoterVSComponentManager {
     public abstract String getVote();
 
     public abstract void setVote(String vote);
+
+    public abstract void setEditable(boolean b);
 }
