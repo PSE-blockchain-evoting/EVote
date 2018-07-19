@@ -179,7 +179,7 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
     }
 
     @Override
-    public void updateResult() throws NetworkConfigException, NetworkException {
+    public void updateResult() {
         currentPanel.updateResults(adapter.getResults(), adapter.getWinner());
     }
 

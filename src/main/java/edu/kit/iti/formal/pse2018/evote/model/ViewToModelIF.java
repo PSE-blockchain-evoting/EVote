@@ -1,7 +1,5 @@
 package edu.kit.iti.formal.pse2018.evote.model;
 
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 public interface ViewToModelIF {
@@ -12,5 +10,5 @@ public interface ViewToModelIF {
 
     public void setElectionStatusListener(ElectionStatusListener listener);
 
-    public int[] getResults() throws NetworkConfigException, NetworkException;
+    public int[] getResults();
 }

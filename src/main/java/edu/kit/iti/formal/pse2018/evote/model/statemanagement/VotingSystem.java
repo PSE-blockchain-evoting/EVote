@@ -1,8 +1,5 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
-
 public abstract class VotingSystem {
     protected Election election;
 
@@ -10,9 +7,9 @@ public abstract class VotingSystem {
         this.election = election;
     }
 
-    abstract int[] determineResults() throws NetworkException, NetworkConfigException;
+    abstract int[] determineResults();
 
     abstract Vote loadVote(String vote);
 
-    abstract Candidate determineWinner() throws NetworkException, NetworkConfigException;
+    abstract Candidate determineWinner();
 }
