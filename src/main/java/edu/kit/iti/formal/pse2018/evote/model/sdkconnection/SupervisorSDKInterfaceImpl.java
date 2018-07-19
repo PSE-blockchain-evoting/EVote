@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,10 +28,14 @@ import org.hyperledger.fabric.sdk.exception.CryptoException;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.hyperledger.fabric.sdk.security.CryptoSuite;
+import org.hyperledger.fabric_ca.sdk.Attribute;
+import org.hyperledger.fabric_ca.sdk.EnrollmentRequest;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
 import org.hyperledger.fabric_ca.sdk.HFCAEnrollment;
+import org.hyperledger.fabric_ca.sdk.HFCAIdentity;
 import org.hyperledger.fabric_ca.sdk.RegistrationRequest;
 import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
+import org.hyperledger.fabric_ca.sdk.exception.IdentityException;
 import org.hyperledger.fabric_ca.sdk.exception.RegistrationException;
 
 
@@ -66,13 +72,30 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         HFCAClient hfcaClient = createHFCAClient();
         Enrollment enrollment;
+        HFCAIdentity identity;
         try {
+            ArrayList<Attribute> attributes = new ArrayList<>();
+            attributes.add(new Attribute("test_attr", "test_val"));
+            identity = hfcaClient.newHFCAIdentity(username);
+            identity.setAttributes(attributes);
             enrollment = hfcaClient.enroll(username, password);
         } catch (EnrollmentException | org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException e) {
             throw new NetworkConfigException(e.getMessage());
         }
         AppUser appUser = new AppUser(username, bundle.getString("affiliation"), new HashSet<>(), username,
                 bundle.getString("mspID"), enrollment);
+        try {
+            identity.update(appUser);
+            for (HFCAIdentity hfcaIdentity : hfcaClient.getHFCAIdentities(appUser)) {
+                System.out.println(hfcaIdentity);
+                for (Attribute attribute : hfcaIdentity.getAttributes()) {
+                    System.out.println("\t" + attribute.getName() + ": " + attribute.getValue());
+                }
+            }
+        } catch (IdentityException | org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException e) {
+            throw new NetworkException(e.getMessage());
+        }
+
         FileOutputStream fos = new FileOutputStream(filePath);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(appUser);
