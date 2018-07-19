@@ -22,23 +22,23 @@ public class IRVVotingSystem extends VotingSystem {
     private String[] candidateDescriptions;
 
     /**
-    * Scores of each candidate at some round
+    * Scores of each candidate at some round.
     */
     private int[] scores;
 
     /**
-    * Who is still in competition
+    * Who is still in competition.
     */
     private boolean[] stillIn;
 
     /**
-    * votes[i] is the vote with preferences of voter #i
+    * votes[i] is the vote with preferences of voter #i.
     */
     private List<IRVVote> votes = new LinkedList<IRVVote>();
 
 
     /**
-     * create instance of IRVVotingSystem
+     * create instance of IRVVotingSystem.
      * @param election
      */
     public IRVVotingSystem(Election election) {
@@ -118,7 +118,7 @@ public class IRVVotingSystem extends VotingSystem {
     }
 
     /**
-    * Get max score through still-in-candidates
+    * Get max score through still-in-candidates.
     */
     private int maxScoreIndex() {
         int res = -1;
@@ -133,7 +133,7 @@ public class IRVVotingSystem extends VotingSystem {
     }
 
     /**
-    * Get min score through still-in-candidates
+    * Get min score through still-in-candidates.
     */
     private int minScoreIndex() {
         int res = -1;

@@ -17,7 +17,7 @@ public class IRVVote {
     private List<Integer> preferences = new LinkedList<Integer>();
 
     /**
-    * Create Vote with preferences from rank #1 to rank #N
+    * Create Vote with preferences from rank #1 to rank #N.
     */
     public IRVVote(Collection<Integer> preferences) {
         this.preferences.addAll(preferences);
@@ -45,7 +45,7 @@ public class IRVVote {
     }
 
     /**
-    * Copy this vote
+    * Copy this vote.
     */
     public IRVVote copy() {
         return new IRVVote(this.preferences);
