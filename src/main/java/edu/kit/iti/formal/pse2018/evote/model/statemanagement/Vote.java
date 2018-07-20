@@ -8,4 +8,5 @@ public abstract class Vote {
     }
 
     abstract String asString();
+
 }
