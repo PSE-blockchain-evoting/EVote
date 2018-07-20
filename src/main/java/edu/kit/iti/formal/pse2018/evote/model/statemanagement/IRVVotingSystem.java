@@ -4,6 +4,12 @@ import edu.kit.iti.formal.pse2018.evote.exceptions.FailedDetermineWinnerExceptio
 import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -77,7 +83,11 @@ public class IRVVotingSystem extends VotingSystem {
     @Override
     public Vote loadVote(String vote) throws LoadVoteException, WrongCandidateNameException {
         ResourceBundle lang = ResourceBundle.getBundle("StateManagement");
-        String[] rankedCandidates = vote.split(",");
+        JsonReader reader = Json.createReader(new ByteArrayInputStream(vote.getBytes(StandardCharsets.UTF_8)));
+        JsonArray obj = reader.readArray();
+        String[] rankedCandidates = obj.getValuesAs(
+                jsonValue -> jsonValue.toString().replaceAll("\"", "")).toArray(new String[0]);
+
         if (rankedCandidates.length != this.candidates.length) {
             // Bad count of candidates in the vote.
             throw new LoadVoteException(lang.getString("badCountOfCandidates"));

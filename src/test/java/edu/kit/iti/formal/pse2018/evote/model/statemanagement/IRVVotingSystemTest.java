@@ -44,15 +44,15 @@ public class IRVVotingSystemTest {
         IRVVotingSystem irv = new IRVVotingSystem(election);
         try {
             // voter "a" -> Bob rank1, Sue rank3, Bill rank2
-            irv.loadVote("Bob,Bill,Sue");
+            irv.loadVote("[\"Bob\",\"Bill\",\"Sue\"]");
             // voter "b" -> Bob rank2, Sue rank1, Bill rank3
-            irv.loadVote("Sue,Bob,Bill");
+            irv.loadVote("[\"Sue\",\"Bob\",\"Bill\"]");
             // voter "c" -> Bob rank3, Sue rank2, Bill rank1
-            irv.loadVote("Bill,Sue,Bob");
+            irv.loadVote("[\"Bill\",\"Sue\",\"Bob\"]");
             // voter "d" -> Bob rank1, Sue rank3, Bill rank2
-            irv.loadVote("Bob,Bill,Sue");
+            irv.loadVote("[\"Bob\",\"Bill\",\"Sue\"]");
             // voter "e" -> Bob rank2, Sue rank1, Bill rank3
-            irv.loadVote("Sue,Bob,Bill");
+            irv.loadVote("[\"Sue\",\"Bob\",\"Bill\"]");
         } catch (Exception ex) {
             assertTrue(false);
         }
