@@ -201,6 +201,3 @@ public class IRVVotingSystem extends VotingSystem {
         return this.scores;
     }
 }
-
-
-

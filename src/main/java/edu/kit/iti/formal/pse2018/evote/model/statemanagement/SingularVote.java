@@ -13,7 +13,7 @@ public class SingularVote extends Vote {
         return null;
     }
 
-    public SingularVote loadVote(String vote) {
+    public static SingularVote loadVote(String vote) {
         //TODO: IMPLEMENT
         return null;
     }

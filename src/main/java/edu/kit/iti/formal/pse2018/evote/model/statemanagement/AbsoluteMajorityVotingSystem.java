@@ -7,12 +7,18 @@ public class AbsoluteMajorityVotingSystem extends MajorityVotingSystem {
     }
 
     @Override
-    Vote loadVote(String vote) {
-        return null;
-    }
-
-    @Override
     Candidate determineWinner() {
-        return null;
+        int[] voteCount = determineResults();
+        int winnerIndex = 0;
+        int totalNumberOfVotes = election.getVotes().length;
+        for (int i = 0; i < voteCount.length - 2; i++) {
+            if (voteCount[i] < voteCount[i + 1]) {
+                winnerIndex = i + 1;
+            }
+        }
+        if (voteCount[winnerIndex] >= (totalNumberOfVotes / 2)) {
+            return election.candidateList[winnerIndex];
+        }
+        return null; //no winner
     }
 }

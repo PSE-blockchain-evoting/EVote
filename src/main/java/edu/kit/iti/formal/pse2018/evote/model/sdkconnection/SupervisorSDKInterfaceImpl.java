@@ -17,7 +17,6 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import org.hyperledger.fabric.sdk.Enrollment;
@@ -39,14 +38,16 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
 
     private HFCAClient hfcaClient;
 
-    private SupervisorSDKInterfaceImpl(String filePath, SDKEventListener listener) throws NetworkException,
-            AuthenticationException, InternalSDKException, NetworkConfigException {
+    private SupervisorSDKInterfaceImpl(String filePath, SDKEventListener listener, HFCAClient hfcaClient)
+            throws NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
         super(filePath, listener);
+        this.hfcaClient = hfcaClient;
     }
 
-    private SupervisorSDKInterfaceImpl(AppUser appUser, SDKEventListener listener) throws NetworkException,
-            AuthenticationException, InternalSDKException, NetworkConfigException {
+    private SupervisorSDKInterfaceImpl(AppUser appUser, SDKEventListener listener, HFCAClient hfcaClient)
+            throws NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
         super(appUser, listener);
+        this.hfcaClient = hfcaClient;
     }
 
     /**
@@ -61,9 +62,36 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
                 SDKEventListener listener) throws IOException, NetworkException, AuthenticationException,
             InternalSDKException, NetworkConfigException {
         ResourceBundle bundle = ResourceBundle.getBundle("config");
+        HFCAClient hfcaClient = createHFCAClient();
+        Enrollment enrollment;
+        try {
+            enrollment = hfcaClient.enroll(username, password);
+        } catch (EnrollmentException | org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException e) {
+            throw new NetworkConfigException(e.getMessage());
+        }
+        AppUser appUser = new AppUser(username, bundle.getString("affiliation"), new HashSet<>(), username,
+                bundle.getString("mspID"), enrollment);
+        FileOutputStream fos = new FileOutputStream(filePath);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(appUser);
+        return new SupervisorSDKInterfaceImpl(appUser, listener, hfcaClient);
+    }
+
+    /**
+     * Creates a new SupervisorSDKInterfaceImpl instance.
+     * @param filePath path to load admin identity from
+     * @param listener listener to be notified of status changes
+     * @return new SupervisorSDKInterfaceImpl
+     */
+    public static SupervisorSDKInterfaceImpl createInstance(String filePath, SDKEventListener listener)
+            throws NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
+        return new SupervisorSDKInterfaceImpl(filePath, listener, createHFCAClient());
+    }
+
+    private static HFCAClient createHFCAClient() throws InternalSDKException, NetworkException {
+        ResourceBundle bundle = ResourceBundle.getBundle("config");
         CryptoSuite cryptoSuite;
         HFCAClient hfcaClient;
-        Enrollment enrollment;
         try {
             cryptoSuite = CryptoSuite.Factory.getCryptoSuite();
         } catch (IllegalAccessException | InstantiationException | ClassNotFoundException | CryptoException
@@ -76,44 +104,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
             throw new NetworkException(e.getMessage());
         }
         hfcaClient.setCryptoSuite(cryptoSuite);
-        try {
-            enrollment = hfcaClient.enroll(username, password);
-        } catch (EnrollmentException | org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException e) {
-            throw new NetworkConfigException(e.getMessage());
-        }
-        AppUser appUser = new AppUser(username, bundle.getString("affiliation"), new HashSet<>(), username,
-                bundle.getString("mspID"), enrollment);
-        FileOutputStream fos = new FileOutputStream(filePath);
-        ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(appUser);
-        return new SupervisorSDKInterfaceImpl(appUser, listener);
-    }
-
-    /**
-     * Creates a new SupervisorSDKInterfaceImpl instance.
-     * @param filePath path to load admin identity from
-     * @param listener listener to be notified of status changes
-     * @return new SupervisorSDKInterfaceImpl
-     */
-    public static SupervisorSDKInterfaceImpl createInstance(String filePath, SDKEventListener listener)
-            throws NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
-        return new SupervisorSDKInterfaceImpl(filePath, listener);
-    }
-
-    /**
-     * Gets all votes from the network.
-     * @return all votes
-     */
-    public String[] getAllVotes() throws NetworkException, NetworkConfigException {
-        AllVotesQuery query = new AllVotesQuery(this.hfClient);
-        try {
-            query.query();
-        } catch (ProposalException e) {
-            throw new NetworkException(e.getMessage());
-        } catch (InvalidArgumentException e) {
-            throw new NetworkConfigException(e.getMessage());
-        }
-        return query.getResult();
+        return hfcaClient;
     }
 
     /**

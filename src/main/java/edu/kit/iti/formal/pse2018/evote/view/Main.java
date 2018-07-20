@@ -19,6 +19,7 @@ public class Main {
         Locale.setDefault(new Locale("de", "DE"));
         UIManager.put("Title.font", new FontUIResource("Sans Serif", Font.BOLD,35));
         UIManager.put("General.font", new FontUIResource("Sans Serif", Font.BOLD,15));
+        UIManager.put("Vote.font", new FontUIResource("Sans Serif", Font.BOLD, 30));
 
         SupervisorGUI gui = new SupervisorGUI();
     }

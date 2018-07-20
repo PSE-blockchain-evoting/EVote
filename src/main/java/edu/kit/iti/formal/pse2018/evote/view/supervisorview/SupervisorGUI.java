@@ -2,14 +2,17 @@ package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 
 import edu.kit.iti.formal.pse2018.evote.control.SupervisorViewToControlIF;
 import edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol.SupervisorControl;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
-import edu.kit.iti.formal.pse2018.evote.model.SupervisorViewToModelIF;
 import edu.kit.iti.formal.pse2018.evote.model.statemanagement.SupervisorElection;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 import edu.kit.iti.formal.pse2018.evote.utils.VotingSystemType;
 import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dialog;
 import java.awt.Font;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
@@ -49,7 +52,6 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
      */
     public SupervisorGUI() {
         ElectionStatusListener listener = new SupervisorElectionEndListenerImpl(this);
-
         SupervisorElection model = new SupervisorElection(listener);
         SupervisorViewToControlIF control = new SupervisorControl(this, model);
         adapter = new SupervisorAdapter(control, model);
@@ -68,7 +70,6 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
         lblTitle = new JLabel();
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitle.setFont((Font) UIManager.get("Title.font"));
-        lblTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pnlLogo = new JPanel();
         pnlLogo.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 
@@ -77,19 +78,19 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
         layout.setAutoCreateContainerGaps(true);
 
         layout.setVerticalGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup()
-                .addComponent(pnlLogo, titleBarHeightMin, titleBarHeight, titleBarHeight)
-                .addComponent(lblTitle, titleBarHeightMin, titleBarHeight, titleBarHeight)
-            )
-            .addComponent(currentPanel)
+                .addGroup(layout.createParallelGroup()
+                        .addComponent(pnlLogo, titleBarHeightMin, titleBarHeight, titleBarHeight)
+                        .addComponent(lblTitle, titleBarHeightMin, titleBarHeight, titleBarHeight)
+                )
+                .addComponent(currentPanel)
         );
 
         layout.setHorizontalGroup(layout.createParallelGroup()
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlLogo, logoWidthMin, logoWidth, logoWidth)
-                .addComponent(lblTitle, 50, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            )
-            .addComponent(currentPanel)
+                .addGroup(layout.createSequentialGroup()
+                        .addComponent(pnlLogo, logoWidthMin, logoWidth, logoWidth)
+                        .addComponent(lblTitle, 50, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                )
+                .addComponent(currentPanel)
         );
         this.getContentPane().setLayout(layout);
     }
@@ -98,6 +99,10 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
      * Shows the Authentication Panel in the SupervisorGUI.
      */
     public void showAuthentication() {
+        for (Component c : this.getContentPane().getComponents()) {
+            this.getContentPane().remove(c);
+        }
+
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
 
         currentPanel = new SupervisorAuthentication(adapter);
@@ -107,6 +112,10 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
 
     @Override
     public void showFrontpage() {
+        for (Component c : this.getContentPane().getComponents()) {
+            this.getContentPane().remove(c);
+        }
+
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
 
         currentPanel = new SupervisorFrontpage(adapter);
@@ -116,6 +125,10 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
 
     @Override
     public void showResults() {
+        for (Component c : this.getContentPane().getComponents()) {
+            this.getContentPane().remove(c);
+        }
+
         ElectionDataIF data = adapter.getElectionData();
         VotingSystemType vs = data.getVotingSystem();
         componentManager = SupervisorVSComponentManagerBuilder.generateComponentManager(vs, adapter);
@@ -123,17 +136,20 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
         SupervisorGUIPanel p = new SupervisorResult(adapter, componentManager);
 
-        layout.replace(currentPanel, p);
         currentPanel = p;
-
+        initComponents();
         lblTitle.setText(data.getName());
+        currentPanel.updateResults(adapter.getResults(), adapter.getWinner());
     }
 
     @Override
     public void startConfigMenu() {
-        config = new ConfigGUI(adapter);
+        if (config == null) {
+            config = new ConfigGUI(adapter);
+            config.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+            config.setSize(800, 600);
+        }
         config.setVisible(true);
-        this.setVisible(false);
     }
 
     @Override
