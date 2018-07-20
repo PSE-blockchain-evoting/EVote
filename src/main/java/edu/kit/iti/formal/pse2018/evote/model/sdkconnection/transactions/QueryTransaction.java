@@ -43,9 +43,10 @@ public abstract class QueryTransaction extends Transaction {
         request.setArgs(buildArgumentStrings());
         Collection<ProposalResponse> responses = channel.queryByChaincode(request);
         for (ProposalResponse resp : responses) {
-            if (resp.getStatus() != ChaincodeResponse.Status.SUCCESS)
+            if (resp.getStatus() != ChaincodeResponse.Status.SUCCESS) {
                 throw new NetworkException(String.format("Query proposal failed. Peer %s responded with %s",
                         resp.getPeer(), resp.getMessage()));
+            }
         }
         parseResultString(new String(responses.iterator().next().getChaincodeActionResponsePayload()));
     }
