@@ -121,8 +121,9 @@ public class SupervisorElection extends Election implements SupervisorControlToM
 
     @Override
     public void setVoters(String[] names) {
+        voterList = new Voter[names.length];
         for (int i = 0; i < voterList.length - 1; i++) {
-
+            voterList[i] = new Voter(names[i]);
         }
     }
 
@@ -142,18 +143,13 @@ public class SupervisorElection extends Election implements SupervisorControlToM
     }
 
     @Override
-    public String[] getVotes() {
-        return new String[0];
-    }
-
-    @Override
     public void startElection() throws NetworkException, NetworkConfigException {
         supervisorSDKInterface.createElection(electionDataIF);
     }
 
     @Override
     public void destroyElection() {
-        //TODO
+        //TODO: IMPLEMENT
     }
 
     @Override
@@ -172,17 +168,21 @@ public class SupervisorElection extends Election implements SupervisorControlToM
 
     @Override
     public String getWinner() {
-        return null;
+        return super.getWinner();
     }
 
 
     @Override
     public String[] getVoters() {
-        return new String[0];
+        String[] voterNames = new String[voterList.length];
+        for (int i = 0; i < voterNames.length - 1; i++) {
+            voterNames[i] = voterList[i].getName();
+        }
+        return voterNames;
     }
 
     @Override
     public ConfigIssues getConfigIssues() {
-        return null;
+        return configIssuesImpl;
     }
 }

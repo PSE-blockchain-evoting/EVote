@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 public class IRVVotingSystemTest {
 
     @Test
-    public void all() throws FailedDetermineWinnerException, WrongCandidateNameException, LoadVoteException {
+    public void all() throws WrongCandidateNameException, LoadVoteException {
         // Test IRVVotingSystem class by example from wikipedia.
         // https://en.wikipedia.org/wiki/Instant-runoff_voting
 
@@ -57,11 +57,11 @@ public class IRVVotingSystemTest {
         irv.loadVote("[\"Sue\",\"Bob\",\"Bill\"]");
 
         // Verify determineWinner is right
-        Candidate cand = irv.determineWinner();
+        String cand = irv.determineWinner();
 
         assertNotNull(cand);
-        assertEquals("Sue", cand.getName());
-        assertEquals("Mega cool candidate #2", cand.getDescription());
+        assertEquals("Sue", cand);
+        //assertEquals("Mega cool candidate #2", cand.getDescription()); we changed determineWinner return type to String
 
         // Verify determineResults is right
         int[] results = irv.determineResults();

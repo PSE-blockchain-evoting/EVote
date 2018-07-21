@@ -7,7 +7,7 @@ public class RelativeMajorityVotingSystem extends MajorityVotingSystem {
     }
 
     @Override
-    Candidate determineWinner() {
+    String determineWinner() {
         int[] voteCount = determineResults();
         int winnerIndex = 0;
         for (int i = 0; i < voteCount.length - 2; i++) {
@@ -15,6 +15,6 @@ public class RelativeMajorityVotingSystem extends MajorityVotingSystem {
                 winnerIndex = i + 1;
             }
         }
-        return election.candidateList[winnerIndex];
+        return election.candidateList[winnerIndex].getName();
     }
 }
