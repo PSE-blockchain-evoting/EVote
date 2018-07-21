@@ -44,10 +44,19 @@ public abstract class QueryTransaction extends Transaction {
         Collection<ProposalResponse> responses = channel.queryByChaincode(request);
         for (ProposalResponse resp : responses) {
             if (resp.getStatus() != ChaincodeResponse.Status.SUCCESS) {
-                throw new NetworkException(String.format("Query proposal failed. Peer %s responded with %s",
-                        resp.getPeer(), resp.getMessage()));
+                throw new NetworkException(resp.getMessage());
             }
         }
-        parseResultString(new String(responses.iterator().next().getChaincodeActionResponsePayload()));
+        String[] payloads = new String[responses.size()];
+        int count = 0;
+        for (ProposalResponse resp : responses) {
+            payloads[count] = new String(resp.getChaincodeActionResponsePayload());
+            count++;
+        }
+
+        if (Arrays.stream(payloads).distinct().count() > 1) {
+            throw new NetworkException("Responses differ");
+        }
+        parseResultString(payloads[0]);
     }
 }
