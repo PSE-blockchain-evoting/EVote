@@ -1,5 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.view;
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.awt.event.ActionListener;
@@ -26,5 +28,5 @@ public interface SupervisorControlToViewIF extends ControlToViewIF {
 
     public String getUsername();
 
-    public void updateResult();
+    public void updateResult() throws NetworkConfigException, NetworkException;
 }

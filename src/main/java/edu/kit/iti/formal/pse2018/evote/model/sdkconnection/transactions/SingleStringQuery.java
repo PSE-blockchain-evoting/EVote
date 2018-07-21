@@ -12,7 +12,7 @@ public abstract class SingleStringQuery extends QueryTransaction {
 
     @Override
     protected void parseResultString(String result) {
-
+        this.result = result;
     }
 
     public String getResult() {
