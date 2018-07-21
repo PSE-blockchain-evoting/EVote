@@ -1,9 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
 import org.junit.Test;
-
-import edu.kit.iti.formal.pse2018.evote.exceptions.FailedDetermineWinnerException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
@@ -16,7 +13,7 @@ import static org.junit.Assert.*;
 public class IRVVotingSystemTest {
 
     @Test
-    public void all() throws WrongCandidateNameException, LoadVoteException {
+    public void all() throws WrongCandidateNameException {
         // Test IRVVotingSystem class by example from wikipedia.
         // https://en.wikipedia.org/wiki/Instant-runoff_voting
         Locale.setDefault(new Locale("de", "DE"));
