@@ -14,7 +14,7 @@ public class RankedVote extends Vote {
     private String[] candidates;
 
     /**
-     * Save list of candidate names
+     * Save list of candidate names.
      */
     /*
     public static void setCandidates(String[] candidates) {
