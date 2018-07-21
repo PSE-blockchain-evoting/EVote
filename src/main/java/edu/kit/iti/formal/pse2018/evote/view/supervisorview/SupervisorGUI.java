@@ -3,16 +3,20 @@ package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 import edu.kit.iti.formal.pse2018.evote.control.SupervisorViewToControlIF;
 import edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol.SupervisorControl;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
+import edu.kit.iti.formal.pse2018.evote.model.statemanagement.SupervisorElection;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 import edu.kit.iti.formal.pse2018.evote.utils.VotingSystemType;
-import edu.kit.iti.formal.pse2018.evote.view.ModelMock;
 import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
+import edu.kit.iti.formal.pse2018.evote.view.components.ImagePanel;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Font;
+import java.io.File;
+import java.io.IOException;
 import java.util.ResourceBundle;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JFrame;
@@ -50,7 +54,7 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
      */
     public SupervisorGUI() {
         ElectionStatusListener listener = new SupervisorElectionEndListenerImpl(this);
-        ModelMock model = new ModelMock(listener);
+        SupervisorElection model = new SupervisorElection(listener);
         SupervisorViewToControlIF control = new SupervisorControl(this, model);
         adapter = new SupervisorAdapter(control, model);
 
@@ -68,8 +72,14 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
         lblTitle = new JLabel();
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitle.setFont((Font) UIManager.get("Title.font"));
+
         pnlLogo = new JPanel();
-        pnlLogo.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        try {
+            pnlLogo = new ImagePanel(ImageIO.read(new File("src/main/resources/logo.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+            pnlLogo.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        }
 
         layout = new GroupLayout(this.getContentPane());
         layout.setAutoCreateGaps(true);

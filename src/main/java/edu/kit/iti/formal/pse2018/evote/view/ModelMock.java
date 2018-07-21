@@ -99,7 +99,7 @@ public class ModelMock implements SupervisorControlToModelIF,
     @Override
     public int[] getResults() {
         //int[] i = {10, 2, 41, 5};
-        int[] i = {4, 123, 64, 22, 5, 43, 83, 23, 12, 73, 22, 13, 2};
+        int[] i = {4, 123, 64, 22, 5, 43, 83, 23, 12, 73, 22, 13, 2, 21, 22, 3, 140};
         return i;
     }
 
