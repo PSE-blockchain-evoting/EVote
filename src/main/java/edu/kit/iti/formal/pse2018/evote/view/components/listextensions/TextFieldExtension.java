@@ -37,6 +37,20 @@ public class TextFieldExtension extends ComponentExtension<JTextField> {
      * @param text The text to set.
      */
     public void setText(int i, String text) {
+        while (i >= components.size()) {
+            list.addNewEntry();
+        }
         components.get(i).setText(text);
+    }
+
+    /**
+     * Allow editing of the Textfields.
+     *
+     * @param b enable/disable.
+     */
+    public void setEditable(boolean b) {
+        for (JTextField txf : components) {
+            txf.setEditable(b);
+        }
     }
 }

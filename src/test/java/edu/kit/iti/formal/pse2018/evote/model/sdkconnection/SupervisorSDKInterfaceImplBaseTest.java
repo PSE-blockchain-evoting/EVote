@@ -14,6 +14,7 @@ import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.Enrollment;
 import org.hyperledger.fabric.sdk.HFClient;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
+import org.hyperledger.fabric_ca.sdk.HFCAIdentity;
 import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
 import org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException;
 import org.junit.Before;
@@ -39,7 +40,8 @@ public class SupervisorSDKInterfaceImplBaseTest {
 
     @Test
     public void createInstance() throws EnrollmentException, InvalidArgumentException, IOException, NetworkException,
-            AuthenticationException, InternalSDKException, NetworkConfigException, ClassNotFoundException {
+            AuthenticationException, InternalSDKException, NetworkConfigException, ClassNotFoundException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException {
         PowerMockito.mockStatic(HFCAClient.class);
         PowerMockito.mockStatic(HFClient.class);
 
@@ -47,9 +49,12 @@ public class SupervisorSDKInterfaceImplBaseTest {
         Enrollment enrollment = mock(Enrollment.class, withSettings().serializable());
         HFClient hfClient = mock(HFClient.class);
         Channel channel = mock(Channel.class);
+        HFCAIdentity identity = mock(HFCAIdentity.class);
 
         when(hfcaClient.enroll(anyString(), anyString())).thenReturn(enrollment);
+        when(hfcaClient.newHFCAIdentity(anyString())).thenReturn(identity);
         when(HFCAClient.createNewInstance(anyString(), eq(null))).thenReturn(hfcaClient);
+        when(hfClient.newChannel(anyString())).thenReturn(channel);
         when(hfClient.getChannel(anyString())).thenReturn(channel);
         when(HFClient.createNewInstance()).thenReturn(hfClient);
 
@@ -65,7 +70,8 @@ public class SupervisorSDKInterfaceImplBaseTest {
 
     @Test
     public void createInstanceFromFile() throws EnrollmentException, InvalidArgumentException, IOException,
-            NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
+            NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException {
         PowerMockito.mockStatic(HFCAClient.class);
         PowerMockito.mockStatic(HFClient.class);
 
@@ -76,6 +82,7 @@ public class SupervisorSDKInterfaceImplBaseTest {
 
         when(hfcaClient.enroll(anyString(), anyString())).thenReturn(enrollment);
         when(HFCAClient.createNewInstance(anyString(), eq(null))).thenReturn(hfcaClient);
+        when(hfClient.newChannel(anyString())).thenReturn(channel);
         when(hfClient.getChannel(anyString())).thenReturn(channel);
         when(HFClient.createNewInstance()).thenReturn(hfClient);
 
