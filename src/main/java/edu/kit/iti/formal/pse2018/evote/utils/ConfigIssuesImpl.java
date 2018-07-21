@@ -26,21 +26,21 @@ public class ConfigIssuesImpl implements ConfigIssues {
 
     @Override
     public String getNameIssue() {
-        return null;
+        return nameIssue;
     }
 
     @Override
     public String getCandidateIssue() {
-        return null;
+        return candidateIssue;
     }
 
     @Override
     public String getVoterIssue() {
-        return null;
+        return voterIssue;
     }
 
     @Override
     public String getTimespanIssue() {
-        return null;
+        return timespanIssue;
     }
 }
