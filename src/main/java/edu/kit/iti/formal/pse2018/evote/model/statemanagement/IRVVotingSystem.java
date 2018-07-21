@@ -18,7 +18,7 @@ public class IRVVotingSystem extends VotingSystem {
     }
 
     @Override
-    Candidate determineWinner() {
+    String determineWinner() {
         //TODO: IMPLEMENT
         return null;
     }

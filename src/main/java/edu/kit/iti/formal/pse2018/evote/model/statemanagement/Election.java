@@ -1,7 +1,5 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
 import edu.kit.iti.formal.pse2018.evote.model.SDKInterface;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
@@ -39,8 +37,7 @@ public abstract class Election {
     }
 
     public String getWinner() {
-        //TODO: IMPLEMENT
-        return null;
+        return votingSystem.determineWinner();
     }
 
     /**

@@ -1,8 +1,5 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
-
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import javax.json.Json;

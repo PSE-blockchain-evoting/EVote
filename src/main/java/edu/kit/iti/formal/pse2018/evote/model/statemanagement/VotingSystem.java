@@ -11,5 +11,5 @@ public abstract class VotingSystem {
 
     abstract Vote loadVote(String vote);
 
-    abstract Candidate determineWinner();
+    abstract String determineWinner();
 }
