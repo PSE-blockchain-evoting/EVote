@@ -46,7 +46,6 @@ public class SDKEventListenerImpl extends Thread implements SDKEventListener {
 
     @Override
     public void onElectionRunning() {
-        System.out.println("Received check");
         lastEvent = System.currentTimeMillis();
         assert (!hasEnded);
 
@@ -61,7 +60,6 @@ public class SDKEventListenerImpl extends Thread implements SDKEventListener {
             long cur = System.currentTimeMillis();
             long diff = cur - lastEvent;
             if (diff > backoff) {
-                System.out.println("Need to check again");
                 lastEvent = cur;
                 election.checkElectionOver();
             }
@@ -69,7 +67,6 @@ public class SDKEventListenerImpl extends Thread implements SDKEventListener {
             long sleep = backoff + lastEvent - cur;
             assert (sleep > 0);
             try {
-                System.out.println("sleeping for " + sleep + "ms");
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
                 e.printStackTrace();
