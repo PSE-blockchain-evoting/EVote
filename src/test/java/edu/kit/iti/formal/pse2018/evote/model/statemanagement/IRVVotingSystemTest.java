@@ -16,7 +16,6 @@ public class IRVVotingSystemTest {
     public void all() {
         // Test IRVVotingSystem class by example from wikipedia.
         // https://en.wikipedia.org/wiki/Instant-runoff_voting
-
         Locale.setDefault(new Locale("de", "DE"));
 
         // First: prepare candidates.

@@ -1,19 +1,16 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
 import edu.kit.iti.formal.pse2018.evote.exceptions.FailedDetermineWinnerException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonReader;
 
 
 public class IRVVotingSystem extends VotingSystem {
@@ -40,7 +37,7 @@ public class IRVVotingSystem extends VotingSystem {
     /**
     * votes[i] is the vote with preferences of voter #i.
     */
-    private List<IRVVote> votes = new LinkedList<IRVVote>();
+    private List<RankedVote> votes = new LinkedList<RankedVote>();
 
 
     /**
@@ -71,8 +68,8 @@ public class IRVVotingSystem extends VotingSystem {
     /**
     * Copy all votes and returns them.
     */
-    private List<IRVVote> copyVotes() {
-        List<IRVVote> res = new LinkedList<IRVVote>();
+    private List<RankedVote> copyVotes() {
+        List<RankedVote> res = new LinkedList<RankedVote>();
         int votesCnt = votes.size();
         for (int i = 0; i < votesCnt; i++) {
             res.add(this.votes.get(i).copy());
@@ -81,23 +78,19 @@ public class IRVVotingSystem extends VotingSystem {
     }
 
     @Override
-    public Vote loadVote(String vote) throws LoadVoteException, WrongCandidateNameException {
+    public Vote loadVote(String vote) throws WrongCandidateNameException {
         ResourceBundle lang = ResourceBundle.getBundle("StateManagement");
         JsonReader reader = Json.createReader(new ByteArrayInputStream(vote.getBytes(StandardCharsets.UTF_8)));
         JsonArray obj = reader.readArray();
         String[] rankedCandidates = obj.getValuesAs(
-                jsonValue -> jsonValue.toString().replaceAll("\"", "")).toArray(new String[0]);
-
-        if (rankedCandidates.length != this.candidates.length) {
-            // Bad count of candidates in the vote.
-            throw new LoadVoteException(lang.getString("badCountOfCandidates"));
-        }
+            jsonValue -> jsonValue.toString().replaceAll("\"", "")).toArray(new String[0]);
         List<Integer> preferences = new ArrayList<Integer>();
         for (int i = 0; i < rankedCandidates.length; i++) {
             preferences.add(getCandidateIndex(rankedCandidates[i]));
         }
-        this.votes.add(new IRVVote(preferences));
-        return new RankedVote(vote);
+        RankedVote res = new RankedVote(this.candidates, preferences);
+        this.votes.add(res);
+        return res;
     }
 
     /**
@@ -162,7 +155,7 @@ public class IRVVotingSystem extends VotingSystem {
         ResourceBundle lang = ResourceBundle.getBundle("StateManagement");
         // Work with copy, because we should to eliminate candidates
         // while determining the winner
-        List<IRVVote> votesCpy = copyVotes();
+        List<RankedVote> votesCpy = copyVotes();
         int voteCnt = votesCpy.size();
         makeAllStillIn();
         int winnerInd = -1;
