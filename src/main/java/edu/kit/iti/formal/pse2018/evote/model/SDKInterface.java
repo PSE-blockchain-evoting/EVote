@@ -6,6 +6,8 @@ import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 public interface SDKInterface {
 
+    public String[] getAllVotes() throws NetworkException, NetworkConfigException;
+
     public void dispatchElectionOverCheck() throws NetworkException, NetworkConfigException;
 
     public ElectionDataIF getElectionData()throws NetworkException, NetworkConfigException;

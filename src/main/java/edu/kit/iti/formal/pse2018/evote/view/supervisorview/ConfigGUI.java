@@ -15,7 +15,7 @@ import java.awt.Font;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -24,7 +24,7 @@ import javax.swing.UIManager;
 /**
  * ConfigGUI is a JFrame which allows the configuration of an election by the user.
  */
-public class ConfigGUI extends JFrame {
+public class ConfigGUI extends JDialog {
 
     private SupervisorAdapter adapter;
 
@@ -77,7 +77,7 @@ public class ConfigGUI extends JFrame {
 
         tabsLayout.setActiveListener(l);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
         this.setTitle(lang.getString("Title"));
 
         lblTitle = new JLabel(lang.getString("Title"));

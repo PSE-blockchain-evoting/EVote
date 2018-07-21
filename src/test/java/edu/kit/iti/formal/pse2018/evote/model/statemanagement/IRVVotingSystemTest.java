@@ -2,6 +2,9 @@ package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
 import org.junit.Test;
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.FailedDetermineWinnerException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import static org.mockito.Mockito.*;
@@ -13,7 +16,7 @@ import static org.junit.Assert.*;
 public class IRVVotingSystemTest {
 
     @Test
-    public void all() {
+    public void all() throws WrongCandidateNameException, LoadVoteException {
         // Test IRVVotingSystem class by example from wikipedia.
         // https://en.wikipedia.org/wiki/Instant-runoff_voting
         Locale.setDefault(new Locale("de", "DE"));
@@ -41,31 +44,23 @@ public class IRVVotingSystemTest {
 
         // Load votes
         IRVVotingSystem irv = new IRVVotingSystem(election);
-        try {
-            // voter "a" -> Bob rank1, Sue rank3, Bill rank2
-            irv.loadVote("[\"Bob\",\"Bill\",\"Sue\"]");
-            // voter "b" -> Bob rank2, Sue rank1, Bill rank3
-            irv.loadVote("[\"Sue\",\"Bob\",\"Bill\"]");
-            // voter "c" -> Bob rank3, Sue rank2, Bill rank1
-            irv.loadVote("[\"Bill\",\"Sue\",\"Bob\"]");
-            // voter "d" -> Bob rank1, Sue rank3, Bill rank2
-            irv.loadVote("[\"Bob\",\"Bill\",\"Sue\"]");
-            // voter "e" -> Bob rank2, Sue rank1, Bill rank3
-            irv.loadVote("[\"Sue\",\"Bob\",\"Bill\"]");
-        } catch (Exception ex) {
-            assertTrue(false);
-        }
+        // voter "a" -> Bob rank1, Sue rank3, Bill rank2
+        irv.loadVote("[\"Bob\",\"Bill\",\"Sue\"]");
+        // voter "b" -> Bob rank2, Sue rank1, Bill rank3
+        irv.loadVote("[\"Sue\",\"Bob\",\"Bill\"]");
+        // voter "c" -> Bob rank3, Sue rank2, Bill rank1
+        irv.loadVote("[\"Bill\",\"Sue\",\"Bob\"]");
+        // voter "d" -> Bob rank1, Sue rank3, Bill rank2
+        irv.loadVote("[\"Bob\",\"Bill\",\"Sue\"]");
+        // voter "e" -> Bob rank2, Sue rank1, Bill rank3
+        irv.loadVote("[\"Sue\",\"Bob\",\"Bill\"]");
 
         // Verify determineWinner is right
-        Candidate cand = null;
-        try {
-            cand = irv.determineWinner();
-        } catch (Exception ex) {
-            assertTrue(false);
-        }
-        assertTrue(cand != null);
-        assertEquals("Sue", cand.getName());
-        assertEquals("Mega cool candidate #2", cand.getDescription());
+        String cand = irv.determineWinner();
+
+        assertNotNull(cand);
+        assertEquals("Sue", cand);
+        //assertEquals("Mega cool candidate #2", cand.getDescription()); we changed determineWinner return type to String
 
         // Verify determineResults is right
         int[] results = irv.determineResults();

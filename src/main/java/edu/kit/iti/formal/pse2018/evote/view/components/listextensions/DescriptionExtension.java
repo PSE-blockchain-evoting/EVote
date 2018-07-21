@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -18,6 +17,8 @@ public class DescriptionExtension extends ComponentExtension<JButton> {
 
     private LinkedList<DescriptionDialog> dds;
     private JFrame parent;
+    private String tableButtonText = "";
+    private boolean editable = true;
 
     /**
      * Creates a DescriptionExtension.
@@ -40,10 +41,10 @@ public class DescriptionExtension extends ComponentExtension<JButton> {
     @Override
     protected JButton createNewType() {
         DescriptionDialog dd = new DescriptionDialog(parent);
+        dd.setEditable(editable);
         dds.add(dd);
 
-        ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
-        JButton btnNew = new JButton(lang.getString("btnDescriptionText"));
+        JButton btnNew = new JButton(tableButtonText);
         btnNew.setFont(font);
         btnNew.addActionListener(new ActionListener() {
             @Override
@@ -69,6 +70,9 @@ public class DescriptionExtension extends ComponentExtension<JButton> {
      * @param desc The new description-
      */
     public void setDescription(int i, String desc) {
+        while (i >= components.size()) {
+            list.addNewEntry();
+        }
         dds.get(i).setDescription(desc);
     }
 
@@ -80,5 +84,30 @@ public class DescriptionExtension extends ComponentExtension<JButton> {
      */
     public String getDescription(int i) {
         return dds.get(i).getDescription();
+    }
+
+
+    /**
+     * Allow editing of the Descriptions.
+     *
+     * @param b enable/disable.
+     */
+    public void setEditable(boolean b) {
+        editable = b;
+        for (DescriptionDialog dd : dds) {
+            dd.setEditable(b);
+        }
+    }
+
+    /**
+     * Allows editing of the button Text in the Table.
+     *
+     * @param s The new String of the buttons.
+     */
+    public void setButtonText(String s) {
+        tableButtonText = s;
+        for (JButton btn : components) {
+            btn.setText(s);
+        }
     }
 }

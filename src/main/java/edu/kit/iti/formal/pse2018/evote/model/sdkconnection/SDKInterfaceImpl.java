@@ -6,6 +6,7 @@ import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 import edu.kit.iti.formal.pse2018.evote.model.SDKInterface;
+import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.AllVotesQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionDataQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionStatusQuery;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
@@ -100,7 +101,12 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
 
     private void createChannel() throws NetworkConfigException, NetworkException {
         ResourceBundle bundle = ResourceBundle.getBundle("config");
-        Channel channel = hfClient.getChannel(bundle.getString("channel_name"));
+        Channel channel;
+        try {
+            channel = hfClient.newChannel(bundle.getString("channel_name"));
+        } catch (InvalidArgumentException e) {
+            throw new NetworkConfigException(e.getMessage());
+        }
         String[] names = bundle.getString("peer_names").split(",");
         String[] urls = bundle.getString("peer_urls").split(",");
         assert names.length == urls.length;
@@ -170,4 +176,21 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
         }
         return query.getResult();
     }
+
+    /**
+     * Gets all votes from the network.
+     * @return all votes
+     */
+    public String[] getAllVotes() throws NetworkException, NetworkConfigException {
+        AllVotesQuery query = new AllVotesQuery(this.hfClient);
+        try {
+            query.query();
+        } catch (ProposalException e) {
+            throw new NetworkException(e.getMessage());
+        } catch (InvalidArgumentException e) {
+            throw new NetworkConfigException(e.getMessage());
+        }
+        return query.getResult();
+    }
+
 }

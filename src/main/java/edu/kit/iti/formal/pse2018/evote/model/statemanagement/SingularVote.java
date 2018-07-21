@@ -1,5 +1,11 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+
 public class SingularVote extends Vote {
 
     private Candidate candidateVote; //TODO: NEEDS TO BE SET
@@ -13,8 +19,15 @@ public class SingularVote extends Vote {
         return null;
     }
 
-    public SingularVote loadVote(String vote) {
-        //TODO: IMPLEMENT
-        return null;
+    /**
+     * converts a JSON-String into a SingularVote instance.
+     * @param vote the JSON String
+     * @return SingularVote containing representing the vote
+     */
+    public static SingularVote loadVote(String vote) {
+        JsonReader reader = Json.createReader(new ByteArrayInputStream(vote.getBytes(StandardCharsets.UTF_8)));
+        JsonObject obj = reader.readObject();
+        String candidate = obj.getString("candidate");
+        return new SingularVote(candidate);
     }
 }
