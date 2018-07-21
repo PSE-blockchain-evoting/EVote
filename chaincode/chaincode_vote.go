@@ -48,7 +48,7 @@ func (t *VoteChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 }
 
 func (t *VoteChaincode) allVotesQuery(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	var resultSlice []string
+	var resultSlice []string = []string{}
 
 	stateIterator, err := stub.GetStateByRange("v", "w")
 	if err != nil {
@@ -99,9 +99,10 @@ func (t *VoteChaincode) electionStatusQuery(stub shim.ChaincodeStubInterface, ar
 	if err != nil {
 		return shim.Error("The given Time couldn't be parsed")
 	}
+
 	endTime := time.Unix(timeInt, 0)
 	now := time.Now()
-	if now.Before(endTime) {
+	if now.After(endTime) {
 		stub.SetEvent("status", []byte("ended"))
 		return shim.Success(nil)
 	}
@@ -183,7 +184,10 @@ func (t *VoteChaincode) electionStatusQuery(stub shim.ChaincodeStubInterface, ar
 		}
 	}
 
-	stub.SetEvent("status", []byte("running"))
+	err = stub.SetEvent("status", []byte("running"))
+	if err != nil {
+		return shim.Error("SetEvent failed")
+	}
 	return shim.Success(nil)
 }
 
@@ -231,7 +235,7 @@ func (t *VoteChaincode) initializationInvokation(stub shim.ChaincodeStubInterfac
 
 	err := cid.AssertAttributeValue(stub, "voteAdmin", "true")
 	if err != nil {
-		return shim.Error("Failed to get state")
+		//return shim.Error("CID assert failed")
 	}
 
 	if len(args) != 1 {
@@ -259,7 +263,7 @@ func (t *VoteChaincode) initializationInvokation(stub shim.ChaincodeStubInterfac
 
 	_, err = strconv.ParseInt(string(*initMap["endDate"]), 10, 64)
 	if err != nil {
-		return shim.Error("The given Time couldn't be parsed")
+		return shim.Error("The given Time couldn't be parsed: " + string(*initMap["endDate"]))
 	}
 
 	if endConditionMap["type"] == nil {
@@ -297,7 +301,7 @@ func (t *VoteChaincode) voteInvokation(stub shim.ChaincodeStubInterface, args []
 	if err != nil {
 		return shim.Error("Failed to get state")
 	}
-	if stateBytes == nil {
+	if stateBytes != nil {
 		return shim.Error("User already voted once")
 	}
 
@@ -325,3 +329,4 @@ func main() {
 		fmt.Printf("Error starting Vote chaincode: %s", err)
 	}
 }
+
