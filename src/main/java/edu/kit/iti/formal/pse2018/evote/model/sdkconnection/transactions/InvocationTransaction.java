@@ -37,9 +37,10 @@ public abstract class InvocationTransaction extends Transaction {
         request.setFcn(getFunctionName());
         request.setArgs(buildArgumentStrings());
         Collection<ProposalResponse> responses = channel.sendTransactionProposal(request);
-        if (responses.stream().anyMatch(proposalResponse ->
-                !proposalResponse.isVerified() || proposalResponse.getStatus() != ChaincodeResponse.Status.SUCCESS)) {
-            throw new NetworkException("Invocation proposal failed");
+        for (ProposalResponse resp : responses) {
+            if (!resp.isVerified() ||  resp.getStatus() != ChaincodeResponse.Status.SUCCESS) {
+                throw new NetworkException(resp.getMessage());
+            }
         }
         channel.sendTransaction(responses).join();
     }

@@ -38,7 +38,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
      */
     private boolean checkElectionConfiguration(ElectionDataIF electionDataIF) {
         boolean value = true;
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("ConfigIssues.properties");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("ConfigIssues");
 
         if (!electionDataIF.getName().contains("\\w")) {
             configIssuesImpl.setNameIssue(resourceBundle.getString("name_issue"));

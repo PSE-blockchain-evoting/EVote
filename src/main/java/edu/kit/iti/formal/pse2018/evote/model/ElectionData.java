@@ -114,8 +114,8 @@ public class ElectionData implements ElectionDataIF {
         objectBuilder.add("candidates", arrayBuilder);
         arrayBuilder = Json.createArrayBuilder(Arrays.asList(electionData.getCandidateDescriptions()));
         objectBuilder.add("candidateDescriptions", arrayBuilder);
-        objectBuilder.add("startDate", Long.toString(electionData.getStartDate().getTime() / 1000 * 1000));
-        objectBuilder.add("endDate", Long.toString(electionData.getEndDate().getTime() / 1000 * 1000));
+        objectBuilder.add("startDate", electionData.getStartDate().getTime() / 1000 * 1000);
+        objectBuilder.add("endDate", electionData.getEndDate().getTime() / 1000 * 1000);
         JsonObjectBuilder temp = Json.createObjectBuilder();
         objectBuilder.add("endCondition", electionData.getEndCondition().asJsonObject());
         objectBuilder.add("voterCount", electionData.getVoterCount());
@@ -136,8 +136,8 @@ public class ElectionData implements ElectionDataIF {
 
         String[] candidateDescs = obj.getJsonArray("candidateDescriptions").getValuesAs(
             jsonValue -> jsonValue.toString().replaceAll("\"", "")).toArray(new String[0]);
-        Date startDate = new Date(Long.valueOf(obj.getString("startDate")));
-        Date endDate = new Date(Long.valueOf(obj.getString("endDate")));
+        Date startDate = new Date(obj.getJsonNumber("startDate").longValue());
+        Date endDate = new Date(obj.getJsonNumber("endDate").longValue());
         int voterCount = obj.getInt("voterCount");
         obj = obj.getJsonObject("endCondition");
         ElectionEndCondition condition;
