@@ -23,10 +23,14 @@ public class StackedBarChart extends Diagram {
 
     @Override
     protected void drawChart(Graphics graphics) {
-        Graphics2D g = (Graphics2D) graphics;
-        g.setColor(Color.ORANGE);
-        g.fillRect(0,0, 10, 10);
+        if (data == null) {
+            return;
+        }
+        if (colors == null) {
+            colors = TEST_COLOR;
+        }
 
+        Graphics2D g = (Graphics2D) graphics;
         int barDist = 20;
         int barHeight = (getHeight() - data[0] * barDist) / (data[0] + 1);
 

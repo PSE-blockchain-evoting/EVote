@@ -27,7 +27,7 @@ public class SupervisorMajorityVotingComponentManager extends SupervisorVSCompon
     public SupervisorMajorityVotingComponentManager(SupervisorAdapter adapter) {
         super(adapter);
         Font f = (Font) UIManager.get("General.font");
-        Font fbig = (Font)UIManager.get("Voter.font");
+        Font fbig = (Font)UIManager.get("Vote.font");
 
         canRes = new TextExtension(null, fbig, null);
         GapExtension ge = new GapExtension(canRes, null);

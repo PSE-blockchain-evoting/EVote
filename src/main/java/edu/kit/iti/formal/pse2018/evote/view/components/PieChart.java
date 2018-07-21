@@ -31,8 +31,6 @@ public class PieChart extends Diagram {
         int x0 = width < height ? 0 : (width - size) / 2;
         int y0 = width < height ? (height - size) / 2 : 0;
 
-        g.setColor(Color.CYAN);
-
         int sum = 0;
         for (int i = 0; i < data.length; i++) {
             sum += data[i];
