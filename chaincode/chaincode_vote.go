@@ -108,7 +108,7 @@ func (t *VoteChaincode) electionStatusQuery(stub shim.ChaincodeStubInterface, ar
 	}
 
 	//Check for VoterPercentileCondition
-	if string(*endConditionMap["type"]) != "VoterPercentileCondition" {
+	if string(*endConditionMap["type"]) != "\"VoterPercentileCondition\"" {
 		neededPercentage, err := strconv.Atoi(string(*endConditionMap["percentage"]))
 		if err != nil {
 			return shim.Error("Failed to read percentage for VoterPercentileCondition")
@@ -138,7 +138,7 @@ func (t *VoteChaincode) electionStatusQuery(stub shim.ChaincodeStubInterface, ar
 			stub.SetEvent("status", []byte("running"))
 			return shim.Success(nil)
 		}
-	} else if string(*endConditionMap["type"]) != "CandidatePercentileCondition" {
+	} else if string(*endConditionMap["type"]) != "\"CandidatePercentileCondition\"" {
 		neededPercentage, err := strconv.Atoi(string(*endConditionMap["percentage"]))
 		if err != nil {
 			return shim.Error("Failed to read percentage for VoterPercentileCondition")
@@ -269,7 +269,7 @@ func (t *VoteChaincode) initializationInvokation(stub shim.ChaincodeStubInterfac
 	if endConditionMap["type"] == nil {
 		return shim.Error("Json couldn't be parsed")
 	}
-	if string(*endConditionMap["type"]) != "TimeOnlyCondition" {
+	if string(*endConditionMap["type"]) != "\"TimeOnlyCondition\"" {
 		if endConditionMap["percentage"] == nil {
 			return shim.Error("Json couldn't be parsed")
 		}
