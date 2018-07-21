@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.util.LinkedList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.Border;
 
 /**
  * BasicList is a very basic implementation of
@@ -13,10 +14,11 @@ import javax.swing.JScrollPane;
 public class BasicList extends JPanel {
 
     protected JPanel pnlScroll;
+    protected JScrollPane spc;
     protected LinkedList<Entry> entries;
 
     /**
-     *  Creates a very basic List.
+     * Creates a very basic List.
      */
     public BasicList() {
         this.setLayout(new BorderLayout());
@@ -28,17 +30,25 @@ public class BasicList extends JPanel {
         JPanel p = new JPanel(new BorderLayout());
         p.add(pnlScroll, BorderLayout.NORTH);
 
-        JScrollPane scp = new JScrollPane(p);
-        this.add(scp);
+        spc = new JScrollPane(p);
+        this.add(spc);
 
         entries = new LinkedList<>();
     }
 
     /**
      * Gives the number entries in the list.
+     *
      * @return The number of Entries in this list.
      */
     public int getEntryCount() {
         return entries.size();
+    }
+
+    @Override
+    public void setBorder(Border border) {
+        if (spc != null) {
+            spc.setBorder(border);
+        }
     }
 }

@@ -15,6 +15,13 @@ public class PieChart extends Diagram {
 
     @Override
     protected void drawChart(Graphics graphics) {
+        if (data == null) {
+            return;
+        }
+        if (colors == null) {
+            colors = TEST_COLOR;
+        }
+
         Graphics2D g = (Graphics2D) graphics;
 
         int width = getWidth();
@@ -35,8 +42,8 @@ public class PieChart extends Diagram {
 
         double cur = 0;
         for (int i = 0; i < data.length; i++) {
-            g.setColor(colors[i]);
-            g.fillArc(x0, y0, size, size, (int)Math.round(ratio * cur), (int)Math.round(data[i] * ratio));
+            g.setColor(colors[i % colors.length]);
+            g.fillArc(x0, y0, size, size, (int) Math.round(ratio * cur), (int) Math.round(data[i] * ratio));
             cur += data[i];
         }
     }

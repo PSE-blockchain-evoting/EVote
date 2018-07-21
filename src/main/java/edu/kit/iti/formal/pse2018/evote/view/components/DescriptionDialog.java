@@ -24,6 +24,7 @@ public class DescriptionDialog extends JDialog {
 
     /**
      * Creates a JDialog which will allow the User to input a Description about something.
+     *
      * @param parent The parent JFrame.
      */
     @SuppressWarnings({"checkstyle:linelength", "checkstyle:Indentation"})
@@ -34,7 +35,7 @@ public class DescriptionDialog extends JDialog {
 
         this.setTitle(lang.getString("DescriptionTitle"));
         this.setModal(true);
-        this.setSize(200,300);
+        this.setSize(200, 300);
         this.setLocationRelativeTo(null);
 
         listener = new LinkedList<>();
@@ -81,8 +82,9 @@ public class DescriptionDialog extends JDialog {
 
     /**
      * Show or hide DescriptionDialog.
+     *
      * @param name The name of the description.
-     * @param b If true is shows the DescriptionDialog, if false it hides it.
+     * @param b    If true is shows the DescriptionDialog, if false it hides it.
      */
     public void setVisible(String name, boolean b) {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
@@ -110,5 +112,9 @@ public class DescriptionDialog extends JDialog {
 
     public String getDescription() {
         return txaDescription.getText();
+    }
+
+    public void setEditable(boolean b) {
+        this.txaDescription.setEditable(b);
     }
 }

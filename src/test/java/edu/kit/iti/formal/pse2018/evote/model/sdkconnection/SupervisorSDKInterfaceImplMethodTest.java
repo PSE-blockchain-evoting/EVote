@@ -39,7 +39,8 @@ public class SupervisorSDKInterfaceImplMethodTest {
 
     @Before
     public void setup() throws EnrollmentException, InvalidArgumentException, IOException, NetworkException,
-            AuthenticationException, InternalSDKException, NetworkConfigException {
+            AuthenticationException, InternalSDKException, NetworkConfigException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException {
         PowerMockito.mockStatic(HFCAClient.class);
         PowerMockito.mockStatic(HFClient.class);
 
@@ -51,6 +52,7 @@ public class SupervisorSDKInterfaceImplMethodTest {
         when(hfcaClient.enroll(anyString(), anyString())).thenReturn(enrollment);
         when(HFCAClient.createNewInstance(anyString(), eq(null))).thenReturn(hfcaClient);
         when(hfClient.getChannel(anyString())).thenReturn(channel);
+        when(hfClient.newChannel(anyString())).thenReturn(channel);
         when(HFClient.createNewInstance()).thenReturn(hfClient);
 
         File appUserFile = tempFolder.newFile("appuser");

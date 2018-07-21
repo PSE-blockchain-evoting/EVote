@@ -75,10 +75,11 @@ public class TimespanPanel extends ConfigPanel {
 
         spnPercentage = new JSpinner(new SpinnerNumberModel());
 
+        ResourceBundle viewLang = ResourceBundle.getBundle("View");
         cbxExtraCond = new JComboBox<>();
-        cbxExtraCond.addItem(lang.getString("TIME_ONLY_CONDITION"));
-        cbxExtraCond.addItem(lang.getString("VOTER_PERCENTILE_CONDITION"));
-        cbxExtraCond.addItem(lang.getString("CANDIDATE_PERCENTILE_CONDITION"));
+        cbxExtraCond.addItem(viewLang.getString("TIME_ONLY_CONDITION"));
+        cbxExtraCond.addItem(viewLang.getString("VOTER_PERCENTILE_CONDITION"));
+        cbxExtraCond.addItem(viewLang.getString("CANDIDATE_PERCENTILE_CONDITION"));
 
         Font f = (Font) UIManager.get("General.font");
         lblStart.setFont(f);
@@ -241,7 +242,7 @@ public class TimespanPanel extends ConfigPanel {
      * @param cond the ElectionEndCondition to show in the UI.
      */
     public void setEndCondition(ElectionEndCondition cond) {
-        ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
+        ResourceBundle lang = ResourceBundle.getBundle("View");
         if (cond instanceof TimeOnlyCondition) {
             cbxExtraCond.setSelectedItem(lang.getString("TIME_ONLY_CONDITION"));
         } else if (cond instanceof VoterPercentileCondition) {

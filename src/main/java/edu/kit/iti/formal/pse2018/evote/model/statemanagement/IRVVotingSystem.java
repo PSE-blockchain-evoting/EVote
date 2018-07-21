@@ -151,7 +151,7 @@ public class IRVVotingSystem extends VotingSystem {
     }
 
     @Override
-    public Candidate determineWinner() throws FailedDetermineWinnerException {
+    public String determineWinner() {
         ResourceBundle lang = ResourceBundle.getBundle("StateManagement");
         // Work with copy, because we should to eliminate candidates
         // while determining the winner
@@ -180,10 +180,9 @@ public class IRVVotingSystem extends VotingSystem {
             }
         }
         if (winnerInd < 0 || winnerInd >= this.candidates.length || !determined) {
-            // Failed to determine the winner.
-            throw new FailedDetermineWinnerException(lang.getString("failedDetermineWinner"));
+            return null;
         }
-        return new Candidate(this.candidates[winnerInd], this.candidateDescriptions[winnerInd]);
+        return this.candidates[winnerInd];
     }
 
     /**
@@ -194,6 +193,3 @@ public class IRVVotingSystem extends VotingSystem {
         return this.scores;
     }
 }
-
-
-
