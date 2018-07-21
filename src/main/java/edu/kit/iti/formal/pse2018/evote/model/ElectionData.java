@@ -152,7 +152,7 @@ public class ElectionData implements ElectionDataIF {
                 condition = new CandidatePercentileCondition(obj.getInt("percentage"));
                 break;
             default:
-                throw new RuntimeException("No valid end condition"); //TODO: Replace with proper exception
+                throw new javax.json.JsonException("No valid end condition");
         }
         return new ElectionData(name, description, votingSystemType, candidates, candidateDescs, startDate,
                 endDate, condition, voterCount);
