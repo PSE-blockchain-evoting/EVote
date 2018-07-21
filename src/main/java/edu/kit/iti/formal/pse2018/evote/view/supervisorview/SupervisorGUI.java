@@ -3,9 +3,9 @@ package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 import edu.kit.iti.formal.pse2018.evote.control.SupervisorViewToControlIF;
 import edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol.SupervisorControl;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
-import edu.kit.iti.formal.pse2018.evote.model.statemanagement.SupervisorElection;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 import edu.kit.iti.formal.pse2018.evote.utils.VotingSystemType;
+import edu.kit.iti.formal.pse2018.evote.view.ModelMock;
 import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 
 import java.awt.Color;
@@ -50,7 +50,7 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
      */
     public SupervisorGUI() {
         ElectionStatusListener listener = new SupervisorElectionEndListenerImpl(this);
-        SupervisorElection model = new SupervisorElection(listener);
+        ModelMock model = new ModelMock(listener);
         SupervisorViewToControlIF control = new SupervisorControl(this, model);
         adapter = new SupervisorAdapter(control, model);
 

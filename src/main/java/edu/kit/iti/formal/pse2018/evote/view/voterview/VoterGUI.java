@@ -3,8 +3,8 @@ package edu.kit.iti.formal.pse2018.evote.view.voterview;
 import edu.kit.iti.formal.pse2018.evote.control.VoterViewToControlIF;
 import edu.kit.iti.formal.pse2018.evote.control.votercontrol.VoterControl;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
-import edu.kit.iti.formal.pse2018.evote.model.statemanagement.VoterElection;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
+import edu.kit.iti.formal.pse2018.evote.view.ModelMock;
 import edu.kit.iti.formal.pse2018.evote.view.VoterControlToViewIF;
 import edu.kit.iti.formal.pse2018.evote.view.components.ImagePanel;
 
@@ -50,7 +50,7 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
      */
     public VoterGUI() {
         ElectionStatusListener listener = new VoterElectionEndListenerImpl(this);
-        VoterElection model = new VoterElection(listener);
+        ModelMock model = new ModelMock(listener);
         VoterViewToControlIF control = new VoterControl(this, model);
         adapter = new VoterAdapter(control, model);
 

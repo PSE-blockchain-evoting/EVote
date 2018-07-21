@@ -74,10 +74,10 @@ public class ModelMock implements SupervisorControlToModelIF,
         ElectionDataImpl data = new ElectionDataImpl();
         data.setName("Blockchain 2018");
         data.setDesc("Die wahl zur besten blockcahin kdkdkd");
-        data.setType(VotingSystemType.ABSOLUTEMAJORITY);
+        data.setType(VotingSystemType.INSTANTRUNOFF);
         String[] candidates = {"Bitcoin", "Ethereum", "Monero", "sth else"};
         data.setCandidates(candidates);
-        String[] desc = {"Die erste und schlechtsteste", "Die andere", "die Kriminielle", "hab ich nie von gehört"};
+        String[] desc = {"Die erste", "Die andere", "die geheime", "hab ich nie von gehört"};
         data.setCandidatesDesc(desc);
         data.setVoterCount(4);
         data.setStart(new Date(2001, 12, 22));
@@ -98,7 +98,8 @@ public class ModelMock implements SupervisorControlToModelIF,
 
     @Override
     public int[] getResults() {
-        int[] i = {10, 2, 41, 5};
+        //int[] i = {10, 2, 41, 5};
+        int[] i = {4, 123, 64, 22, 5, 43, 83, 23, 12, 73, 22, 13, 2};
         return i;
     }
 

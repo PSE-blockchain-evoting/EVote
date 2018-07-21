@@ -39,7 +39,6 @@ public class VoterMajorityVotingSystemComponentManager extends VoterVSComponentM
         Font f = (Font) UIManager.get("General.font");
         Font fbig = (Font) UIManager.get("Vote.font");
 
-
         ElectionDataIF data = adapter.getElectionData();
         DescriptionExtension de = new DescriptionExtension(null, fbig, null);
         de.setEditable(false);
@@ -56,7 +55,6 @@ public class VoterMajorityVotingSystemComponentManager extends VoterVSComponentM
             File nsfile = new File("src/main/resources/notSelected.png");
             BufferedImage imgsfile = ImageIO.read(sfile);
             BufferedImage imgnsfile = ImageIO.read(nsfile);
-            System.out.println("imgsfile type: " + imgsfile.getType());
             selected = new ImageIcon(ImageIO.read(sfile));
             unselected = new ImageIcon(ImageIO.read(nsfile));
         } catch (IOException e) {
