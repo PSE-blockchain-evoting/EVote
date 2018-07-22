@@ -173,6 +173,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         try {
             supervisorSDKInterface = SupervisorSDKInterfaceImpl
                     .createInstance(username, password, filePath, sdkEventListenerImpl);
+            sdkInterfaceImpl = supervisorSDKInterface;
             loadSDKData();
         } catch (IOException e) {
             return false;
@@ -180,6 +181,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
             e.printStackTrace();
             return false;
         }
+        sdkEventListenerImpl.start();
         return true;
     }
 
@@ -205,7 +207,9 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
 
         supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(filePath, sdkEventListenerImpl);
+        sdkInterfaceImpl = supervisorSDKInterface;
         loadSDKData();
+        sdkEventListenerImpl.start();
     }
 
     @Override

@@ -18,6 +18,7 @@ public class ConfirmedConfigListener extends SupervisorEventListener {
     public void actionPerformed(ActionEvent actionEvent) {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorControl");
         ElectionDataIF data = gui.getElectionData();
+        model.setVoters(gui.getVoters());
         boolean b = model.setElectionData(data);
         if (b) {
             gui.showSuccess(lang.getString("confirmedConfigSuccess"));
