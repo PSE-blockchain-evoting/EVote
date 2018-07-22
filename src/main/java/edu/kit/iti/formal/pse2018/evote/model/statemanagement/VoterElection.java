@@ -1,6 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.ElectionRunningException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
@@ -37,14 +38,15 @@ public class VoterElection extends Election implements VoterViewToModelIF, Voter
 
     @Override
     public void authenticate(String path) throws NetworkException, AuthenticationException,
-            InternalSDKException, NetworkConfigException, WrongCandidateNameException, LoadVoteException {
+            InternalSDKException, NetworkConfigException, WrongCandidateNameException,
+            LoadVoteException, ElectionRunningException {
         voterSDKInterface = new VoterSDKInterfaceImpl(path, sdkEventListenerImpl);
         sdkInterfaceImpl = voterSDKInterface;
         if (sdkInterfaceImpl.isElectionInitialized()) {
             loadSDKData();
             sdkEventListenerImpl.start();
-        }else{
-            throw new
+        } else {
+            throw new ElectionRunningException("No Election is initialized");
         }
     }
 }
