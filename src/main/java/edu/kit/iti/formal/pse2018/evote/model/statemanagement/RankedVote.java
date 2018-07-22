@@ -49,6 +49,19 @@ public class RankedVote extends Vote {
     }
 
     /**
+    * Get rank of the candidate by index of candidate.
+    * Returned value 0 means that there is no candidate in vote.
+    */
+    public int getRank(int candidateInd) {
+        for (int i = 0; i < preferences.size(); i++) {
+            if (preferences.get(i) == candidateInd) {
+                return i + 1;
+            }
+        }
+        return 0;
+    }
+
+    /**
     * Remove candidate from preferences list.
     */
     public void removeCandidate(int candInd) {

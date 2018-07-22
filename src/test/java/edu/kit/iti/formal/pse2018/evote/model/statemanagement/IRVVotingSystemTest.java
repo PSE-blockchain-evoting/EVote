@@ -61,6 +61,6 @@ public class IRVVotingSystemTest {
 
         // Verify determineResults is right
         int[] results = irv.determineResults();
-        assertArrayEquals(new int[]{2, 3, 0}, results);
+        assertArrayEquals(new int[]{3, 2, 2, 1, 2, 1, 2, 1, 2, 2}, results);
     }
 }

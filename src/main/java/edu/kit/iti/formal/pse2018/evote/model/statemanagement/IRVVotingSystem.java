@@ -1,6 +1,5 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
-import edu.kit.iti.formal.pse2018.evote.exceptions.FailedDetermineWinnerException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
@@ -152,7 +151,6 @@ public class IRVVotingSystem extends VotingSystem {
 
     @Override
     public String determineWinner() {
-        ResourceBundle lang = ResourceBundle.getBundle("StateManagement");
         // Work with copy, because we should to eliminate candidates
         // while determining the winner
         List<RankedVote> votesCpy = copyVotes();
@@ -190,6 +188,17 @@ public class IRVVotingSystem extends VotingSystem {
      */
     @Override
     public int[] determineResults() {
-        return this.scores;
+        int[] result = new int[1 + this.candidates.length * this.candidates.length];
+        result[0] = this.candidates.length;
+        for (int j = 0; j < this.votes.size(); j++) {
+            RankedVote vote = this.votes.get(j);
+            for (int i = 0; i < this.candidates.length; i++) {
+                int rank = vote.getRank(i);
+                if (rank > 0) {
+                    result[1 + (rank - 1) * this.candidates.length + i]++;
+                }
+            }
+        }
+        return result;
     }
 }
