@@ -105,7 +105,7 @@ public class ElectionData implements ElectionDataIF {
      * @param electionData the election data to marshall
      * @return JsonObject containing the election data
      */
-    public static JsonObject toJson(ElectionDataIF electionData) {
+    public static JsonObjectBuilder toJson(ElectionDataIF electionData) {
         JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
         objectBuilder.add("name", electionData.getName());
         objectBuilder.add("description", electionData.getDescription());
@@ -119,7 +119,7 @@ public class ElectionData implements ElectionDataIF {
         JsonObjectBuilder temp = Json.createObjectBuilder();
         objectBuilder.add("endCondition", electionData.getEndCondition().asJsonObject());
         objectBuilder.add("voterCount", electionData.getVoterCount());
-        return objectBuilder.build();
+        return objectBuilder;
     }
 
     /**

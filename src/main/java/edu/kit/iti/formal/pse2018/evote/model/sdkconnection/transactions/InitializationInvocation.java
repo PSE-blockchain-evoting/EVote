@@ -23,7 +23,7 @@ public class InitializationInvocation extends InvocationTransaction {
     protected String[] buildArgumentStrings() {
         StringWriter stringWriter = new StringWriter();
         JsonWriter writer = Json.createWriter(stringWriter);
-        JsonObject obj = ElectionData.toJson(this.electionData);
+        JsonObject obj = ElectionData.toJson(this.electionData).build();
         writer.writeObject(obj);
         writer.close();
         return new String[]{stringWriter.toString()};
