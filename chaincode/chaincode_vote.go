@@ -42,6 +42,9 @@ func (t *VoteChaincode) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 	} else if function == "voteInvokation" {
 		// Submits vote to chaincode.
 		return t.voteInvokation(stub, args)
+	} else if function == "initStatusQuery" {
+		//Check if an election is initialized
+		return t.initStatusQuery(stub, args)
 	}
 
 	return shim.Error("Invalid invoke function name. Expecting \"vote\" \"query\"")
@@ -81,7 +84,7 @@ func (t *VoteChaincode) electionStatusQuery(stub shim.ChaincodeStubInterface, ar
 		return shim.Error("Failed to get state")
 	}
 	if stateBytes == nil {
-		return shim.Error("Init set already")
+		return shim.Error("Init not set")
 	}
 
 	err = json.Unmarshal(stateBytes, &initMap)
@@ -106,9 +109,10 @@ func (t *VoteChaincode) electionStatusQuery(stub shim.ChaincodeStubInterface, ar
 		stub.SetEvent("status", []byte("ended"))
 		return shim.Success(nil)
 	}
-
+	stub.SetEvent("status", []byte("running"))
+	return shim.Success(nil)
 	//Check for VoterPercentileCondition
-	if string(*endConditionMap["type"]) != "\"VoterPercentileCondition\"" {
+	if string(*endConditionMap["type"]) != "VoterPercentileCondition" {
 		neededPercentage, err := strconv.Atoi(string(*endConditionMap["percentage"]))
 		if err != nil {
 			return shim.Error("Failed to read percentage for VoterPercentileCondition")
@@ -138,7 +142,7 @@ func (t *VoteChaincode) electionStatusQuery(stub shim.ChaincodeStubInterface, ar
 			stub.SetEvent("status", []byte("running"))
 			return shim.Success(nil)
 		}
-	} else if string(*endConditionMap["type"]) != "\"CandidatePercentileCondition\"" {
+	} else if string(*endConditionMap["type"]) != "CandidatePercentileCondition" {
 		neededPercentage, err := strconv.Atoi(string(*endConditionMap["percentage"]))
 		if err != nil {
 			return shim.Error("Failed to read percentage for VoterPercentileCondition")
@@ -311,6 +315,18 @@ func (t *VoteChaincode) voteInvokation(stub shim.ChaincodeStubInterface, args []
 	}
 
 	return shim.Success(nil)
+}
+
+func (t *VoteChaincode) initStatusQuery(stub shim.ChaincodeStubInterface, args []string) pb.Response {
+
+	stateBytes, err := stub.GetState("init")
+	if err != nil {
+		return shim.Success([]byte("true"))
+	}
+	if stateBytes != nil {
+		return shim.Success([]byte("true"))
+	}
+	return shim.Success([]byte("false"))
 }
 
 //Utility function
