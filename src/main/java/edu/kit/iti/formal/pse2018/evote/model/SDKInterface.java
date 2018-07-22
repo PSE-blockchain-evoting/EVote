@@ -11,4 +11,6 @@ public interface SDKInterface {
     public void dispatchElectionOverCheck() throws NetworkException, NetworkConfigException;
 
     public ElectionDataIF getElectionData()throws NetworkException, NetworkConfigException;
+
+    public boolean isElectionInitialized() throws NetworkException, NetworkConfigException;
 }
