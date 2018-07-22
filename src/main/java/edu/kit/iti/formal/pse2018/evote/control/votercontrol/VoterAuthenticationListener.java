@@ -25,7 +25,11 @@ public class VoterAuthenticationListener extends VoterEventListener {
         String path = gui.getAuthenticationPath();
         try {
             model.authenticate(path);
-            gui.showChoice();
+            if (model.isElectionInitialized()) {
+                gui.showWait();
+            } else {
+                gui.showChoice();
+            }
         } catch (InternalSDKException | NetworkException | AuthenticationException | NetworkConfigException e) {
             gui.showError(lang.getString("voterAuthenticationBad"));
             e.printStackTrace();

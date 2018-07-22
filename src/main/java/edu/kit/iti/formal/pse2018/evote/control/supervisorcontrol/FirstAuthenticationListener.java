@@ -23,7 +23,11 @@ public class FirstAuthenticationListener extends SupervisorEventListener {
         String password = gui.getPassword();
         try {
             model.firstAuthentication(name, password);
-            gui.showFrontpage();
+            if (model.isElectionInitialized()) {
+                gui.showResults();
+            } else {
+                gui.showFrontpage();
+            }
         } catch (NetworkException e) {
             gui.showError(lang.getString("authFailed"));
         } catch (AuthenticationException e) {

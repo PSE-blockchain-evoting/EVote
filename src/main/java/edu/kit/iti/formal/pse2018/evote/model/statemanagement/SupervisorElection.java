@@ -193,8 +193,10 @@ public class SupervisorElection extends Election implements SupervisorControlToM
     }
 
     @Override
-    public void startElection() throws NetworkException, NetworkConfigException {
+    public void startElection() throws NetworkException, NetworkConfigException,
+            WrongCandidateNameException, LoadVoteException {
         supervisorSDKInterface.createElection(electionDataIF);
+        reloadVotes();
         sdkEventListenerImpl.start();
     }
 

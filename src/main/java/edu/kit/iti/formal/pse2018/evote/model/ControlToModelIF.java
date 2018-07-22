@@ -17,4 +17,6 @@ public interface ControlToModelIF {
     public ElectionDataIF getElectionData();
 
     public String getWinner();
+
+    public boolean isElectionInitialized() throws NetworkException, NetworkConfigException;
 }
