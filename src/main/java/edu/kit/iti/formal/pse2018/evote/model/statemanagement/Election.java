@@ -22,15 +22,14 @@ public abstract class Election {
     /**
      * Creates an instance of Election. Election is the heart of the model.
      * It manages the related data and logic for Election.
+     *
      * @param electionStatusListener The GUI listener for election events.
-     * @throws NetworkException Exception within the SDKConnection is thrown.
+     * @throws NetworkException       Exception within the SDKConnection is thrown.
      * @throws NetworkConfigException The network was wrongly configured.
      */
     public Election(ElectionStatusListener electionStatusListener) throws NetworkException, NetworkConfigException {
         sdkEventListenerImpl = new SDKEventListenerImpl(this);
         sdkEventListenerImpl.setElectionStatusListener(electionStatusListener);
-        sdkEventListenerImpl.start();
-
     }
 
     public void setElectionStatusListener(ElectionStatusListener listener) {
@@ -41,8 +40,16 @@ public abstract class Election {
         return electionDataIF;
     }
 
+    /**
+     * Starts a check, whether election is over.
+     *
+     * @throws NetworkException
+     * @throws NetworkConfigException
+     */
     public void checkElectionOver() throws NetworkException, NetworkConfigException {
-        sdkInterfaceImpl.dispatchElectionOverCheck();
+        if (sdkInterfaceImpl != null) {
+            sdkInterfaceImpl.dispatchElectionOverCheck();
+        }
     }
 
     public String getWinner() {
@@ -55,9 +62,13 @@ public abstract class Election {
 
     protected void loadSDKData() throws NetworkException, NetworkConfigException,
             LoadVoteException, WrongCandidateNameException {
+
         assert (sdkInterfaceImpl != null);
-        electionDataIF = sdkInterfaceImpl.getElectionData();
-        reloadVotes();
+        //ElectionDataIF data = sdkInterfaceImpl.getElectionData();
+        //if (data != null) {
+        //    electionDataIF = data;
+        //    reloadVotes();
+        //}
     }
 
     protected void reloadVotes() throws NetworkException, NetworkConfigException,

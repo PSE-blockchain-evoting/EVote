@@ -41,5 +41,6 @@ public class VoterElection extends Election implements VoterViewToModelIF, Voter
         voterSDKInterface = new VoterSDKInterfaceImpl(path, sdkEventListenerImpl);
         sdkInterfaceImpl = voterSDKInterface;
         loadSDKData();
+        sdkEventListenerImpl.start();
     }
 }
