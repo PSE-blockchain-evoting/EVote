@@ -189,6 +189,9 @@ public class IRVVotingSystem extends VotingSystem {
     @Override
     public int[] determineResults() {
         int[] result = new int[1 + this.candidates.length * this.candidates.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = 0;
+        }
         result[0] = this.candidates.length;
         for (int j = 0; j < this.votes.size(); j++) {
             RankedVote vote = this.votes.get(j);
