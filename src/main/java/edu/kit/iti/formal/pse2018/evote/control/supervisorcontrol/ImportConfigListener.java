@@ -25,7 +25,7 @@ public class ImportConfigListener extends SupervisorEventListener {
             gui.showError(lang.getString("importFailed"));
             e.printStackTrace();
         }
-        gui.startConfigMenu();
         gui.loadConfigData();
+        gui.startConfigMenu();
     }
 }

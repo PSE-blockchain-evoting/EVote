@@ -170,6 +170,11 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
 
     @Override
     public void loadConfigData() {
+        if (config == null) {
+            config = new ConfigGUI(adapter);
+            config.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+            config.setSize(800, 600);
+        }
         config.loadConfigData();
     }
 

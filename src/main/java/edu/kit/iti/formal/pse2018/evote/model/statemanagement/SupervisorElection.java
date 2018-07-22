@@ -226,7 +226,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
     @Override
     public String[] getVoters() {
         String[] voterNames = new String[voters.length];
-        for (int i = 0; i < voterNames.length - 1; i++) {
+        for (int i = 0; i < voterNames.length; i++) {
             voterNames[i] = voters[i].getName();
         }
         return voterNames;
