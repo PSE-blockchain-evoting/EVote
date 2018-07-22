@@ -40,7 +40,11 @@ public class VoterElection extends Election implements VoterViewToModelIF, Voter
             InternalSDKException, NetworkConfigException, WrongCandidateNameException, LoadVoteException {
         voterSDKInterface = new VoterSDKInterfaceImpl(path, sdkEventListenerImpl);
         sdkInterfaceImpl = voterSDKInterface;
-        loadSDKData();
-        sdkEventListenerImpl.start();
+        if (sdkInterfaceImpl.isElectionInitialized()) {
+            loadSDKData();
+            sdkEventListenerImpl.start();
+        }else{
+            throw new
+        }
     }
 }
