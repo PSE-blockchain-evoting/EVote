@@ -56,7 +56,11 @@ public abstract class Election {
         return votingSystem.determineWinner();
     }
 
-    public int[] getResults() {
+    /**
+     * Returns the current Results of the running election.
+     * @return the result data.
+     */
+    public int[] getResults(){
         return votingSystem.determineResults();
     }
 
@@ -64,11 +68,11 @@ public abstract class Election {
             LoadVoteException, WrongCandidateNameException {
 
         assert (sdkInterfaceImpl != null);
-        //ElectionDataIF data = sdkInterfaceImpl.getElectionData();
-        //if (data != null) {
-        //    electionDataIF = data;
-        //    reloadVotes();
-        //}
+        ElectionDataIF data = sdkInterfaceImpl.getElectionData();
+        if (data != null) {
+            electionDataIF = data;
+            reloadVotes();
+        }
     }
 
     protected void reloadVotes() throws NetworkException, NetworkConfigException,
@@ -78,5 +82,9 @@ public abstract class Election {
         for (String vote : votes) {
             votingSystem.loadVote(vote);
         }
+    }
+
+    public boolean isElectionInitialized() throws NetworkException, NetworkConfigException {
+        return sdkInterfaceImpl.isElectionInitialized();
     }
 }

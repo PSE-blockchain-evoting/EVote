@@ -1,7 +1,9 @@
 package edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol;
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 
@@ -21,10 +23,12 @@ public class StartElectionListener extends SupervisorEventListener {
             model.startElection();
             gui.showResults();
             gui.showSuccess(lang.getString("startElectionSuccess"));
-        } catch (NetworkException e) {
+        } catch (NetworkException | NetworkConfigException e) {
+            e.printStackTrace();
             gui.showError(lang.getString("startElectionBad"));
-        } catch (NetworkConfigException e) {
-            gui.showError(lang.getString("startElectionBad"));
+        } catch (WrongCandidateNameException | LoadVoteException e) {
+            gui.showError(lang.getString("couldntLoadInitialData"));
+            e.printStackTrace();
         }
     }
 }

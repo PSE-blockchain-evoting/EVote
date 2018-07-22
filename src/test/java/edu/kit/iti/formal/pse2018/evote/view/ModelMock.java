@@ -93,6 +93,11 @@ public class ModelMock implements SupervisorControlToModelIF,
     }
 
     @Override
+    public boolean isElectionInitialized() throws NetworkException, NetworkConfigException {
+        return true;
+    }
+
+    @Override
     public void setElectionStatusListener(ElectionStatusListener listener) {
     }
 

@@ -2,8 +2,10 @@ package edu.kit.iti.formal.pse2018.evote.model;
 
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.io.FileNotFoundException;
@@ -24,7 +26,7 @@ public interface SupervisorControlToModelIF extends ControlToModelIF {
 
     public String[] getVotes();
 
-    public void startElection() throws NetworkException, NetworkConfigException;
+    public void startElection() throws NetworkException, NetworkConfigException, WrongCandidateNameException, LoadVoteException;
 
     public void destroyElection() throws NetworkException, NetworkConfigException;
 }

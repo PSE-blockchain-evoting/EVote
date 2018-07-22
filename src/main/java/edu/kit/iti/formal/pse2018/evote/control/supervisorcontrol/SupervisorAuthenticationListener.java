@@ -1,6 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol;
 
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.ElectionRunningException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
@@ -25,12 +26,19 @@ public class SupervisorAuthenticationListener extends SupervisorEventListener {
         String authPath = gui.getAuthenticationPath();
         try {
             model.authenticate(authPath);
-            gui.showFrontpage();
+            if (model.isElectionInitialized()) {
+                gui.showResults();
+            } else {
+                gui.showFrontpage();
+            }
         } catch (NetworkException | AuthenticationException | InternalSDKException | NetworkConfigException e) {
             gui.showError(lang.getString("authFailed"));
             e.printStackTrace();
         } catch (WrongCandidateNameException | LoadVoteException e) {
             gui.showError(lang.getString("couldntLoadInitialData"));
+            e.printStackTrace();
+        } catch (ElectionRunningException e) {
+            System.err.println("ElectionRunningException was not caught");
             e.printStackTrace();
         }
     }
