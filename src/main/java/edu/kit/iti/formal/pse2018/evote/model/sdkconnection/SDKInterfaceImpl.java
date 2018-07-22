@@ -9,6 +9,7 @@ import edu.kit.iti.formal.pse2018.evote.model.SDKInterface;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.AllVotesQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionDataQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionStatusQuery;
+import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.InitStatusQuery;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.io.FileInputStream;
@@ -191,6 +192,24 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
             throw new NetworkConfigException(e.getMessage());
         }
         return query.getResult();
+    }
+
+    /**
+     * Checks if an election is initialized or not
+     * @return true, if election is initialized
+     * @throws NetworkException
+     * @throws NetworkConfigException
+     */
+    public boolean isElectionInitialized() throws NetworkException, NetworkConfigException {
+        InitStatusQuery query = new InitStatusQuery(this.hfClient);
+        try {
+            query.query();
+        } catch (ProposalException e) {
+            throw new NetworkException(e.getMessage());
+        } catch (InvalidArgumentException e) {
+            throw new NetworkConfigException(e.getMessage());
+        }
+        return "true".equals(query.getResult());
     }
 
 }
