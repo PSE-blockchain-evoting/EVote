@@ -116,7 +116,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         JsonReader json = Json.createReader(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
         JsonObject obj = json.readObject();
         String[] voters = obj.getJsonArray("voters").getValuesAs(
-            jsonValue -> jsonValue.toString().replaceAll("\"", "")).toArray(new String[0]);
+                jsonValue -> jsonValue.toString().replaceAll("\"", "")).toArray(new String[0]);
         ElectionDataIF data = ElectionData.fromJSon(obj);
         //One could verify the import but it would require interface return type change to boolean
         electionDataIF = data;
@@ -174,14 +174,16 @@ public class SupervisorElection extends Election implements SupervisorControlToM
             supervisorSDKInterface = SupervisorSDKInterfaceImpl
                     .createInstance(username, password, filePath, sdkEventListenerImpl);
             sdkInterfaceImpl = supervisorSDKInterface;
-            loadSDKData();
+            if (sdkInterfaceImpl.isElectionInitialized()) {
+                loadSDKData();
+                sdkEventListenerImpl.start();
+            }
         } catch (IOException e) {
             return false;
         } catch (WrongCandidateNameException | LoadVoteException e) {
             e.printStackTrace();
             return false;
         }
-        sdkEventListenerImpl.start();
         return true;
     }
 
@@ -193,6 +195,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
     @Override
     public void startElection() throws NetworkException, NetworkConfigException {
         supervisorSDKInterface.createElection(electionDataIF);
+        sdkEventListenerImpl.start();
     }
 
     @Override
@@ -206,10 +209,13 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
 
-        supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(filePath, sdkEventListenerImpl);
+        supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(filePath,
+                sdkEventListenerImpl);
         sdkInterfaceImpl = supervisorSDKInterface;
-        loadSDKData();
-        sdkEventListenerImpl.start();
+        if (sdkInterfaceImpl.isElectionInitialized()) {
+            loadSDKData();
+            sdkEventListenerImpl.start();
+        }
     }
 
     @Override
