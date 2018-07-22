@@ -2,12 +2,15 @@ package edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol;
 
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 
 public class SupervisorAuthenticationListener extends SupervisorEventListener {
 
@@ -18,18 +21,17 @@ public class SupervisorAuthenticationListener extends SupervisorEventListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorControl");
         String authPath = gui.getAuthenticationPath();
         try {
             model.authenticate(authPath);
             gui.showFrontpage();
-        } catch (NetworkException e) {
-            gui.showError("authFailed");
-        } catch (AuthenticationException e) {
-            gui.showError("authFailed");
-        } catch (InternalSDKException e) {
-            gui.showError("authFailed");
-        } catch (NetworkConfigException e) {
-            gui.showError("authFailed");
+        } catch (NetworkException | AuthenticationException | InternalSDKException | NetworkConfigException e) {
+            gui.showError(lang.getString("authFailed"));
+            e.printStackTrace();
+        } catch (WrongCandidateNameException | LoadVoteException e) {
+            gui.showError(lang.getString("couldntLoadInitialData"));
+            e.printStackTrace();
         }
     }
 }

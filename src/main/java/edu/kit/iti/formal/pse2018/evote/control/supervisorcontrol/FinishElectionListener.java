@@ -1,5 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol;
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 
@@ -14,6 +16,12 @@ public class FinishElectionListener extends SupervisorEventListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        model.destroyElection();
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorControl");
+        try {
+            model.destroyElection();
+        } catch (NetworkException | NetworkConfigException e) {
+            gui.showError(lang.getString("electionDestructionFaile"));
+            e.printStackTrace();
+        }
     }
 }

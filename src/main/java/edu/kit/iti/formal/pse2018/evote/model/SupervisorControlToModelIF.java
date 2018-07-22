@@ -6,11 +6,14 @@ import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 public interface SupervisorControlToModelIF extends ControlToModelIF {
 
-    public void importConfig(String path);
+    public void importConfig(String path) throws IOException;
 
-    public void exportConfig(String path);
+    public void exportConfig(String path) throws IOException;
 
     public void setVoters(String[] names);
 
@@ -23,5 +26,5 @@ public interface SupervisorControlToModelIF extends ControlToModelIF {
 
     public void startElection() throws NetworkException, NetworkConfigException;
 
-    public void destroyElection();
+    public void destroyElection() throws NetworkException, NetworkConfigException;
 }

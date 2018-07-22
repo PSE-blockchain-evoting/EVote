@@ -1,5 +1,9 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
+import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
 import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 
@@ -22,7 +26,7 @@ public class SDKEventListenerImpl extends Thread implements SDKEventListener {
      *
      * @param election The Election context.
      */
-    public SDKEventListenerImpl(Election election) {
+    public SDKEventListenerImpl(Election election) throws NetworkException, NetworkConfigException {
         hasEnded = false;
         Random r = new Random();
         backoff = Math.round(r.nextGaussian() * DEVIATION + BACKOFF_AVG);
@@ -61,7 +65,14 @@ public class SDKEventListenerImpl extends Thread implements SDKEventListener {
             long diff = cur - lastEvent;
             if (diff > backoff) {
                 lastEvent = cur;
-                election.checkElectionOver();
+                try {
+                    election.checkElectionOver();
+                    election.reloadVotes();
+                } catch (NetworkException | NetworkConfigException
+                        | LoadVoteException | WrongCandidateNameException e) {
+                    e.printStackTrace();
+                    break;
+                }
             }
 
             long sleep = backoff + lastEvent - cur;
