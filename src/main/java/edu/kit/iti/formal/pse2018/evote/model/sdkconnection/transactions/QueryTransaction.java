@@ -34,6 +34,7 @@ public abstract class QueryTransaction extends Transaction {
      * @throws InvalidArgumentException @see Hyperledger
      */
     public void query() throws ProposalException, InvalidArgumentException, NetworkException {
+        System.out.println("\u001B[34m" + "QUERY: " + getFunctionName() + "\u001B[0m");
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         Channel channel = this.client.getChannel(bundle.getString("channel_name"));
         QueryByChaincodeRequest request = client.newQueryProposalRequest();
