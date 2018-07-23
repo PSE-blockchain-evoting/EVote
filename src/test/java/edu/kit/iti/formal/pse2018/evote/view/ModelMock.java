@@ -21,7 +21,7 @@ public class ModelMock implements SupervisorControlToModelIF,
 
     private String ownVote = null;
 
-    public ModelMock(ElectionStatusListener l) {
+    public ModelMock(ElectionStatusListener l) throws NetworkException, NetworkConfigException{
 
     }
 
@@ -94,7 +94,7 @@ public class ModelMock implements SupervisorControlToModelIF,
 
     @Override
     public boolean isElectionInitialized() throws NetworkException, NetworkConfigException {
-        return true;
+        return false;
     }
 
     @Override

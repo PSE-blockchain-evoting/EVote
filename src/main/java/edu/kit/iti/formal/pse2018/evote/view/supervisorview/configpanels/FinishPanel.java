@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.LayoutManager2;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
@@ -57,7 +58,7 @@ public class FinishPanel extends ConfigPanel {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
 
         lblTimeFrame = new JLabel();
-        lblVotingSystem = new JLabel(lang.getString("lblVotingSystemPrefix") + ":" + "hardcoded");
+        lblVotingSystem = new JLabel(lang.getString("lblVotingSystemPrefix") + ":");
 
         Font f = (Font) UIManager.get("General.font");
         lblCandidates = new JLabel(lang.getString("lblCandidateText") + ":");
@@ -78,7 +79,7 @@ public class FinishPanel extends ConfigPanel {
         txaDescription.setLineWrap(true);
         spDescription = new JScrollPane(txaDescription);
 
-        lblIssues = new JLabel("<html>Here are all the issues <p> Issue1 </p></html>");
+        lblIssues = new JLabel("");
         lblIssues.setForeground(Color.RED);
         lblIssues.setVerticalAlignment(SwingConstants.NORTH);
 
@@ -175,8 +176,9 @@ public class FinishPanel extends ConfigPanel {
         ElectionDataIF data = gui.getElectionData();
         Date startDate = data.getStartDate();
         Date endDate = data.getEndDate();
-        String start = startDate != null ? startDate.toString() : "________";
-        String end = endDate != null ? endDate.toString() : "________";
+        SimpleDateFormat spf = new SimpleDateFormat("dd.MM.yyyy, hh:mm");
+        String start = startDate != null ? spf.format(startDate) : "________";
+        String end = endDate != null ? spf.format(endDate) : "________";
 
         lblTimeFrame.setText(lang.getString("lblTimespanPrefix") + start
                 + lang.getString("lblTimespanMiddle") + " " + end);
