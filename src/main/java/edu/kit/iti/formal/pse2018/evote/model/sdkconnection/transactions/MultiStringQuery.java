@@ -1,7 +1,5 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions;
 
-import org.hyperledger.fabric.sdk.HFClient;
-
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -9,6 +7,8 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonReader;
 import javax.json.JsonString;
+
+import org.hyperledger.fabric.sdk.HFClient;
 
 public abstract class MultiStringQuery extends QueryTransaction {
 

@@ -27,7 +27,8 @@ public interface SupervisorControlToModelIF extends ControlToModelIF {
 
     public String[] getVotes();
 
-    public void startElection() throws NetworkException, NetworkConfigException, WrongCandidateNameException, LoadVoteException, IOException, EnrollmentException;
+    public void startElection() throws NetworkException, NetworkConfigException,
+            WrongCandidateNameException, LoadVoteException, IOException, EnrollmentException;
 
     public void destroyElection() throws NetworkException, NetworkConfigException;
 }

@@ -43,8 +43,8 @@ public abstract class Election {
     /**
      * Starts a check, whether election is over.
      *
-     * @throws NetworkException
-     * @throws NetworkConfigException
+     * @throws NetworkException       Exception within the SDKConnection is thrown.
+     * @throws NetworkConfigException The network was wrongly configured.
      */
     public void checkElectionOver() throws NetworkException, NetworkConfigException {
         if (sdkInterfaceImpl != null) {
@@ -58,9 +58,10 @@ public abstract class Election {
 
     /**
      * Returns the current Results of the running election.
+     *
      * @return the result data.
      */
-    public int[] getResults(){
+    public int[] getResults() {
         return votingSystem.determineResults();
     }
 

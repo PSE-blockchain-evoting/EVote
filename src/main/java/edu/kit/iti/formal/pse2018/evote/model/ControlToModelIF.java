@@ -12,7 +12,8 @@ import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 public interface ControlToModelIF {
 
     public void authenticate(String path) throws NetworkException, AuthenticationException,
-            InternalSDKException, NetworkConfigException, WrongCandidateNameException, LoadVoteException, ElectionRunningException;
+            InternalSDKException, NetworkConfigException, WrongCandidateNameException,
+            LoadVoteException, ElectionRunningException;
 
     public ElectionDataIF getElectionData();
 
