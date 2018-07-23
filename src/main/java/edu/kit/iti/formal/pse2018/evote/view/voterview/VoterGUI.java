@@ -127,9 +127,11 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
             this.getContentPane().remove(c);
         }
 
-        ResourceBundle lang = ResourceBundle.getBundle("VoterView");
+        ElectionDataIF data = adapter.getElectionData();
+        componentManager = VoterVSComponentManagerBuilder.generateComponentManager(data.getVotingSystem(), adapter);
         currentPanel = new VoterWait(adapter, componentManager);
         buildLayout();
+        ResourceBundle lang = ResourceBundle.getBundle("VoterView");
         lblTitle.setText(lang.getString("WaitTitle"));
     }
 

@@ -1,6 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
@@ -31,6 +32,7 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
+import javax.json.JsonString;
 
 
 public class SupervisorElection extends Election implements SupervisorControlToModelIF, SupervisorViewToModelIF {
@@ -115,8 +117,9 @@ public class SupervisorElection extends Election implements SupervisorControlToM
 
         JsonReader json = Json.createReader(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
         JsonObject obj = json.readObject();
-        String[] voters = obj.getJsonArray("voters").getValuesAs(
-                jsonValue -> jsonValue.toString().replaceAll("\"", "")).toArray(new String[0]);
+        String[] voters = obj.getJsonArray("voters").getValuesAs(JsonString.class)
+                .stream().map(JsonString::getString).toArray(String[]::new);
+
         ElectionDataIF data = ElectionData.fromJSon(obj);
         //One could verify the import but it would require interface return type change to boolean
         electionDataIF = data;
@@ -194,8 +197,16 @@ public class SupervisorElection extends Election implements SupervisorControlToM
 
     @Override
     public void startElection() throws NetworkException, NetworkConfigException,
-            WrongCandidateNameException, LoadVoteException {
+            WrongCandidateNameException, LoadVoteException, IOException, EnrollmentException {
         supervisorSDKInterface.createElection(electionDataIF);
+
+        ResourceBundle config = ResourceBundle.getBundle("config");
+        File f = new File(config.getString("voter_Certificates"));
+        f.mkdirs();
+        for (Voter v : voters) {
+            supervisorSDKInterface.createUser(v.getName(), config.getString("voter_Certificates")
+                    + File.separator + v.getName() + ".cert");
+        }
         reloadVotes();
         sdkEventListenerImpl.start();
     }

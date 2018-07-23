@@ -129,6 +129,11 @@ public class ModelMock implements SupervisorControlToModelIF,
     }
 
     @Override
+    public boolean hasVoted() {
+        return false;
+    }
+
+    @Override
     public String getOwnVote() {
         //return "{\"candidate\":\"Bitcoin\"}";
         return ownVote;

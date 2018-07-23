@@ -13,6 +13,7 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonString;
 
 /**
  * Data Transfer Object for metadata pertaining a election.
@@ -131,11 +132,11 @@ public class ElectionData implements ElectionDataIF {
         String name = obj.getString("name");
         String description = obj.getString("description");
         VotingSystemType votingSystemType = VotingSystemType.valueOf(obj.getString("votingSystem"));
-        String[] candidates = obj.getJsonArray("candidates").getValuesAs(
-            jsonValue -> jsonValue.toString().replaceAll("\"", "")).toArray(new String[0]);
+        String[] candidates = obj.getJsonArray("candidates").getValuesAs(JsonString.class)
+                .stream().map(x -> x.getString()).toArray(String[]::new);
+        String[] candidateDescs = obj.getJsonArray("candidateDescriptions").getValuesAs(JsonString.class)
+                .stream().map(x -> x.getString()).toArray(String[]::new);
 
-        String[] candidateDescs = obj.getJsonArray("candidateDescriptions").getValuesAs(
-            jsonValue -> jsonValue.toString().replaceAll("\"", "")).toArray(new String[0]);
         Date startDate = new Date(obj.getJsonNumber("startDate").longValue());
         Date endDate = new Date(obj.getJsonNumber("endDate").longValue());
         int voterCount = obj.getInt("voterCount");
