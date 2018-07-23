@@ -17,11 +17,22 @@ public class VoterElection extends Election implements VoterViewToModelIF, Voter
 
     private VoterSDKInterface voterSDKInterface;
     private String vote;
+    private boolean hasVoted;
 
 
+    /**
+     * Initializes VoterElection. This provides very basic offline functionality and the voter should authenticate
+     * to unlock most of the provided features.
+     *
+     * @param electionStatusListener the StatusListener for the View about Election updates.
+     * @throws NetworkException
+     * @throws NetworkConfigException
+     */
     public VoterElection(ElectionStatusListener electionStatusListener) throws NetworkException,
             NetworkConfigException {
         super(electionStatusListener);
+        vote = null;
+        hasVoted = false;
     }
 
     @Override
@@ -33,7 +44,13 @@ public class VoterElection extends Election implements VoterViewToModelIF, Voter
     @Override
     public boolean vote(String vote) throws NetworkException, NetworkConfigException {
         voterSDKInterface.vote(vote);
+        this.vote = vote;
         return true;
+    }
+
+    @Override
+    public boolean hasVoted() {
+        return hasVoted;
     }
 
     @Override
@@ -44,6 +61,13 @@ public class VoterElection extends Election implements VoterViewToModelIF, Voter
         sdkInterfaceImpl = voterSDKInterface;
         if (sdkInterfaceImpl.isElectionInitialized()) {
             loadSDKData();
+            String ownVote = voterSDKInterface.getOwnVote();
+            if (ownVote.equals("")) {
+                hasVoted = false;
+            } else {
+                hasVoted = true;
+                vote = ownVote;
+            }
             sdkEventListenerImpl.start();
         } else {
             throw new ElectionRunningException("No Election is initialized");
