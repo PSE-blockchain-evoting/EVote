@@ -3,7 +3,6 @@ package edu.kit.iti.formal.pse2018.evote.control.votercontrol;
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.ElectionRunningException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
@@ -35,7 +34,7 @@ public class VoterAuthenticationListener extends VoterEventListener {
         } catch (InternalSDKException | NetworkException | AuthenticationException | NetworkConfigException e) {
             gui.showError(lang.getString("voterAuthenticationBad"));
             e.printStackTrace();
-        } catch (WrongCandidateNameException | LoadVoteException e) {
+        } catch (WrongCandidateNameException e) {
             gui.showError(lang.getString("couldntLoadInitialData"));
             e.printStackTrace();
         } catch (ElectionRunningException e) {

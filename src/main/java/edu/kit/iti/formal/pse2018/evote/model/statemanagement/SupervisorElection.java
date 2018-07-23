@@ -3,7 +3,6 @@ package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
@@ -183,7 +182,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
             }
         } catch (IOException e) {
             return false;
-        } catch (WrongCandidateNameException | LoadVoteException e) {
+        } catch (WrongCandidateNameException e) {
             e.printStackTrace();
             return false;
         }
@@ -197,7 +196,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
 
     @Override
     public void startElection() throws NetworkException, NetworkConfigException,
-            WrongCandidateNameException, LoadVoteException, IOException, EnrollmentException {
+            WrongCandidateNameException, IOException, EnrollmentException {
         supervisorSDKInterface.createElection(electionDataIF);
 
         ResourceBundle config = ResourceBundle.getBundle("config");
@@ -218,7 +217,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
 
     @Override
     public void authenticate(String path) throws NetworkException, AuthenticationException,
-            InternalSDKException, NetworkConfigException, WrongCandidateNameException, LoadVoteException {
+            InternalSDKException, NetworkConfigException, WrongCandidateNameException {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
 
@@ -258,7 +257,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
 
     @Override
     protected void loadSDKData() throws NetworkException, NetworkConfigException,
-            WrongCandidateNameException, LoadVoteException {
+            WrongCandidateNameException {
         super.loadSDKData();
     }
 }

@@ -1,7 +1,6 @@
 package edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol;
 
 import edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
@@ -28,7 +27,7 @@ public class StartElectionListener extends SupervisorEventListener {
         } catch (NetworkException | NetworkConfigException | EnrollmentException | IOException e) {
             e.printStackTrace();
             gui.showError(lang.getString("startElectionBad"));
-        } catch (WrongCandidateNameException | LoadVoteException e) {
+        } catch (WrongCandidateNameException e) {
             gui.showError(lang.getString("couldntLoadInitialData"));
             e.printStackTrace();
         }
