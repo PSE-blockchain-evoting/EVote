@@ -203,7 +203,7 @@ func (t *VoteChaincode) ownVoteQuery(stub shim.ChaincodeStubInterface, args []st
 	key := "vote_" + creatorID
 	stateBytes, err := stub.GetState(key)
 	if err != nil {
-		return shim.Error("Failed to get vote")
+		return shim.Success(nil)
 	}
 
 	return shim.Success(stateBytes)
