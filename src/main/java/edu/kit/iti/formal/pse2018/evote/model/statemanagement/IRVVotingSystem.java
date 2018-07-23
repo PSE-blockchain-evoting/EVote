@@ -19,11 +19,6 @@ public class IRVVotingSystem extends VotingSystem {
     private String[] candidates;
 
     /**
-     * All Candidate Descriptions.
-     */
-    private String[] candidateDescriptions;
-
-    /**
     * Scores of each candidate at some round.
     */
     private int[] scores;
@@ -46,7 +41,6 @@ public class IRVVotingSystem extends VotingSystem {
     public IRVVotingSystem(Election election) {
         super(election);
         candidates = election.getElectionData().getCandidates();
-        candidateDescriptions = election.getElectionData().getCandidateDescriptions();
         int candCnt = candidates.length;
         scores = new int[candCnt];
         stillIn = new boolean[candCnt];

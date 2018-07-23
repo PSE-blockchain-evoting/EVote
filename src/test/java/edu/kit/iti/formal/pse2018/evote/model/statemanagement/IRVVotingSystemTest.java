@@ -19,23 +19,11 @@ public class IRVVotingSystemTest {
         Locale.setDefault(new Locale("de", "DE"));
 
         // First: prepare candidates.
-        Candidate candBob = mock(Candidate.class);
-        Candidate candSue = mock(Candidate.class);
-        Candidate candBill = mock(Candidate.class);
-        when(candBob.getName()).thenReturn("Bob");
-        when(candBob.getDescription()).thenReturn("Mega cool candidate #1");
-        when(candSue.getName()).thenReturn("Sue");
-        when(candSue.getDescription()).thenReturn("Mega cool candidate #2");
-        when(candBill.getName()).thenReturn("Bill");
-        when(candBill.getDescription()).thenReturn("Mega cool candidate #3");
-        String[] candidates = new String[]{candBob.getName(), candSue.getName(), candBill.getName()};
-        String[] candidateDescriptions = new String[]{candBob.getDescription(), candSue.getDescription(),
-            candBill.getDescription()};
+        String[] candidates = new String[]{"Bob", "Sue", "Bill"};
 
         // Prepare election and election data.
         ElectionDataIF electionData = mock(ElectionDataIF.class);
         when(electionData.getCandidates()).thenReturn(candidates);
-        when(electionData.getCandidateDescriptions()).thenReturn(candidateDescriptions);
         Election election = mock(Election.class);
         when(election.getElectionData()).thenReturn(electionData);
 
@@ -57,7 +45,6 @@ public class IRVVotingSystemTest {
 
         assertNotNull(cand);
         assertEquals("Sue", cand);
-        //assertEquals("Mega cool candidate #2", cand.getDescription()); we changed determineWinner return type to String
 
         // Verify determineResults is right
         int[] results = irv.determineResults();
