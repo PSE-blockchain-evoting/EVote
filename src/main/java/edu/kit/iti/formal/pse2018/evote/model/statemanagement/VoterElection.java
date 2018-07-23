@@ -25,8 +25,8 @@ public class VoterElection extends Election implements VoterViewToModelIF, Voter
      * to unlock most of the provided features.
      *
      * @param electionStatusListener the StatusListener for the View about Election updates.
-     * @throws NetworkException
-     * @throws NetworkConfigException
+     * @throws NetworkException If a Network Issue occurs.
+     * @throws NetworkConfigException If the Network wasn't configured properly.
      */
     public VoterElection(ElectionStatusListener electionStatusListener) throws NetworkException,
             NetworkConfigException {
