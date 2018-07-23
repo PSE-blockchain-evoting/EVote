@@ -2,6 +2,8 @@ package edu.kit.iti.formal.pse2018.evote.view.voterview;
 
 import edu.kit.iti.formal.pse2018.evote.control.VoterViewToControlIF;
 import edu.kit.iti.formal.pse2018.evote.control.votercontrol.VoterControl;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
 import edu.kit.iti.formal.pse2018.evote.model.statemanagement.VoterElection;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
@@ -50,7 +52,13 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
      */
     public VoterGUI() {
         ElectionStatusListener listener = new VoterElectionEndListenerImpl(this);
-        VoterElection model = new VoterElection(listener);
+        VoterElection model = null;
+        try {
+            model = new VoterElection(listener);
+        } catch (NetworkException | NetworkConfigException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
         VoterViewToControlIF control = new VoterControl(this, model);
         adapter = new VoterAdapter(control, model);
 
@@ -119,9 +127,11 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
             this.getContentPane().remove(c);
         }
 
-        ResourceBundle lang = ResourceBundle.getBundle("VoterView");
+        ElectionDataIF data = adapter.getElectionData();
+        componentManager = VoterVSComponentManagerBuilder.generateComponentManager(data.getVotingSystem(), adapter);
         currentPanel = new VoterWait(adapter, componentManager);
         buildLayout();
+        ResourceBundle lang = ResourceBundle.getBundle("VoterView");
         lblTitle.setText(lang.getString("WaitTitle"));
     }
 

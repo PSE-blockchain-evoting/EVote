@@ -8,22 +8,10 @@ import java.util.List;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 
-public class RankedVote extends Vote {
-    //private static String[] candidates;
-
+public class RankedVote {
     private String[] candidates;
 
-    /**
-     * Save list of candidate names.
-     */
-    /*
-    public static void setCandidates(String[] candidates) {
-        RankedVote.candidates = candidates;
-    }
-    */
-
-    @Override
-    String asString() {
+    private String asString() {
         JsonArrayBuilder b = Json.createArrayBuilder();
         for (int i = 0; i < preferences.size(); i++) {
             b.add(candidates[preferences.get(i)]);
@@ -43,7 +31,6 @@ public class RankedVote extends Vote {
     * Create Vote with preferences from rank #1 to rank #N.
     */
     public RankedVote(String[] candidates, Collection<Integer> preferences) {
-        super("");
         this.candidates = candidates;
         this.preferences.addAll(preferences);
     }

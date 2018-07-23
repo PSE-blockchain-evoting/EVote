@@ -13,6 +13,7 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
+import javax.json.JsonString;
 
 /**
  * Data Transfer Object for metadata pertaining a election.
@@ -105,7 +106,7 @@ public class ElectionData implements ElectionDataIF {
      * @param electionData the election data to marshall
      * @return JsonObject containing the election data
      */
-    public static JsonObject toJson(ElectionDataIF electionData) {
+    public static JsonObjectBuilder toJson(ElectionDataIF electionData) {
         JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
         objectBuilder.add("name", electionData.getName());
         objectBuilder.add("description", electionData.getDescription());
@@ -114,12 +115,12 @@ public class ElectionData implements ElectionDataIF {
         objectBuilder.add("candidates", arrayBuilder);
         arrayBuilder = Json.createArrayBuilder(Arrays.asList(electionData.getCandidateDescriptions()));
         objectBuilder.add("candidateDescriptions", arrayBuilder);
-        objectBuilder.add("startDate", Long.toString(electionData.getStartDate().getTime() / 1000 * 1000));
-        objectBuilder.add("endDate", Long.toString(electionData.getEndDate().getTime() / 1000 * 1000));
+        objectBuilder.add("startDate", electionData.getStartDate().getTime() / 1000 * 1000);
+        objectBuilder.add("endDate", electionData.getEndDate().getTime() / 1000 * 1000);
         JsonObjectBuilder temp = Json.createObjectBuilder();
         objectBuilder.add("endCondition", electionData.getEndCondition().asJsonObject());
         objectBuilder.add("voterCount", electionData.getVoterCount());
-        return objectBuilder.build();
+        return objectBuilder;
     }
 
     /**
@@ -131,13 +132,13 @@ public class ElectionData implements ElectionDataIF {
         String name = obj.getString("name");
         String description = obj.getString("description");
         VotingSystemType votingSystemType = VotingSystemType.valueOf(obj.getString("votingSystem"));
-        String[] candidates = obj.getJsonArray("candidates").getValuesAs(
-            jsonValue -> jsonValue.toString().replaceAll("\"", "")).toArray(new String[0]);
+        String[] candidates = obj.getJsonArray("candidates").getValuesAs(JsonString.class)
+                .stream().map(x -> x.getString()).toArray(String[]::new);
+        String[] candidateDescs = obj.getJsonArray("candidateDescriptions").getValuesAs(JsonString.class)
+                .stream().map(x -> x.getString()).toArray(String[]::new);
 
-        String[] candidateDescs = obj.getJsonArray("candidateDescriptions").getValuesAs(
-            jsonValue -> jsonValue.toString().replaceAll("\"", "")).toArray(new String[0]);
-        Date startDate = new Date(Long.valueOf(obj.getString("startDate")));
-        Date endDate = new Date(Long.valueOf(obj.getString("endDate")));
+        Date startDate = new Date(obj.getJsonNumber("startDate").longValue());
+        Date endDate = new Date(obj.getJsonNumber("endDate").longValue());
         int voterCount = obj.getInt("voterCount");
         obj = obj.getJsonObject("endCondition");
         ElectionEndCondition condition;
@@ -152,7 +153,7 @@ public class ElectionData implements ElectionDataIF {
                 condition = new CandidatePercentileCondition(obj.getInt("percentage"));
                 break;
             default:
-                throw new RuntimeException("No valid end condition"); //TODO: Replace with proper exception
+                throw new javax.json.JsonException("No valid end condition");
         }
         return new ElectionData(name, description, votingSystemType, candidates, candidateDescs, startDate,
                 endDate, condition, voterCount);

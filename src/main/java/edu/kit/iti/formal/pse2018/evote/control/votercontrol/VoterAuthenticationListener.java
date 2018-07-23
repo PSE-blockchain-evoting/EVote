@@ -1,9 +1,12 @@
 package edu.kit.iti.formal.pse2018.evote.control.votercontrol;
 
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.ElectionRunningException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import edu.kit.iti.formal.pse2018.evote.model.VoterControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.view.VoterControlToViewIF;
 
@@ -22,15 +25,23 @@ public class VoterAuthenticationListener extends VoterEventListener {
         String path = gui.getAuthenticationPath();
         try {
             model.authenticate(path);
-            gui.showChoice();
-        } catch (NetworkException e) {
+            if (model.isElectionInitialized()) {
+                if (model.hasVoted()) {
+                    gui.showWait();
+                } else {
+                    gui.showChoice();
+                }
+            }
+        } catch (InternalSDKException | NetworkException | AuthenticationException | NetworkConfigException e) {
             gui.showError(lang.getString("voterAuthenticationBad"));
-        } catch (AuthenticationException e) {
-            gui.showError(lang.getString("voterAuthenticationBad"));
-        } catch (InternalSDKException e) {
-            gui.showError(lang.getString("voterAuthenticationBad"));
-        } catch (NetworkConfigException e) {
-            gui.showError(lang.getString("voterAuthenticationBad"));
+            e.printStackTrace();
+        } catch (WrongCandidateNameException | LoadVoteException e) {
+            gui.showError(lang.getString("couldntLoadInitialData"));
+            e.printStackTrace();
+        } catch (ElectionRunningException e) {
+            gui.showError(lang.getString("noElectionRunning"));
+            e.printStackTrace();
+            gui.exit();
         }
     }
 }

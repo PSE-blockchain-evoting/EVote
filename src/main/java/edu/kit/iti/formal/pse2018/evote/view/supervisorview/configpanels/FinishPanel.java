@@ -86,7 +86,7 @@ public class FinishPanel extends ConfigPanel {
         btnExport.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                jfcExport.showOpenDialog(null);
+                jfcExport.showSaveDialog(null);
                 adapter.getExportConfigListener().actionPerformed(actionEvent);
             }
         });
@@ -94,7 +94,13 @@ public class FinishPanel extends ConfigPanel {
         for (ActionListener l : btnContinue.getActionListeners()) {
             btnContinue.removeActionListener(l);
         }
-        btnContinue.addActionListener(adapter.getStartElectionListener());
+        btnContinue.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                adapter.getStartElectionListener().actionPerformed(actionEvent);
+                gui.setVisible(false);
+            }
+        });
 
         jfcExport = new JFileChooser();
 

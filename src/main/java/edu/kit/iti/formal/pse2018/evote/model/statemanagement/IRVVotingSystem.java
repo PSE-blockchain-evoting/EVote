@@ -77,7 +77,7 @@ public class IRVVotingSystem extends VotingSystem {
     }
 
     @Override
-    public Vote loadVote(String vote) throws WrongCandidateNameException {
+    public void loadVote(String vote) throws WrongCandidateNameException {
         ResourceBundle lang = ResourceBundle.getBundle("StateManagement");
         JsonReader reader = Json.createReader(new ByteArrayInputStream(vote.getBytes(StandardCharsets.UTF_8)));
         JsonArray obj = reader.readArray();
@@ -89,12 +89,11 @@ public class IRVVotingSystem extends VotingSystem {
         }
         RankedVote res = new RankedVote(this.candidates, preferences);
         this.votes.add(res);
-        return res;
     }
 
     /**
-    * Get Candidate index not to store names in votes.
-    */
+     * Get Candidate index not to store names in votes.
+     */
     private int getCandidateIndex(String candidateName) throws WrongCandidateNameException {
         ResourceBundle lang = ResourceBundle.getBundle("StateManagement");
         for (int i = 0; i < this.candidates.length; i++) {
@@ -107,9 +106,9 @@ public class IRVVotingSystem extends VotingSystem {
     }
 
     /**
-    * Is there somebody who is still in the competition.
-    * If no, then returns true. Otherwize, false.
-    */
+     * Is there somebody who is still in the competition.
+     * If no, then returns true. Otherwize, false.
+     */
     private boolean isEmpty() {
         for (int i = 0; i < stillIn.length; i++) {
             if (stillIn[i]) {
@@ -120,8 +119,8 @@ public class IRVVotingSystem extends VotingSystem {
     }
 
     /**
-    * Get max score through still-in-candidates.
-    */
+     * Get max score through still-in-candidates.
+     */
     private int maxScoreIndex() {
         int res = -1;
         int resInd = -1;
@@ -135,8 +134,8 @@ public class IRVVotingSystem extends VotingSystem {
     }
 
     /**
-    * Get min score through still-in-candidates.
-    */
+     * Get min score through still-in-candidates.
+     */
     private int minScoreIndex() {
         int res = -1;
         int resInd = -1;

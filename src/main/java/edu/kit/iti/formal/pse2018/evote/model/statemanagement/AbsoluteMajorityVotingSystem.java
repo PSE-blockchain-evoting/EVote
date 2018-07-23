@@ -10,14 +10,18 @@ public class AbsoluteMajorityVotingSystem extends MajorityVotingSystem {
     String determineWinner() {
         int[] voteCount = determineResults();
         int winnerIndex = 0;
-        int totalNumberOfVotes = election.getVotes().length;
+        int totalNumberOfVotes = 0;
+        for (int i = 0; i < votes.length; i++) {
+            totalNumberOfVotes += votes[i];
+        }
+
         for (int i = 0; i < voteCount.length - 2; i++) {
             if (voteCount[i] < voteCount[i + 1]) {
                 winnerIndex = i + 1;
             }
         }
         if (voteCount[winnerIndex] >= (totalNumberOfVotes / 2)) {
-            return election.candidateList[winnerIndex].getName();
+            return election.electionDataIF.getCandidates()[winnerIndex];
         }
         return null; //no winner
     }

@@ -34,6 +34,7 @@ public abstract class QueryTransaction extends Transaction {
      * @throws InvalidArgumentException @see Hyperledger
      */
     public void query() throws ProposalException, InvalidArgumentException, NetworkException {
+        System.out.println("\u001B[34m" + "QUERY: " + getFunctionName() + "\u001B[0m");
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         Channel channel = this.client.getChannel(bundle.getString("channel_name"));
         QueryByChaincodeRequest request = client.newQueryProposalRequest();
@@ -44,10 +45,19 @@ public abstract class QueryTransaction extends Transaction {
         Collection<ProposalResponse> responses = channel.queryByChaincode(request);
         for (ProposalResponse resp : responses) {
             if (resp.getStatus() != ChaincodeResponse.Status.SUCCESS) {
-                throw new NetworkException(String.format("Query proposal failed. Peer %s responded with %s",
-                        resp.getPeer(), resp.getMessage()));
+                throw new NetworkException(resp.getMessage());
             }
         }
-        parseResultString(new String(responses.iterator().next().getChaincodeActionResponsePayload()));
+        String[] payloads = new String[responses.size()];
+        int count = 0;
+        for (ProposalResponse resp : responses) {
+            payloads[count] = new String(resp.getChaincodeActionResponsePayload());
+            count++;
+        }
+
+        if (Arrays.stream(payloads).distinct().count() > 1) {
+            throw new NetworkException("Responses differ");
+        }
+        parseResultString(payloads[0]);
     }
 }

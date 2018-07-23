@@ -12,8 +12,8 @@
     "nicer mensch",
     "sicker kerl"
   ],
-  "startDate": "1136210645000",
-  "endDate": "1136383445000",
+  "startDate": 1136210645000,
+  "endDate": 1136383445000,
   "endCondition": {
     "type": "VoterPercentileCondition",
     "percentage": 60

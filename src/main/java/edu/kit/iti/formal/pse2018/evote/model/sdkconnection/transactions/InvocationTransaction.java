@@ -29,6 +29,7 @@ public abstract class InvocationTransaction extends Transaction {
      * @throws ProposalException @see Hyperledger
      */
     public void invoke() throws InvalidArgumentException, ProposalException, NetworkException {
+        System.out.println("\u001B[34m" + "INVOKE: " + getFunctionName() + "\u001B[0m");
         ResourceBundle bundle = ResourceBundle.getBundle("config");
         Channel channel = this.client.getChannel(bundle.getString("channel_name"));
         TransactionProposalRequest request = client.newTransactionProposalRequest();
@@ -37,9 +38,10 @@ public abstract class InvocationTransaction extends Transaction {
         request.setFcn(getFunctionName());
         request.setArgs(buildArgumentStrings());
         Collection<ProposalResponse> responses = channel.sendTransactionProposal(request);
-        if (responses.stream().anyMatch(proposalResponse ->
-                !proposalResponse.isVerified() || proposalResponse.getStatus() != ChaincodeResponse.Status.SUCCESS)) {
-            throw new NetworkException("Invocation proposal failed");
+        for (ProposalResponse resp : responses) {
+            if (!resp.isVerified() ||  resp.getStatus() != ChaincodeResponse.Status.SUCCESS) {
+                throw new NetworkException(resp.getMessage());
+            }
         }
         channel.sendTransaction(responses).join();
     }

@@ -9,12 +9,15 @@ import edu.kit.iti.formal.pse2018.evote.model.SDKInterface;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.AllVotesQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionDataQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionStatusQuery;
+import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.InitStatusQuery;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+
 import java.lang.reflect.InvocationTargetException;
+
 import java.util.ResourceBundle;
 
 import org.hyperledger.fabric.sdk.Channel;
@@ -53,10 +56,11 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
 
     /**
      * Loads the AppUser from file and creates ElectionStatusListener and HFClient.
+     *
      * @param filePath path to the serialized AppUser
-     * @throws IOException if reading file failed
+     * @throws IOException            if reading file failed
      * @throws ClassNotFoundException if file is not a valid file
-     * @throws ClassCastException if file is not a valid AppUser
+     * @throws ClassCastException     if file is not a valid AppUser
      */
     protected SDKInterfaceImpl(String filePath, SDKEventListener listener) throws AuthenticationException,
             NetworkConfigException, NetworkException, InternalSDKException {
@@ -163,6 +167,7 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
 
     /**
      * Requests the election data from the network.
+     *
      * @return election data stored in the network
      */
     public ElectionDataIF getElectionData() throws NetworkException, NetworkConfigException {
@@ -179,6 +184,7 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
 
     /**
      * Gets all votes from the network.
+     *
      * @return all votes
      */
     public String[] getAllVotes() throws NetworkException, NetworkConfigException {
@@ -191,6 +197,23 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
             throw new NetworkConfigException(e.getMessage());
         }
         return query.getResult();
+    }
+
+    /**
+     * Checks if an election is initialized or not.
+     *
+     * @return true, if election is initialized.
+     */
+    public boolean isElectionInitialized() throws NetworkException, NetworkConfigException {
+        InitStatusQuery query = new InitStatusQuery(this.hfClient);
+        try {
+            query.query();
+        } catch (ProposalException e) {
+            throw new NetworkException(e.getMessage());
+        } catch (InvalidArgumentException e) {
+            throw new NetworkConfigException(e.getMessage());
+        }
+        return "true".equals(query.getResult());
     }
 
 }

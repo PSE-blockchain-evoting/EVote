@@ -1,16 +1,22 @@
 package edu.kit.iti.formal.pse2018.evote.model;
 
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
+import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public interface SupervisorControlToModelIF extends ControlToModelIF {
 
-    public void importConfig(String path);
+    public void importConfig(String path) throws IOException;
 
-    public void exportConfig(String path);
+    public void exportConfig(String path) throws IOException;
 
     public void setVoters(String[] names);
 
@@ -21,7 +27,8 @@ public interface SupervisorControlToModelIF extends ControlToModelIF {
 
     public String[] getVotes();
 
-    public void startElection() throws NetworkException, NetworkConfigException;
+    public void startElection() throws NetworkException, NetworkConfigException,
+            WrongCandidateNameException, LoadVoteException, IOException, EnrollmentException;
 
-    public void destroyElection();
+    public void destroyElection() throws NetworkException, NetworkConfigException;
 }

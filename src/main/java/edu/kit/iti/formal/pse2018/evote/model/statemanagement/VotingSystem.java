@@ -11,7 +11,7 @@ public abstract class VotingSystem {
 
     abstract int[] determineResults();
 
-    abstract Vote loadVote(String vote) throws WrongCandidateNameException;
+    abstract void loadVote(String vote) throws WrongCandidateNameException;
 
     abstract String determineWinner();
 }
