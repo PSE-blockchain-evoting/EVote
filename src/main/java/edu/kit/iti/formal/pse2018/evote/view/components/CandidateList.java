@@ -7,6 +7,7 @@ import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.Removable
 import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.TextFieldExtension;
 
 import java.awt.Font;
+import java.util.ResourceBundle;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
@@ -30,8 +31,10 @@ public class CandidateList extends ExtendableList {
      * @return a configured instance of ExtendableList
      */
     public static CandidateList createCandidateList(JFrame parent) {
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
         Font f = (Font)UIManager.get("General.font");
         DescriptionExtension de = new DescriptionExtension(new RemovableExtension(null), f, parent);
+        de.setButtonText(lang.getString("btnDescriptionText"));
         TextFieldExtension tfe = new TextFieldExtension(de, f);
         NumberedExtension ne = new NumberedExtension(tfe, f);
 

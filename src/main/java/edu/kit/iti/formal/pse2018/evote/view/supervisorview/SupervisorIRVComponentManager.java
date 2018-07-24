@@ -36,8 +36,10 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
         String[] candidates = data.getCandidates();
 
         canVotes = new TextExtension(null, fbig, null);
+        canVotes.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
         GapExtension ge = new GapExtension(canVotes, null);
         canName = new TextExtension(ge, fbig, candidates);
+        canName.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
         table = new ExtendableList(canName);
         canName.setList(table);
     }

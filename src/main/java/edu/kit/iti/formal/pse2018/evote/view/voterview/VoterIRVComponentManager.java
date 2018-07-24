@@ -24,6 +24,7 @@ import javax.swing.UIManager;
 
 public class VoterIRVComponentManager extends VoterVSComponentManager {
 
+    private TextExtension names;
     private RankingExtension re;
 
     /**
@@ -40,8 +41,8 @@ public class VoterIRVComponentManager extends VoterVSComponentManager {
         de.setEditable(false);
         de.setButtonText("!");
         GapExtension ge0 = new GapExtension(de, f);
-        TextExtension te = new TextExtension(ge0, f, data.getCandidates());
-        GapExtension ge1 = new GapExtension(te, f);
+        TextExtension names = new TextExtension(ge0, f, data.getCandidates());
+        GapExtension ge1 = new GapExtension(names, f);
         re = new RankingExtension(ge1, f, data.getCandidates().length);
 
         table = new ExtendableList(re);
@@ -128,5 +129,15 @@ public class VoterIRVComponentManager extends VoterVSComponentManager {
     @Override
     public void setEditable(boolean b) {
         re.setEditable(b);
+    }
+
+    @Override
+    public void enableColors(boolean b) {
+        if (b) {
+            names.setColors(VoterVSComponentManager.CANDIDATE_COLORS);
+        } else {
+            Color[] c = {Color.BLACK};
+            names.setColors(c);
+        }
     }
 }

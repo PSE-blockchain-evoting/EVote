@@ -40,7 +40,7 @@ public class DescriptionDialog extends JDialog {
 
         listener = new LinkedList<>();
 
-        lblDescription = new JLabel();
+        lblDescription = new JLabel("<Placeholder>");
         txaDescription = new JTextArea();
         txaDescription.setColumns(10);
         txaDescription.setRows(1);
@@ -83,12 +83,11 @@ public class DescriptionDialog extends JDialog {
     /**
      * Show or hide DescriptionDialog.
      *
-     * @param name The name of the description.
      * @param b    If true is shows the DescriptionDialog, if false it hides it.
      */
-    public void setVisible(String name, boolean b) {
+    public void setVisible(boolean b) {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
-        lblDescription.setText(lang.getString("lblDescriptionAboutCandidateText") + name + ":");
+        lblDescription.setText(lang.getString("lblDescriptionText"));
         super.setVisible(b);
     }
 

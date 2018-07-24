@@ -2,6 +2,7 @@ package edu.kit.iti.formal.pse2018.evote.view.components.listextensions;
 
 import edu.kit.iti.formal.pse2018.evote.view.components.Entry;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.swing.JLabel;
 public class TextExtension extends ComponentExtension<JLabel> {
 
     private List<String> text;
+    private Color[] colors = {Color.BLACK};
 
     /**
      * Creates an instance of TextExtension.
@@ -42,6 +44,7 @@ public class TextExtension extends ComponentExtension<JLabel> {
         } else {
             lbl = new JLabel(text.get(size));
         }
+        lbl.setForeground(colors[components.size() % colors.length]);
         lbl.setFont(font);
         return lbl;
     }
@@ -91,5 +94,20 @@ public class TextExtension extends ComponentExtension<JLabel> {
 
         this.text.set(i, text);
         components.get(i).setText(text);
+    }
+
+    /**
+     * Define Colors for the different Rows.
+     *
+     * @param colors The colors stored in an array.
+     *               TextExtension will cycle the array if there is more text than defined colors.
+     */
+    public void setColors(Color[] colors) {
+        this.colors = colors;
+        int i = 0;
+        for (JLabel lbl : components) {
+            lbl.setForeground(colors[i % colors.length]);
+            i++;
+        }
     }
 }

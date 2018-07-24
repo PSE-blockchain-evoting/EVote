@@ -49,7 +49,10 @@ public class VoterAuthentication extends VoterGUIPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 fcSearch.showOpenDialog(VoterAuthentication.this);
-                txfPath.setText(fcSearch.getSelectedFile().getAbsolutePath());
+                String path = fcSearch.getSelectedFile().getAbsolutePath();
+                if (path != null) {
+                    txfPath.setText(path);
+                }
             }
         });
         btnConfirmCert = new JButton(lang.getString("btnConfirmCertText"));

@@ -3,6 +3,7 @@ package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.awt.Font;
+import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -37,15 +38,19 @@ public class InformationPanel extends JPanel {
         lblVotingSystem = new JLabel(lang.getString("lblVotingSystemText") + ": "
                 + lang.getString(data.getVotingSystem().name()));
         lblVotingSystem.setFont(f);
+
+        SimpleDateFormat spf = new SimpleDateFormat("dd.MM.yyyy, hh:mm");
+        String startString = spf.format(data.getStartDate());
+        String endString = spf.format(data.getEndDate());
         lblTimeSpan = new JLabel(lang.getString("lblTimespanPrefix") + ": "
-                + data.getStartDate().toString() + " " + lang.getString("lblTimespanMiddle")
-                + data.getEndDate());
+                + startString + " " + lang.getString("lblTimespanMiddle")
+                + " " + endString);
         lblTimeSpan.setFont(f);
+
         lblDescription = new JLabel(lang.getString("lblDescriptionText") + ":");
         lblDescription.setFont(f);
         txaDescription = new JTextArea(data.getDescription());
         txaDescription.setFont(f);
-        //txaDescription.setLineWrap(true);
         txaDescription.setEditable(false);
     }
 

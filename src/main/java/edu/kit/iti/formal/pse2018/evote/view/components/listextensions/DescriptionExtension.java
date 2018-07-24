@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -44,6 +45,7 @@ public class DescriptionExtension extends ComponentExtension<JButton> {
         dd.setEditable(editable);
         dds.add(dd);
 
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorConfig");
         JButton btnNew = new JButton(tableButtonText);
         btnNew.setFont(font);
         btnNew.addActionListener(new ActionListener() {
