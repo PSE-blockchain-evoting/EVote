@@ -3,6 +3,7 @@ package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigIssues;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 import edu.kit.iti.formal.pse2018.evote.view.ElectionDataImpl;
+import edu.kit.iti.formal.pse2018.evote.view.components.ImagePanel;
 import edu.kit.iti.formal.pse2018.evote.view.components.VerticalTabs;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels.CandidatePanel;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels.FinishPanel;
@@ -12,7 +13,9 @@ import edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels.VoterPa
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.IOException;
 import java.util.ResourceBundle;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.JDialog;
@@ -85,7 +88,13 @@ public class ConfigGUI extends JDialog {
         lblTitle.setFont((Font) UIManager.get("Title.font"));
         lblTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pnlLogo = new JPanel();
-        pnlLogo.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        try {
+            pnlLogo = new ImagePanel(ImageIO.read(getClass().getResourceAsStream("/logo.png")));
+        } catch (IOException e) {
+            e.printStackTrace();
+            pnlLogo = new JPanel();
+            pnlLogo.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        }
         buildLayout();
     }
 
