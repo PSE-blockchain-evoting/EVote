@@ -129,6 +129,7 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
 
         ElectionDataIF data = adapter.getElectionData();
         componentManager = VoterVSComponentManagerBuilder.generateComponentManager(data.getVotingSystem(), adapter);
+        componentManager.enableColors(false);
         currentPanel = new VoterWait(adapter, componentManager);
         buildLayout();
         ResourceBundle lang = ResourceBundle.getBundle("VoterView");
@@ -144,6 +145,7 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
         ResourceBundle lang = ResourceBundle.getBundle("VoterView");
         ElectionDataIF data = adapter.getElectionData();
         componentManager = VoterVSComponentManagerBuilder.generateComponentManager(data.getVotingSystem(), adapter);
+        componentManager.enableColors(false);
         currentPanel = new VoterChoice(adapter, componentManager);
         buildLayout();
         lblTitle.setText(data.getName());
@@ -160,6 +162,7 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
             componentManager = VoterVSComponentManagerBuilder.generateComponentManager(
                     adapter.getElectionData().getVotingSystem(), adapter);
         }
+        componentManager.enableColors(true);
         currentPanel = new VoterResult(adapter, componentManager);
         buildLayout();
         lblTitle.setText(adapter.getElectionData().getName());

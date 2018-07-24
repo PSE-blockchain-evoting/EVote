@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.LayoutStyle;
@@ -55,7 +56,19 @@ public class VoterChoice extends VoterGUIPanel {
             }
         });
         btnConfirmVote = new JButton(lang.getString("btnConfirmVoteText"));
-        btnConfirmVote.addActionListener(adapter.getVotedListener());
+        btnConfirmVote.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                String s = lang.getString("ConfirmVoteWarning");
+                int res = JOptionPane.showConfirmDialog(VoterChoice.this,
+                        lang.getString("ConfirmVoteWarning"),
+                        lang.getString("ConfirmVoteTitle"),
+                        JOptionPane.OK_CANCEL_OPTION);
+                if (res == JOptionPane.OK_OPTION) {
+                    adapter.getVotedListener().actionPerformed(actionEvent);
+                }
+            }
+        });
         btnInfo.setFont(f);
         pnlInfos = new InformationPanel(adapter.getElectionData());
         spInfos = new JScrollPane(pnlInfos);

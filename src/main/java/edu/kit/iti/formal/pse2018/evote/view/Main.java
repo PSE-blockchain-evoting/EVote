@@ -22,6 +22,5 @@ public class Main {
         UIManager.put("Vote.font", new FontUIResource("Sans Serif", Font.BOLD, 30));
 
         SupervisorGUI gui = new SupervisorGUI();
-        gui.electionOver();
     }
 }

@@ -28,6 +28,7 @@ import javax.swing.UIManager;
 public class VoterMajorityVotingSystemComponentManager extends VoterVSComponentManager {
 
     private RadioSelectionExtension selection;
+    private TextExtension names;
 
     /**
      * Create an instance of VoterMajorityVotingSystemComponentManager.
@@ -44,8 +45,8 @@ public class VoterMajorityVotingSystemComponentManager extends VoterVSComponentM
         de.setEditable(false);
         de.setButtonText("!");
         GapExtension ge = new GapExtension(de, fbig);
-        TextExtension te = new TextExtension(ge, fbig, data.getCandidates());
-        GapExtension ge0 = new GapExtension(te, fbig);
+        names = new TextExtension(ge, fbig, data.getCandidates());
+        GapExtension ge0 = new GapExtension(names, fbig);
 
         Icon selected = null;
         Icon unselected = null;
@@ -126,5 +127,15 @@ public class VoterMajorityVotingSystemComponentManager extends VoterVSComponentM
     @Override
     public void setEditable(boolean b) {
         selection.setEnabled(b);
+    }
+
+    @Override
+    public void enableColors(boolean b) {
+        if (b) {
+            names.setColors(VoterVSComponentManager.CANDIDATE_COLORS);
+        } else {
+            Color[] c = {Color.BLACK};
+            names.setColors(c);
+        }
     }
 }

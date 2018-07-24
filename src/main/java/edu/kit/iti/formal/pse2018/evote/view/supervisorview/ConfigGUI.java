@@ -13,7 +13,6 @@ import edu.kit.iti.formal.pse2018.evote.view.supervisorview.configpanels.VoterPa
 
 import java.awt.Color;
 import java.awt.Font;
-import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
@@ -90,7 +89,7 @@ public class ConfigGUI extends JDialog {
         lblTitle.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pnlLogo = new JPanel();
         try {
-            pnlLogo = new ImagePanel(ImageIO.read(new File("src/main/resources/logo.png")));
+            pnlLogo = new ImagePanel(ImageIO.read(getClass().getResourceAsStream("/logo.png")));
         } catch (IOException e) {
             e.printStackTrace();
             pnlLogo = new JPanel();

@@ -53,7 +53,6 @@ public class SupervisorResult extends SupervisorGUIPanel {
     private void initComponents() {
         Font f = (Font) UIManager.get("General.font");
         ResourceBundle viewLang = ResourceBundle.getBundle("View");
-        ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
         btnInfo = new JToggleButton(viewLang.getString("btnInfoText"));
         btnInfo.setFont(f);
         btnInfo.addActionListener(new ActionListener() {
@@ -69,6 +68,7 @@ public class SupervisorResult extends SupervisorGUIPanel {
         pnlInfo = new InformationPanel(adapter.getElectionData());
         spInfo = new JScrollPane(pnlInfo);
 
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
         btnExit = new JButton(lang.getString("btnExitText"));
         btnExit.setFont(f);
         btnExit.addActionListener(adapter.getLogoutListener());

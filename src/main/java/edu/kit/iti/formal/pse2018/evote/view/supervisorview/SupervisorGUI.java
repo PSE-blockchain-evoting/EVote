@@ -5,9 +5,9 @@ import edu.kit.iti.formal.pse2018.evote.control.supervisorcontrol.SupervisorCont
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
+import edu.kit.iti.formal.pse2018.evote.model.statemanagement.SupervisorElection;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 import edu.kit.iti.formal.pse2018.evote.utils.VotingSystemType;
-import edu.kit.iti.formal.pse2018.evote.view.ModelMock;
 import edu.kit.iti.formal.pse2018.evote.view.SupervisorControlToViewIF;
 import edu.kit.iti.formal.pse2018.evote.view.components.ImagePanel;
 
@@ -56,9 +56,9 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
      */
     public SupervisorGUI() {
         ElectionStatusListener listener = new SupervisorElectionEndListenerImpl(this);
-        ModelMock model = null;
+        SupervisorElection model = null;
         try {
-            model = new ModelMock(listener);
+            model = new SupervisorElection(listener);
         } catch (NetworkException | NetworkConfigException e) {
             e.printStackTrace();
             System.exit(1);

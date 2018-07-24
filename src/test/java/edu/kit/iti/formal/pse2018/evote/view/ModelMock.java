@@ -74,7 +74,7 @@ public class ModelMock implements SupervisorControlToModelIF,
         ElectionDataImpl data = new ElectionDataImpl();
         data.setName("Blockchain 2018");
         data.setDesc("Die wahl zur besten blockcahin kdkdkd");
-        data.setType(VotingSystemType.INSTANTRUNOFF);
+        data.setType(VotingSystemType.ABSOLUTEMAJORITY);
         String[] candidates = {"Bitcoin", "Ethereum", "Monero", "sth else"};
         data.setCandidates(candidates);
         String[] desc = {"Die erste", "Die andere", "die geheime", "hab ich nie von gehört"};

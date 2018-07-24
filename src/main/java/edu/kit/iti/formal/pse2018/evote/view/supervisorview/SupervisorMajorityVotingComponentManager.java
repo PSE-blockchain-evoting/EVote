@@ -27,11 +27,13 @@ public class SupervisorMajorityVotingComponentManager extends SupervisorVSCompon
     public SupervisorMajorityVotingComponentManager(SupervisorAdapter adapter) {
         super(adapter);
         Font f = (Font) UIManager.get("General.font");
-        Font fbig = (Font)UIManager.get("Vote.font");
+        Font fbig = (Font) UIManager.get("Vote.font");
 
         canRes = new TextExtension(null, fbig, null);
+        canRes.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
         GapExtension ge = new GapExtension(canRes, null);
         canName = new TextExtension(ge, fbig, null);
+        canName.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
         NumberedExtension ne = new NumberedExtension(canName, fbig);
         table = new ExtendableList(ne);
         ne.setList(table);
