@@ -1,6 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions;
 
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
+import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 
 import java.util.Collection;
 import java.util.ResourceBundle;
@@ -30,7 +31,7 @@ public abstract class InvocationTransaction extends Transaction {
      */
     public void invoke() throws InvalidArgumentException, ProposalException, NetworkException {
         System.out.println("\u001B[34m" + "INVOKE: " + getFunctionName() + "\u001B[0m");
-        ResourceBundle bundle = ResourceBundle.getBundle("config");
+        ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         Channel channel = this.client.getChannel(bundle.getString("channel_name"));
         TransactionProposalRequest request = client.newTransactionProposalRequest();
         ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName(bundle.getString("chaincode_name")).build();
