@@ -18,7 +18,7 @@ public class VotingSystemBuilder {
             case INSTANTRUNOFF: return new IRVVotingSystem(election);
             case ABSOLUTEMAJORITY: return new AbsoluteMajorityVotingSystem(election);
             case RELATIVEMAJORITY: return new RelativeMajorityVotingSystem(election);
-            default: throw new Error();
+            default: throw new IllegalArgumentException("Unknown Voting System: " + votingSystemType.name());
         }
     }
 }
