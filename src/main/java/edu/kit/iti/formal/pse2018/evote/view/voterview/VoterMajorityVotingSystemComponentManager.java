@@ -52,12 +52,8 @@ public class VoterMajorityVotingSystemComponentManager extends VoterVSComponentM
         Icon unselected = null;
 
         try {
-            File sfile = new File("src/main/resources/selected.png");
-            File nsfile = new File("src/main/resources/notSelected.png");
-            BufferedImage imgsfile = ImageIO.read(sfile);
-            BufferedImage imgnsfile = ImageIO.read(nsfile);
-            selected = new ImageIcon(ImageIO.read(sfile));
-            unselected = new ImageIcon(ImageIO.read(nsfile));
+            selected = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/selected.png")));
+            unselected = new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/notSelected.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -15,6 +15,7 @@ import edu.kit.iti.formal.pse2018.evote.model.SupervisorViewToModelIF;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.SupervisorSDKInterfaceImpl;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigIssues;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigIssuesImpl;
+import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.io.BufferedWriter;
@@ -170,7 +171,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
     @Override
     public boolean firstAuthentication(String username, String password) throws NetworkException,
             AuthenticationException, InternalSDKException, NetworkConfigException {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
+        ResourceBundle resourceBundle = ConfigResourceBundle.loadBundle("config");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
 
         try {
@@ -200,7 +201,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
             WrongCandidateNameException, LoadVoteException, IOException, EnrollmentException {
         supervisorSDKInterface.createElection(electionDataIF);
 
-        ResourceBundle config = ResourceBundle.getBundle("config");
+        ResourceBundle config = ConfigResourceBundle.loadBundle("config");
         File f = new File(config.getString("voter_Certificates"));
         f.mkdirs();
         for (Voter v : voters) {
@@ -219,7 +220,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
     @Override
     public void authenticate(String path) throws NetworkException, AuthenticationException,
             InternalSDKException, NetworkConfigException, WrongCandidateNameException, LoadVoteException {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
+        ResourceBundle resourceBundle = ConfigResourceBundle.loadBundle("config");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
 
         supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(filePath,

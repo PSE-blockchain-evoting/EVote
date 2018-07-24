@@ -10,6 +10,7 @@ import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.AllVote
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionDataQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionStatusQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.InitStatusQuery;
+import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.io.FileInputStream;
@@ -45,7 +46,7 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
         this.appUser = appUser;
         createHFClient();
         createChannel();
-        ResourceBundle bundle = ResourceBundle.getBundle("config");
+        ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         try {
             this.electionStatusListener = new ElectionStatusListener(listener,
                     hfClient.getChannel(bundle.getString("channel_name")));
@@ -73,7 +74,7 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
         }
         createHFClient();
         createChannel();
-        ResourceBundle bundle = ResourceBundle.getBundle("config");
+        ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         try {
             this.electionStatusListener = new ElectionStatusListener(listener,
                     hfClient.getChannel(bundle.getString("channel_name")));
@@ -104,7 +105,7 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
     }
 
     private void createChannel() throws NetworkConfigException, NetworkException {
-        ResourceBundle bundle = ResourceBundle.getBundle("config");
+        ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         Channel channel;
         try {
             channel = hfClient.newChannel(bundle.getString("channel_name"));

@@ -1,6 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection;
 
 import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
+import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
@@ -25,7 +26,7 @@ public class ElectionStatusListener implements ChaincodeEventListener {
      */
     public ElectionStatusListener(SDKEventListener sdkEventListener, Channel channel) throws InvalidArgumentException {
         this.sdkEventListener = sdkEventListener;
-        ResourceBundle bundle = ResourceBundle.getBundle("config");
+        ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         channel.registerChaincodeEventListener(Pattern.compile(bundle.getString("chaincode_name")),
                 Pattern.compile(bundle.getString("chaincode_event_name")), this);
     }
