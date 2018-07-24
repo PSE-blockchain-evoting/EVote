@@ -157,7 +157,8 @@ public class GeneralConfigPanel extends ConfigPanel {
     }
 
     public void setVotingSystem(VotingSystemType sys) {
-        cbxVotingSystem.setSelectedItem(sys.name());
+        ResourceBundle lang = ResourceBundle.getBundle("View");
+        cbxVotingSystem.setSelectedItem(lang.getString(sys.name()));
     }
 
     @Override

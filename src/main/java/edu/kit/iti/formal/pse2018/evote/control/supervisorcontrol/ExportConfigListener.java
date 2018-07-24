@@ -22,7 +22,8 @@ public class ExportConfigListener extends SupervisorEventListener {
         } catch (IOException e) {
             gui.showError(lang.getString("exportFailed"));
             e.printStackTrace();
+        } finally {
+            gui.showSuccess(lang.getString("exportSuccess"));
         }
-        gui.showSuccess(lang.getString("exportSuccess"));
     }
 }
