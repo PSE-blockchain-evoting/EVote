@@ -82,7 +82,7 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
 
         pnlLogo = new JPanel();
         try {
-            pnlLogo = new ImagePanel(ImageIO.read(new File("src/main/resources/logo.png")));
+            pnlLogo = new ImagePanel(ImageIO.read(getClass().getResourceAsStream("/logo.png")));
         } catch (IOException e) {
             e.printStackTrace();
             pnlLogo.setBorder(BorderFactory.createLineBorder(Color.GREEN));

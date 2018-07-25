@@ -10,6 +10,8 @@ import edu.kit.iti.formal.pse2018.evote.view.supervisorview.SupervisorAdapter;
 
 import java.awt.Font;
 import java.awt.LayoutManager2;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -60,6 +62,15 @@ public class TimespanPanel extends ConfigPanel {
         lblPercentage.setHorizontalAlignment(SwingConstants.RIGHT);
         lblPercentSign = new JLabel("%");
         btnImmediately = new JButton(lang.getString("btnImmediateText"));
+        btnImmediately.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Date d = new Date();
+
+                dpStartDate.setDate(d);
+                spnStartTime.setValue(d);
+            }
+        });
 
         spnStartTime = new JSpinner(new SpinnerDateModel());
         JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(spnStartTime, "HH:mm");
@@ -212,8 +223,8 @@ public class TimespanPanel extends ConfigPanel {
         c.set(Calendar.YEAR, cdate.get(Calendar.YEAR));
         c.set(Calendar.MONTH, cdate.get(Calendar.MONTH));
         c.set(Calendar.DAY_OF_MONTH, cdate.get(Calendar.DAY_OF_MONTH));
-        c.set(Calendar.HOUR_OF_DAY, cdate.get(Calendar.HOUR_OF_DAY));
-        c.set(Calendar.MINUTE, cdate.get(Calendar.MINUTE));
+        c.set(Calendar.HOUR_OF_DAY, ctime.get(Calendar.HOUR_OF_DAY));
+        c.set(Calendar.MINUTE, ctime.get(Calendar.MINUTE));
         return c.getTime();
     }
 

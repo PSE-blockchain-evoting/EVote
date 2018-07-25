@@ -77,7 +77,7 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
         lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
         lblTitle.setFont((Font) UIManager.get("Title.font"));
         try {
-            pnlLogo = new ImagePanel(ImageIO.read(new File("src/main/resources/logo.png")));
+            pnlLogo = new ImagePanel(ImageIO.read(getClass().getResourceAsStream("/logo.png")));
         } catch (IOException e) {
             e.printStackTrace();
             pnlLogo = new JPanel();

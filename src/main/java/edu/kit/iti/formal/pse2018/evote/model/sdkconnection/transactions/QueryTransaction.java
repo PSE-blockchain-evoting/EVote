@@ -1,6 +1,7 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions;
 
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
+import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public abstract class QueryTransaction extends Transaction {
      */
     public void query() throws ProposalException, InvalidArgumentException, NetworkException {
         System.out.println("\u001B[34m" + "QUERY: " + getFunctionName() + "\u001B[0m");
-        ResourceBundle bundle = ResourceBundle.getBundle("config");
+        ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         Channel channel = this.client.getChannel(bundle.getString("channel_name"));
         QueryByChaincodeRequest request = client.newQueryProposalRequest();
         ChaincodeID chaincodeID = ChaincodeID.newBuilder().setName(bundle.getString("chaincode_name")).build();

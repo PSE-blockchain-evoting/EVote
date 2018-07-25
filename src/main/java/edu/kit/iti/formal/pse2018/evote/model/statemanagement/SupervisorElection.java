@@ -14,6 +14,7 @@ import edu.kit.iti.formal.pse2018.evote.model.SupervisorViewToModelIF;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.SupervisorSDKInterfaceImpl;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigIssues;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigIssuesImpl;
+import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.io.BufferedWriter;
@@ -57,19 +58,22 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         ResourceBundle resourceBundle = ResourceBundle.getBundle("ConfigIssues");
 
         ConfigIssuesImpl cgi = new ConfigIssuesImpl();
-        if (!electionDataIF.getName().matches(".*\\w.*")) {
+        if (electionDataIF.getName() != null
+                && !electionDataIF.getName().matches(".*\\w.*")) {
             cgi.setNameIssue(resourceBundle.getString("name_issue"));
             value = false;
         }
 
         //checking if there are at least two candidates
-        if (electionDataIF.getCandidates().length <= 1) {
+        if (electionDataIF.getCandidates() != null
+                && electionDataIF.getCandidates().length <= 1) {
             cgi.setCandidateIssue(resourceBundle.getString("candidate_length_issue"));
             value = false;
         }
 
         //checking if any candidate name is empty
-        if (!Arrays.stream(electionDataIF.getCandidates()).allMatch(x -> x.matches(".*\\w.*"))) {
+        if (electionDataIF.getCandidates() != null
+                && !Arrays.stream(electionDataIF.getCandidates()).allMatch(x -> x.matches(".*\\w.*"))) {
             cgi.setCandidateIssue(resourceBundle.getString("candidate_issue"));
             value = false;
         }
@@ -81,7 +85,9 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         }
 
         //check if starting time comes after ending time
-        if (electionDataIF.getStartDate().after(electionDataIF.getEndDate())) {
+        if (electionDataIF.getStartDate() != null
+                && electionDataIF.getEndDate() != null
+                && electionDataIF.getStartDate().after(electionDataIF.getEndDate())) {
             cgi.setTimespanIssue(resourceBundle.getString("timespan_issue"));
             value = false;
         }
@@ -144,10 +150,11 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         builder.add("voters", arrayBuilder);
         String exportString = builder.build().toString();
 
-        File f = new File(path + File.separator + "ElectionConfiguration");
-        f.getParentFile().mkdirs();
+        File f = new File(path);
         try {
-            f.createNewFile();
+            if (!f.exists()) {
+                f.createNewFile();
+            }
             FileWriter fileWriter = new FileWriter(f);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(exportString);
@@ -169,7 +176,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
     @Override
     public boolean firstAuthentication(String username, String password) throws NetworkException,
             AuthenticationException, InternalSDKException, NetworkConfigException {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
+        ResourceBundle resourceBundle = ConfigResourceBundle.loadBundle("config");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
 
         try {
@@ -199,7 +206,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
             WrongCandidateNameException, IOException, EnrollmentException {
         supervisorSDKInterface.createElection(electionDataIF);
 
-        ResourceBundle config = ResourceBundle.getBundle("config");
+        ResourceBundle config = ConfigResourceBundle.loadBundle("config");
         File f = new File(config.getString("voter_Certificates"));
         f.mkdirs();
         for (Voter v : voters) {
@@ -218,7 +225,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
     @Override
     public void authenticate(String path) throws NetworkException, AuthenticationException,
             InternalSDKException, NetworkConfigException, WrongCandidateNameException {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("config");
+        ResourceBundle resourceBundle = ConfigResourceBundle.loadBundle("config");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
 
         supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(filePath,

@@ -19,10 +19,10 @@ public class ExportConfigListener extends SupervisorEventListener {
         String path = gui.getExportPath();
         try {
             model.exportConfig(path);
+            gui.showSuccess(lang.getString("exportSuccess"));
         } catch (IOException e) {
             gui.showError(lang.getString("exportFailed"));
             e.printStackTrace();
         }
-        gui.showSuccess(lang.getString("exportSuccess"));
     }
 }

@@ -9,6 +9,7 @@ import edu.kit.iti.formal.pse2018.evote.model.SupervisorSDKInterface;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.AllVotesQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.DestructionInvocation;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.InitializationInvocation;
+import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.io.FileOutputStream;
@@ -68,22 +69,22 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
     public static SupervisorSDKInterfaceImpl createInstance(String username, String password, String filePath,
                 SDKEventListener listener) throws IOException, NetworkException, AuthenticationException,
             InternalSDKException, NetworkConfigException {
-        ResourceBundle bundle = ResourceBundle.getBundle("config");
+        ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         HFCAClient hfcaClient = createHFCAClient();
         Enrollment enrollment;
         HFCAIdentity identity;
         try {
-            ArrayList<Attribute> attributes = new ArrayList<>();
-            attributes.add(new Attribute("test_attr", "test_val"));
-            identity = hfcaClient.newHFCAIdentity(username);
-            identity.setAttributes(attributes);
+            //ArrayList<Attribute> attributes = new ArrayList<>();
+            //attributes.add(new Attribute("test_attr", "test_val"));
+            //identity = hfcaClient.newHFCAIdentity(username);
+            //identity.setAttributes(attributes);
             enrollment = hfcaClient.enroll(username, password);
         } catch (EnrollmentException | org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException e) {
             throw new NetworkConfigException(e.getMessage());
         }
         AppUser appUser = new AppUser(username, bundle.getString("affiliation"), new HashSet<>(), username,
                 bundle.getString("mspID"), enrollment);
-        try {
+        /*try {
             identity.update(appUser);
             for (HFCAIdentity hfcaIdentity : hfcaClient.getHFCAIdentities(appUser)) {
                 System.out.println(hfcaIdentity);
@@ -93,7 +94,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
             }
         } catch (IdentityException | org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException e) {
             throw new NetworkException(e.getMessage());
-        }
+        }*/
 
         FileOutputStream fos = new FileOutputStream(filePath);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -113,7 +114,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
     }
 
     private static HFCAClient createHFCAClient() throws InternalSDKException, NetworkException {
-        ResourceBundle bundle = ResourceBundle.getBundle("config");
+        ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         CryptoSuite cryptoSuite;
         HFCAClient hfcaClient;
         try {
@@ -163,7 +164,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
     @Override
     public void createUser(String name, String filePath) throws IOException,
             edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException {
-        ResourceBundle bundle = ResourceBundle.getBundle("config");
+        ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         RegistrationRequest request;
         try {
             request = new RegistrationRequest(name, bundle.getString("affiliation"));
