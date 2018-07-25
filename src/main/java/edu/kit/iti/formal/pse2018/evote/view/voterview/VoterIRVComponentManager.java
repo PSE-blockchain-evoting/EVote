@@ -60,6 +60,7 @@ public class VoterIRVComponentManager extends VoterVSComponentManager {
         }
 
         chart = new StackedBarChart();
+        chart.setColors(VoterVSComponentManager.CANDIDATE_COLORS);
         chart.setData(adapter.getResults());
     }
 
