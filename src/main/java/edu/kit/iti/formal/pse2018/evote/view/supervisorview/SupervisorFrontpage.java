@@ -40,8 +40,8 @@ public class SupervisorFrontpage extends SupervisorGUIPanel {
         btnImport.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                fcImportPath.showOpenDialog(SupervisorFrontpage.this);
-                if (fcImportPath.getSelectedFile() != null) {
+                int res = fcImportPath.showOpenDialog(SupervisorFrontpage.this);
+                if (res == JFileChooser.APPROVE_OPTION) {
                     adapter.getImportConfigListener().actionPerformed(actionEvent);
                 }
             }

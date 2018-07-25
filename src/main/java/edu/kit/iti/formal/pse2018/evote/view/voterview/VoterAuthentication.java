@@ -48,9 +48,9 @@ public class VoterAuthentication extends VoterGUIPanel {
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                fcSearch.showOpenDialog(VoterAuthentication.this);
+                int res = fcSearch.showOpenDialog(VoterAuthentication.this);
                 String path = fcSearch.getSelectedFile().getAbsolutePath();
-                if (path != null) {
+                if (res == JFileChooser.APPROVE_OPTION) {
                     txfPath.setText(path);
                 }
             }
