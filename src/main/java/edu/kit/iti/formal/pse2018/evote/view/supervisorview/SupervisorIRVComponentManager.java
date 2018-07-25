@@ -26,6 +26,7 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
     public SupervisorIRVComponentManager(SupervisorAdapter adapter) {
         super(adapter);
         chart = new StackedBarChart();
+        chart.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
         chart.setData(adapter.getResults());
 
         Font fbig = (Font) UIManager.get("Vote.font");

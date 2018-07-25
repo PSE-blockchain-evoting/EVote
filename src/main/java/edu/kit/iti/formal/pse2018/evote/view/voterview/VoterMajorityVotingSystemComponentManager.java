@@ -12,9 +12,7 @@ import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.TextExten
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import javax.imageio.ImageIO;
@@ -74,6 +72,7 @@ public class VoterMajorityVotingSystemComponentManager extends VoterVSComponentM
         }
 
         chart = new PieChart();
+        chart.setColors(VoterVSComponentManager.CANDIDATE_COLORS);
         chart.setData(adapter.getResults());
     }
 

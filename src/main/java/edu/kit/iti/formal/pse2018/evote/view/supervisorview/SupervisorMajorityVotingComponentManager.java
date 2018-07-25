@@ -38,6 +38,7 @@ public class SupervisorMajorityVotingComponentManager extends SupervisorVSCompon
         table = new ExtendableList(ne);
         ne.setList(table);
         chart = new PieChart();
+        chart.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
     }
 
     @Override
