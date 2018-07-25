@@ -20,7 +20,7 @@ public class FinishElectionListener extends SupervisorEventListener {
         try {
             model.destroyElection();
         } catch (NetworkException | NetworkConfigException e) {
-            gui.showError(lang.getString("electionDestructionFaile"));
+            gui.showError(lang.getString("electionDestructionFailed"));
             e.printStackTrace();
         }
     }
