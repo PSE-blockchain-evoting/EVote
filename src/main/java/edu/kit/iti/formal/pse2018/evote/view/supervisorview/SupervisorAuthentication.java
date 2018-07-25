@@ -78,7 +78,7 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 int ret = fcSearch.showOpenDialog(btnSearch);
-                if (ret == JFileChooser.APPROVE_OPTION) {
+                if (ret == JFileChooser.APPROVE_OPTION && fcSearch.getSelectedFile().exists()) {
                     String path = fcSearch.getSelectedFile().getPath();
                     txfPath.setText(path);
                 }
@@ -151,11 +151,6 @@ public class SupervisorAuthentication extends SupervisorGUIPanel {
         layout.linkSize(SwingConstants.VERTICAL, lblPassword, lblUsername, txfUsername, pfPassword);
         layout.linkSize(SwingConstants.VERTICAL, btnSearch, txfPath);
         this.setLayout(layout);
-    }
-
-    @Override
-    public String getImportPath() {
-        return txfPath.getText();
     }
 
     @Override
