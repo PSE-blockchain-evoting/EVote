@@ -88,7 +88,7 @@ public class FinishPanel extends ConfigPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 int res = jfcExport.showSaveDialog(null);
-                if(res == JFileChooser.APPROVE_OPTION) {
+                if (res == JFileChooser.APPROVE_OPTION) {
                     adapter.getExportConfigListener().actionPerformed(actionEvent);
                 }
             }
