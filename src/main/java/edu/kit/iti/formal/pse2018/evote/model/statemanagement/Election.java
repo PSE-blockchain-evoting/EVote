@@ -1,6 +1,5 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
-import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
@@ -66,7 +65,7 @@ public abstract class Election {
     }
 
     protected void loadSDKData() throws NetworkException, NetworkConfigException,
-            LoadVoteException, WrongCandidateNameException {
+            WrongCandidateNameException {
 
         assert (sdkInterfaceImpl != null);
         ElectionDataIF data = sdkInterfaceImpl.getElectionData();
@@ -77,7 +76,7 @@ public abstract class Election {
     }
 
     protected void reloadVotes() throws NetworkException, NetworkConfigException,
-            WrongCandidateNameException, LoadVoteException {
+            WrongCandidateNameException {
         votingSystem = VotingSystemBuilder.generateVotingSystem(electionDataIF.getVotingSystem(), this);
         String[] votes = sdkInterfaceImpl.getAllVotes();
         for (String vote : votes) {

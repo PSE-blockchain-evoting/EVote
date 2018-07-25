@@ -1,6 +1,5 @@
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
-import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
@@ -69,7 +68,7 @@ public class SDKEventListenerImpl extends Thread implements SDKEventListener {
                     election.checkElectionOver();
                     election.reloadVotes();
                 } catch (NetworkException | NetworkConfigException
-                        | LoadVoteException | WrongCandidateNameException e) {
+                        | WrongCandidateNameException e) {
                     e.printStackTrace();
                     break;
                 }

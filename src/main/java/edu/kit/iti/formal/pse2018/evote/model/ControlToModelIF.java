@@ -3,7 +3,6 @@ package edu.kit.iti.formal.pse2018.evote.model;
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.ElectionRunningException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.LoadVoteException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
@@ -13,7 +12,7 @@ public interface ControlToModelIF {
 
     public void authenticate(String path) throws NetworkException, AuthenticationException,
             InternalSDKException, NetworkConfigException, WrongCandidateNameException,
-            LoadVoteException, ElectionRunningException;
+            ElectionRunningException;
 
     public ElectionDataIF getElectionData();
 
