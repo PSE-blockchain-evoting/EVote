@@ -87,8 +87,10 @@ public class FinishPanel extends ConfigPanel {
         btnExport.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                jfcExport.showSaveDialog(null);
-                adapter.getExportConfigListener().actionPerformed(actionEvent);
+                int res = jfcExport.showSaveDialog(null);
+                if(res == JFileChooser.APPROVE_OPTION) {
+                    adapter.getExportConfigListener().actionPerformed(actionEvent);
+                }
             }
         });
         btnContinue.setText(lang.getString("btnConfirmConfigText"));
