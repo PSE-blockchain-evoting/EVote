@@ -17,7 +17,8 @@ public abstract class ListExtension {
     }
 
     /**
-     * An Entry is added to list. The ListExtension can modify it.
+     * An Entry is added to the list. The ListExtension can modify it.
+     *
      * @param e the Entry that is added.
      */
     public void addEntry(Entry e) {
@@ -30,6 +31,7 @@ public abstract class ListExtension {
 
     /**
      * An Entry is removed to List. The ListExtension is notified so it can modify its state if needed.
+     *
      * @param e The Entry that is to be removed.
      */
     public void removeEntry(Entry e) {
@@ -40,6 +42,7 @@ public abstract class ListExtension {
 
     /**
      * Setting the List that is this ListExtension belongs to.
+     *
      * @param list the list this Extension belongs to.
      */
     public final void setList(ExtendableList list) {

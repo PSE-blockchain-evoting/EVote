@@ -23,6 +23,7 @@ public class SupervisorFrontpage extends SupervisorGUIPanel {
 
     /**
      * Creates an instance of SupervisorFrontage.
+     *
      * @param adapter the adapter to the controller and model interface
      */
     public SupervisorFrontpage(SupervisorAdapter adapter) {
@@ -40,7 +41,9 @@ public class SupervisorFrontpage extends SupervisorGUIPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 fcImportPath.showOpenDialog(SupervisorFrontpage.this);
-                adapter.getImportConfigListener().actionPerformed(actionEvent);
+                if (fcImportPath.getSelectedFile() != null) {
+                    adapter.getImportConfigListener().actionPerformed(actionEvent);
+                }
             }
         });
         btnNew = new JButton(lang.getString("btnNewText"));
@@ -51,16 +54,16 @@ public class SupervisorFrontpage extends SupervisorGUIPanel {
         layout = new GroupLayout(this);
 
         layout.setHorizontalGroup(layout.createParallelGroup()
-            .addGroup(layout.createSequentialGroup()
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
-                .addComponent(btnNew)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
-            )
-            .addGroup(layout.createSequentialGroup()
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
-                .addComponent(btnImport)
-                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
-            )
+                .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
+                        .addComponent(btnNew)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
+                )
+                .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
+                        .addComponent(btnImport)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 0, Short.MAX_VALUE)
+                )
         );
 
         layout.setVerticalGroup(layout.createSequentialGroup()
