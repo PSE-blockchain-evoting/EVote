@@ -135,7 +135,7 @@ public class TimespanPanel extends ConfigPanel {
                                 )
                                 .addGroup(gl.createSequentialGroup()
                                         .addComponent(lblPercentage)
-                                        .addComponent(spnPercentage, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(spnPercentage, 10, 50, 50)
                                         .addComponent(lblPercentSign)
                                 )
                         )

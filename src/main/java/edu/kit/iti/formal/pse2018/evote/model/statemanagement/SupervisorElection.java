@@ -58,22 +58,22 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         ResourceBundle resourceBundle = ResourceBundle.getBundle("ConfigIssues");
 
         ConfigIssuesImpl cgi = new ConfigIssuesImpl();
-        if (electionDataIF.getName() != null
-                && !electionDataIF.getName().matches(".*\\w.*")) {
+        if (electionDataIF.getName() == null
+                || !electionDataIF.getName().matches(".*\\w.*")) {
             cgi.setNameIssue(resourceBundle.getString("name_issue"));
             value = false;
         }
 
         //checking if there are at least two candidates
-        if (electionDataIF.getCandidates() != null
-                && electionDataIF.getCandidates().length <= 1) {
+        if (electionDataIF.getCandidates() == null
+                || electionDataIF.getCandidates().length <= 1) {
             cgi.setCandidateIssue(resourceBundle.getString("candidate_length_issue"));
             value = false;
         }
 
         //checking if any candidate name is empty
-        if (electionDataIF.getCandidates() != null
-                && !Arrays.stream(electionDataIF.getCandidates()).allMatch(x -> x.matches(".*\\w.*"))) {
+        if (electionDataIF.getCandidates() == null
+                || !Arrays.stream(electionDataIF.getCandidates()).allMatch(x -> x.matches(".*\\w.*"))) {
             cgi.setCandidateIssue(resourceBundle.getString("candidate_issue"));
             value = false;
         }
@@ -85,9 +85,9 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         }
 
         //check if starting time comes after ending time
-        if (electionDataIF.getStartDate() != null
-                && electionDataIF.getEndDate() != null
-                && electionDataIF.getStartDate().after(electionDataIF.getEndDate())) {
+        if (electionDataIF.getStartDate() == null
+                || electionDataIF.getEndDate() == null
+                || electionDataIF.getStartDate().after(electionDataIF.getEndDate())) {
             cgi.setTimespanIssue(resourceBundle.getString("timespan_issue"));
             value = false;
         }
