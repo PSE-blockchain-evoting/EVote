@@ -175,14 +175,21 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
             throw new NetworkConfigException(e.getMessage());
         }
     }
-
+/*
     @Override
     public void createUser(String name, String filePath) throws IOException,
             edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException {
         ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         RegistrationRequest request;
         try {
+            HFCAIdentity identity = hfcaClient.newHFCAIdentity(name);
+            identity.create(this.appUser);
+        } catch (org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException | IdentityException e) {
+            throw new edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException(e.getMessage());
+        }
+        try {
             request = new RegistrationRequest(name, bundle.getString("affiliation"));
+            //request.addAttribute();
         } catch (Exception e) {
             throw new edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException(e.getMessage());
         }
@@ -203,5 +210,29 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
         FileOutputStream fos = new FileOutputStream(filePath);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(appUser);
+    }
+*/
+    @Override
+    public void createUser(String name, String filePath) throws IOException,
+            edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException {
+        ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
+        try {
+            HFCAIdentity identity = hfcaClient.newHFCAIdentity(name);
+            identity.setSecret("topSecretSecret");
+            identity.create(this.appUser);
+            HFCAEnrollment enrollment;
+            try {
+                enrollment = (HFCAEnrollment) hfcaClient.enroll(identity.getEnrollmentId(), identity.getSecret());
+            } catch (EnrollmentException | org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException e) {
+                throw new edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException(e.getMessage());
+            }
+            AppUser user = new AppUser(name, bundle.getString("affiliation"), new HashSet<>(), name,
+                    bundle.getString("mspID"), enrollment);
+            FileOutputStream fos = new FileOutputStream(filePath);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(user);
+        } catch (org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException | IdentityException e) {
+            throw new edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException(e.getMessage());
+        }
     }
 }
