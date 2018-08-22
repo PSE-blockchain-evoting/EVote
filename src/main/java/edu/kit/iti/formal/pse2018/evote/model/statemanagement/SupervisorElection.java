@@ -41,6 +41,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -73,45 +74,86 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         ResourceBundle resourceBundle = ResourceBundle.getBundle("ConfigIssues");
 
         ConfigIssuesImpl cgi = new ConfigIssuesImpl();
-        if (electionDataIF.getName() == null
-                || !electionDataIF.getName().matches(".*\\w.*")) {
-            cgi.setNameIssue(resourceBundle.getString("name_issue"));
-            value = false;
-        }
 
-        //checking if there are at least two candidates
-        if (electionDataIF.getCandidates() == null
-                || electionDataIF.getCandidates().length <= 1) {
-            cgi.setCandidateIssue(resourceBundle.getString("candidate_length_issue"));
-            value = false;
-        }
+        value |= findNameIssue(electionDataIF.getName(), cgi);
 
-        //checking if any candidate name is empty
-        if (electionDataIF.getCandidates() == null
-                || !Arrays.stream(electionDataIF.getCandidates()).allMatch(x -> x.matches(".*\\w.*"))) {
-            cgi.setCandidateIssue(resourceBundle.getString("candidate_issue"));
-            value = false;
-        }
+        value |= findCandidateIssue(electionDataIF.getCandidates(), cgi);
 
-        //checking if there is at least one voter
-        if (electionDataIF.getVoterCount() < 1) {
-            cgi.setVoterIssue(resourceBundle.getString("voter_length_issue"));
-            value = false;
+        String[] svoters = new String[voters.length];
+        for (int i = 0; i < voters.length; i++) {
+            svoters[i] = voters[i].getName();
         }
+        value |= findVoterIssue(svoters, cgi);
 
-        //check if starting time comes after ending time
-        if (electionDataIF.getStartDate() == null
-                || electionDataIF.getEndDate() == null
-                || electionDataIF.getStartDate().after(electionDataIF.getEndDate())) {
-            cgi.setTimespanIssue(resourceBundle.getString("timespan_issue"));
-            value = false;
-        }
+        value |= findTimespanIssue(electionDataIF.getStartDate(), electionDataIF.getEndDate(), cgi);
 
-        if (!value) {
+        if (value) {
             configIssuesImpl = cgi;
+        } else {
+            configIssuesImpl = null;
         }
 
-        return value;
+        return !value;
+    }
+
+    private boolean findNameIssue(String name, ConfigIssuesImpl cgi) {
+        ResourceBundle lang = ResourceBundle.getBundle("ConfigIssues");
+        if (name == null) {
+            cgi.setNameIssue(lang.getString("name_issue"));
+            return true;
+        } else if (!name.matches(".*\\w.*")) {
+            cgi.setNameIssue(lang.getString("name_issue"));
+            return true;
+        }
+        return false;
+    }
+
+    private boolean findCandidateIssue(String[] candidates, ConfigIssuesImpl cgi) {
+        ResourceBundle lang = ResourceBundle.getBundle("ConfigIssues");
+        if (candidates == null) {
+            cgi.setCandidateIssue(lang.getString("candidate_length_issue"));
+            return true;
+        } else if (candidates.length <= 1) {
+            cgi.setCandidateIssue(lang.getString("candidate_length_issue"));
+            return true;
+        } else if (!Arrays.stream(candidates).allMatch(x -> x.matches(".*\\w.*"))) {
+            cgi.setCandidateIssue(lang.getString("candidate_name_issue"));
+            return true;
+        } else if (Arrays.stream(candidates).distinct().count() == candidates.length) {
+            cgi.setCandidateIssue(lang.getString("candidate_duplicate"));
+            return true;
+        }
+        return false;
+    }
+
+    private boolean findVoterIssue(String[] voters, ConfigIssuesImpl cgi) {
+        ResourceBundle lang = ResourceBundle.getBundle("ConfigIssues");
+        if (voters == null) {
+            cgi.setVoterIssue(lang.getString("voter_length_issue"));
+            return true;
+        } else if (voters.length <= 1) {
+            cgi.setVoterIssue(lang.getString("voter_length_issue"));
+            return true;
+        } else if (!Arrays.stream(voters).allMatch(x -> x.matches(".*\\w.*"))) {
+            cgi.setVoterIssue(lang.getString("voter_name_issue"));
+            return true;
+        } else if (Arrays.stream(voters).distinct().count() == voters.length) {
+            cgi.setVoterIssue(lang.getString("voter_duplicate"));
+            return true;
+        }
+        return false;
+    }
+
+    private boolean findTimespanIssue(Date start, Date end, ConfigIssuesImpl cgi) {
+        ResourceBundle lang = ResourceBundle.getBundle("ConfigIssues");
+        if (start == null || end == null) {
+            cgi.setTimespanIssue(lang.getString("timespan_date_issue"));
+            return true;
+        } else if (start.after(end)) {
+            cgi.setTimespanIssue(lang.getString("timespan_order_issue"));
+            return true;
+        }
+        return false;
     }
 
     /**
