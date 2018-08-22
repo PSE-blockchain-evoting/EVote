@@ -27,6 +27,7 @@ public class NumberedExtension extends ComponentExtension<JLabel> {
 
     /**
      * Creates a new NumberedExtension Instance.
+     *
      * @param next the next Extension in the chain. Can be null.
      */
     public NumberedExtension(ListExtension next, Font font) {
@@ -42,6 +43,9 @@ public class NumberedExtension extends ComponentExtension<JLabel> {
         for (int j = i; j < components.size(); j++) {
             String t = genText(j);
             components.get(j).setText(t);
+        }
+        if (next != null) {
+            next.removeEntry(e);
         }
     }
 
