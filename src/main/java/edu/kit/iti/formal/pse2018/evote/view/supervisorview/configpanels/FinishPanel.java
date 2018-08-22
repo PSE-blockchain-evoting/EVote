@@ -208,6 +208,7 @@ public class FinishPanel extends ConfigPanel {
     @Override
     public void onActive() {
         updateData();
+        lblIssues.setText("");
         adapter.getConfirmedConfigListener().actionPerformed(null);
     }
 
