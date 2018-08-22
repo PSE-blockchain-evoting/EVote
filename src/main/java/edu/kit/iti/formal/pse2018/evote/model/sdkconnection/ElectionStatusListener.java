@@ -16,6 +16,7 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection;
 
 import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
+import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.Transaction;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 
 import java.util.EnumSet;
@@ -23,6 +24,7 @@ import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import org.hyperledger.fabric.sdk.BlockEvent;
+import org.hyperledger.fabric.sdk.BlockInfo;
 import org.hyperledger.fabric.sdk.ChaincodeEvent;
 import org.hyperledger.fabric.sdk.ChaincodeEventListener;
 import org.hyperledger.fabric.sdk.Channel;
@@ -48,6 +50,15 @@ public class ElectionStatusListener implements ChaincodeEventListener {
         //        Pattern.compile(bundle.getString("chaincode_event_name")), this);
         System.out.println("\u001B[95m" + "EVENT LISTENER REGISTERED" + "\u001B[0m");
         System.out.println(channel.getEventHubs().iterator().next());
+        channel.registerBlockListener(blockEvent -> {
+            for (BlockEvent.TransactionEvent t : blockEvent.getTransactionEvents()) {
+                System.out.println("\u001B[95m" + "BEVENT: " + "\u001B[0m");
+                for (BlockInfo.TransactionEnvelopeInfo.TransactionActionInfo i: t.getTransactionActionInfos()) {
+                    if (i != null && i.getEvent() != null && i.getEvent().getEventName() != null)
+                        System.out.println("\u001B[95m" + "\t" + i.getEvent().getEventName() + "\u001B[0m");
+                }
+            }
+        });
         channel.registerChaincodeEventListener(Pattern.compile(".*"), Pattern.compile(".*"), this);
     }
 
