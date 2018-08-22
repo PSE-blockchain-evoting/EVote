@@ -48,17 +48,18 @@ public class ElectionStatusListener implements ChaincodeEventListener {
         ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         //channel.registerChaincodeEventListener(Pattern.compile(bundle.getString("chaincode_name")),
         //        Pattern.compile(bundle.getString("chaincode_event_name")), this);
-        System.out.println("\u001B[95m" + "EVENT LISTENER REGISTERED" + "\u001B[0m");
+        /*System.out.println("\u001B[95m" + "EVENT LISTENER REGISTERED" + "\u001B[0m");
         System.out.println(channel.getEventHubs().iterator().next());
         channel.registerBlockListener(blockEvent -> {
             for (BlockEvent.TransactionEvent t : blockEvent.getTransactionEvents()) {
                 System.out.println("\u001B[95m" + "BEVENT: " + "\u001B[0m");
                 for (BlockInfo.TransactionEnvelopeInfo.TransactionActionInfo i: t.getTransactionActionInfos()) {
-                    if (i != null && i.getEvent() != null && i.getEvent().getEventName() != null)
+                    if (i != null && i.getEvent() != null && i.getEvent().getEventName() != null) {
                         System.out.println("\u001B[95m" + "\t" + i.getEvent().getEventName() + "\u001B[0m");
+                    }
                 }
             }
-        });
+        });*/
         channel.registerChaincodeEventListener(Pattern.compile(".*"), Pattern.compile(".*"), this);
     }
 
