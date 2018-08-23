@@ -68,6 +68,9 @@ public abstract class QueryTransaction extends Transaction {
         int count = 0;
         for (ProposalResponse resp : responses) {
             payloads[count] = new String(resp.getChaincodeActionResponsePayload());
+            if (!resp.isVerified() && !resp.verify(client.getCryptoSuite())) {
+                throw new NetworkException("Response couldn't be verified");
+            }
             count++;
         }
 
