@@ -70,7 +70,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
      * @return true if every election configuration entry complies with the standards, returns false else
      */
     private boolean checkElectionConfiguration(ElectionDataIF electionDataIF) {
-        boolean value = true;
+        boolean value = false;
         ResourceBundle resourceBundle = ResourceBundle.getBundle("ConfigIssues");
 
         ConfigIssuesImpl cgi = new ConfigIssuesImpl();
@@ -119,7 +119,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         } else if (!Arrays.stream(candidates).allMatch(x -> x.matches(".*\\w.*"))) {
             cgi.setCandidateIssue(lang.getString("candidate_name_issue"));
             return true;
-        } else if (Arrays.stream(candidates).distinct().count() == candidates.length) {
+        } else if (Arrays.stream(candidates).distinct().count() < candidates.length) {
             cgi.setCandidateIssue(lang.getString("candidate_duplicate"));
             return true;
         }
@@ -137,7 +137,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         } else if (!Arrays.stream(voters).allMatch(x -> x.matches(".*\\w.*"))) {
             cgi.setVoterIssue(lang.getString("voter_name_issue"));
             return true;
-        } else if (Arrays.stream(voters).distinct().count() == voters.length) {
+        } else if (Arrays.stream(voters).distinct().count() < voters.length) {
             cgi.setVoterIssue(lang.getString("voter_duplicate"));
             return true;
         }

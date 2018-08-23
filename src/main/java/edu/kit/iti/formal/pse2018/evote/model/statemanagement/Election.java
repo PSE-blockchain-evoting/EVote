@@ -97,6 +97,7 @@ public abstract class Election {
         for (String vote : votes) {
             votingSystem.loadVote(vote);
         }
+
     }
 
     public boolean isElectionInitialized() throws NetworkException, NetworkConfigException {

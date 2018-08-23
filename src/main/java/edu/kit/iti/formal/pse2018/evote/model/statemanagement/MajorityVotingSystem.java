@@ -41,6 +41,7 @@ public abstract class MajorityVotingSystem extends VotingSystem {
         for (int i = 0; i < candidates.length; i++) {
             if (candidates[i].equals(candidate)) {
                 votes[i]++;
+                break;
             }
         }
     }
