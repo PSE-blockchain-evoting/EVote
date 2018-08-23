@@ -34,6 +34,7 @@ public class FinishElectionListener extends SupervisorEventListener {
         ResourceBundle lang = ResourceBundle.getBundle("SupervisorControl");
         try {
             model.destroyElection();
+            gui.exit();
         } catch (NetworkException | NetworkConfigException e) {
             gui.showError(lang.getString("electionDestructionFailed"));
             e.printStackTrace();

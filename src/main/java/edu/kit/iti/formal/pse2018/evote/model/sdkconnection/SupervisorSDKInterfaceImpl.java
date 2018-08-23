@@ -25,12 +25,17 @@ import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.Destruc
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.InitializationInvocation;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
+import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import org.hyperledger.fabric_ca.sdk.HFCAClient;
+import org.hyperledger.fabric_ca.sdk.HFCAEnrollment;
+import org.hyperledger.fabric_ca.sdk.HFCAIdentity;
+import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
+import org.hyperledger.fabric_ca.sdk.exception.IdentityException;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
@@ -39,11 +44,6 @@ import org.hyperledger.fabric.sdk.exception.CryptoException;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.hyperledger.fabric.sdk.security.CryptoSuite;
-import org.hyperledger.fabric_ca.sdk.HFCAClient;
-import org.hyperledger.fabric_ca.sdk.HFCAEnrollment;
-import org.hyperledger.fabric_ca.sdk.HFCAIdentity;
-import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
-import org.hyperledger.fabric_ca.sdk.exception.IdentityException;
 
 
 /**
@@ -127,9 +127,11 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
      * Completely stop election and restart the network.
      */
     public void destroyElection() throws NetworkException, NetworkConfigException {
+        ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         DestructionInvocation inv = new DestructionInvocation(this.hfClient);
         try {
             inv.invoke();
+            this.hfClient.getChannel(bundle.getString("channel_name")).shutdown(true);
         } catch (ProposalException e) {
             throw new NetworkException(e.getMessage());
         } catch (InvalidArgumentException e) {

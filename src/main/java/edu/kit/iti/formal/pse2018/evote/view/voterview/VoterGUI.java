@@ -28,7 +28,6 @@ import edu.kit.iti.formal.pse2018.evote.view.components.ImagePanel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
