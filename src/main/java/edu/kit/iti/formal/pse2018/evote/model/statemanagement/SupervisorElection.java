@@ -235,8 +235,11 @@ public class SupervisorElection extends Election implements SupervisorControlToM
             AuthenticationException, InternalSDKException, NetworkConfigException {
         ResourceBundle resourceBundle = ConfigResourceBundle.loadBundle("config");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
+        File f = new File(filePath);
 
         try {
+            f.mkdirs();
+            filePath += File.separator + "supervisor.cert";
             supervisorSDKInterface = SupervisorSDKInterfaceImpl
                     .createInstance(username, password, filePath, sdkEventListenerImpl);
             sdkInterfaceImpl = supervisorSDKInterface;
@@ -265,7 +268,14 @@ public class SupervisorElection extends Election implements SupervisorControlToM
 
         ResourceBundle config = ConfigResourceBundle.loadBundle("config");
         File f = new File(config.getString("voter_Certificates"));
-        f.mkdirs();
+        if (f.exists()) {
+            File[] list = f.listFiles();
+            for (File f1 : list) {
+                Files.delete(Paths.get(f1.getPath()));
+            }
+        } else {
+            f.mkdirs();
+        }
         for (Voter v : voters) {
             supervisorSDKInterface.createUser(v.getName(), config.getString("voter_Certificates")
                     + File.separator + v.getName() + ".cert");
