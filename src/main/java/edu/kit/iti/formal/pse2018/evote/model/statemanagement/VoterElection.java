@@ -22,6 +22,7 @@ import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
+import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 import edu.kit.iti.formal.pse2018.evote.model.VoterControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.model.VoterSDKInterface;
 import edu.kit.iti.formal.pse2018.evote.model.VoterViewToModelIF;
@@ -67,11 +68,17 @@ public class VoterElection extends Election implements VoterViewToModelIF, Voter
         return hasVoted;
     }
 
+    VoterSDKInterface makeVoterSDKInterfaceImpl(String filePath, SDKEventListener sdkEventListener)
+            throws NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
+        // https://github.com/mockito/mockito/wiki/Mocking-Object-Creation
+        return new VoterSDKInterfaceImpl(filePath, sdkEventListener);
+    }
+
     @Override
     public void authenticate(String path) throws NetworkException, AuthenticationException,
             InternalSDKException, NetworkConfigException, WrongCandidateNameException,
             ElectionRunningException {
-        voterSDKInterface = new VoterSDKInterfaceImpl(path, sdkEventListenerImpl);
+        voterSDKInterface = makeVoterSDKInterfaceImpl(path, sdkEventListenerImpl);
         sdkInterfaceImpl = voterSDKInterface;
         if (sdkInterfaceImpl.isElectionInitialized()) {
             loadSDKData();
