@@ -25,17 +25,12 @@ import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.Destruc
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.InitializationInvocation;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
-import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
-import org.hyperledger.fabric_ca.sdk.HFCAClient;
-import org.hyperledger.fabric_ca.sdk.HFCAEnrollment;
-import org.hyperledger.fabric_ca.sdk.HFCAIdentity;
-import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
-import org.hyperledger.fabric_ca.sdk.exception.IdentityException;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 
@@ -44,6 +39,11 @@ import org.hyperledger.fabric.sdk.exception.CryptoException;
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.hyperledger.fabric.sdk.security.CryptoSuite;
+import org.hyperledger.fabric_ca.sdk.HFCAClient;
+import org.hyperledger.fabric_ca.sdk.HFCAEnrollment;
+import org.hyperledger.fabric_ca.sdk.HFCAIdentity;
+import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
+import org.hyperledger.fabric_ca.sdk.exception.IdentityException;
 
 
 /**
@@ -67,6 +67,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
 
     /**
      * Creates a new SupervisorSDKInterfaceImpl instance.
+     *
      * @param username Username of the admin user
      * @param password Password of the admin user
      * @param filePath Filepath to save the admin identity to
@@ -74,8 +75,8 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
      * @return a new SupervisorSDKInterfaceImpl
      */
     public static SupervisorSDKInterfaceImpl createInstance(String username, String password, String filePath,
-                SDKEventListener listener) throws IOException, NetworkException, AuthenticationException,
-            InternalSDKException, NetworkConfigException {
+                                                            SDKEventListener listener) throws IOException,
+            NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
         ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         HFCAClient hfcaClient = createHFCAClient();
         Enrollment enrollment;
@@ -95,6 +96,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
 
     /**
      * Creates a new SupervisorSDKInterfaceImpl instance.
+     *
      * @param filePath path to load admin identity from
      * @param listener listener to be notified of status changes
      * @return new SupervisorSDKInterfaceImpl
@@ -141,6 +143,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
 
     /**
      * Creates a new election.
+     *
      * @param electionData to create the election with
      */
     public void createElection(ElectionDataIF electionData) throws NetworkException, NetworkConfigException {
