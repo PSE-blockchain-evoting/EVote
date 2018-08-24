@@ -13,6 +13,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/*
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection;
 
 
@@ -22,24 +37,28 @@ import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionData;
 import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
-import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.Transaction;
-import edu.kit.iti.formal.pse2018.evote.model.statemanagement.Election;
-import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
-import java.io.*;
-import java.net.MalformedURLException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
-
 import javax.json.Json;
-import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
 import org.hyperledger.fabric.sdk.BlockEvent;
+import org.hyperledger.fabric.sdk.ChaincodeResponse;
 import org.hyperledger.fabric.sdk.Channel;
-import org.hyperledger.fabric.sdk.Enrollment;
 import org.hyperledger.fabric.sdk.HFClient;
+import org.hyperledger.fabric.sdk.ProposalResponse;
+import org.hyperledger.fabric.sdk.QueryByChaincodeRequest;
 import org.hyperledger.fabric.sdk.TransactionProposalRequest;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
@@ -56,45 +75,50 @@ import org.mockito.Mockito;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({HFCAClient.class, HFClient.class, ElectionData.class})
-public class SupervisorSDKInterfaceImplMethodTest {
+public class VoterSDKInterfaceImplTest {
 
     @Rule
     public TemporaryFolder tempFolder = new TemporaryFolder();
 
-    private SupervisorSDKInterfaceImpl objUnderTest;
+    private VoterSDKInterfaceImpl objUnderTest;
+    private TransactionProposalRequest request;
     private Channel channel;
+    private ArrayList<ProposalResponse> responses;
 
     @Before
     public void setup() throws EnrollmentException, InvalidArgumentException, IOException, NetworkException,
             AuthenticationException, InternalSDKException, NetworkConfigException,
-            org.hyperledger.fabric.sdk.exception.InvalidArgumentException {
-        PowerMockito.mockStatic(HFCAClient.class);
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException {
         PowerMockito.mockStatic(HFClient.class);
 
-        HFCAClient hfcaClient = mock(HFCAClient.class);
-        HFCAIdentity identity = mock(HFCAIdentity.class);
-        HFCAEnrollment enrollment = mock(HFCAEnrollment.class, withSettings().serializable());
         HFClient hfClient = mock(HFClient.class);
         this.channel = mock(Channel.class);
-        TransactionProposalRequest request = mock(TransactionProposalRequest.class);
+        this.request = TransactionProposalRequest.newInstance(null);
+        QueryByChaincodeRequest queryRequest = QueryByChaincodeRequest.newInstance(null);
+
         BlockEvent.TransactionEvent event = mock(BlockEvent.TransactionEvent.class);
         CompletableFuture<BlockEvent.TransactionEvent> future = new CompletableFuture<>();
         future.complete(event);
 
-        when(hfcaClient.enroll(any(), any())).thenReturn(enrollment);
-        when(hfcaClient.newHFCAIdentity(anyString())).thenReturn(identity);
-        when(HFCAClient.createNewInstance(anyString(), eq(null))).thenReturn(hfcaClient);
+        ProposalResponse response = mock(ProposalResponse.class);
+        when(response.getStatus()).thenReturn(ChaincodeResponse.Status.SUCCESS);
+        when(response.isVerified()).thenReturn(true);
+        this.responses = new ArrayList<>();
+        responses.add(response);
+
         when(hfClient.getChannel(anyString())).thenReturn(channel);
         when(hfClient.newChannel(anyString())).thenReturn(channel);
         when(hfClient.newTransactionProposalRequest()).thenReturn(request);
+        when(hfClient.newQueryProposalRequest()).thenReturn(queryRequest);
         when(HFClient.createNewInstance()).thenReturn(hfClient);
         when(channel.sendTransaction(anyCollection())).thenReturn(future);
+        when(channel.queryByChaincode(any())).thenReturn(responses);
 
         File appUserFile = tempFolder.newFile("appuser");
         AppUser appUser = new AppUser("", "", null, "", "", null);
@@ -102,68 +126,57 @@ public class SupervisorSDKInterfaceImplMethodTest {
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(appUser);
         SDKEventListener listener = mock(SDKEventListener.class);
-        this.objUnderTest = SupervisorSDKInterfaceImpl.createInstance(
-                appUserFile.getPath(), listener);
+        this.objUnderTest = new VoterSDKInterfaceImpl(appUserFile.getPath(), listener);
     }
 
-    //TODO: Add further tests for different methods in SupervisorSDKInterfaceImpl
-
     @Test
-    public void destroyElectionTest() throws NetworkException, NetworkConfigException {
-        this.objUnderTest.destroyElection();
+    public void voteTest() throws NetworkException, NetworkConfigException {
+        String vote = "{ \"candidate\": \"candidate1\"}";
+        this.objUnderTest.vote(vote);
+        assertEquals(1, this.request.getArgs().size());
+        assertEquals(vote, this.request.getArgs().get(0));
+        assertEquals("voteInvokation", this.request.getFcn());
     }
 
     @Test(expected = NetworkException.class)
-    public void destroyElectionProposalExceptionTest() throws org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException, NetworkException, NetworkConfigException {
+    public void voteProposalExceptionTest() throws NetworkException, NetworkConfigException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException {
         when(this.channel.sendTransactionProposal(any())).thenThrow(ProposalException.class);
-        this.objUnderTest.destroyElection();
+        String vote = "{ \"candidate\": \"candidate1\"}";
+        this.objUnderTest.vote(vote);
     }
 
     @Test(expected = NetworkConfigException.class)
-    public void destroyElectionInvalidArgumentExceptionTest() throws org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException, NetworkException, NetworkConfigException {
+    public void voteInvalidArgumentExceptionTest() throws NetworkException, NetworkConfigException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException {
         when(this.channel.sendTransactionProposal(any()))
                 .thenThrow(org.hyperledger.fabric.sdk.exception.InvalidArgumentException.class);
-        this.objUnderTest.destroyElection();
+        String vote = "{ \"candidate\": \"candidate1\"}";
+        this.objUnderTest.vote(vote);
     }
 
     @Test
-    public void createElectionTest() throws NetworkException, NetworkConfigException, FileNotFoundException {
-        JsonReader reader = Json.createReader(new FileInputStream("src/test/resources/electionDataExample.json"));
-        ElectionDataIF electionData = ElectionData.fromJSon(reader.readObject());
-        this.objUnderTest.createElection(electionData);
+    public void getOwnVoteTest() throws NetworkException, NetworkConfigException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException {
+        String vote = "{ \"candidate\": \"candidate1\"}";
+        when(this.responses.get(0).getChaincodeActionResponsePayload()).thenReturn(vote.getBytes());
+        String res = this.objUnderTest.getOwnVote();
+        assertEquals(vote, res);
     }
 
     @Test(expected = NetworkException.class)
-    public void createElectionProposalExceptionTest() throws NetworkException, NetworkConfigException, FileNotFoundException, org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException {
-        when(this.channel.sendTransactionProposal(any()))
-                .thenThrow(ProposalException.class);
-        JsonReader reader = Json.createReader(new FileInputStream("src/test/resources/electionDataExample.json"));
-        ElectionDataIF electionData = ElectionData.fromJSon(reader.readObject());
-        this.objUnderTest.createElection(electionData);
+    public void getOwnVoteProposalExceptionTest() throws NetworkException, NetworkConfigException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException {
+        when(this.channel.queryByChaincode(any())).thenThrow(ProposalException.class);
+        this.objUnderTest.getOwnVote();
     }
 
     @Test(expected = NetworkConfigException.class)
-    public void createElectionInvalidArgumentExceptionTest() throws NetworkException, NetworkConfigException, FileNotFoundException, org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException {
-        when(this.channel.sendTransactionProposal(any()))
+    public void getOwnVoteInvalidArgumentExceptionTest() throws NetworkException, NetworkConfigException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException {
+        when(this.channel.queryByChaincode(any()))
                 .thenThrow(org.hyperledger.fabric.sdk.exception.InvalidArgumentException.class);
-        JsonReader reader = Json.createReader(new FileInputStream("src/test/resources/electionDataExample.json"));
-        ElectionDataIF electionData = ElectionData.fromJSon(reader.readObject());
-        this.objUnderTest.createElection(electionData);
-    }
-
-    @Test
-    public void createUserTest() throws IOException, edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException, ClassNotFoundException {
-        String name = "TestUser";
-        String filePath = tempFolder.newFile("testUser").getAbsolutePath();
-        this.objUnderTest.createUser(name, filePath);
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath));
-        Object readObject = ois.readObject();
-        assertTrue(readObject instanceof AppUser);
-        AppUser readUser = (AppUser) readObject;
-        assertEquals(name, readUser.getName());
-        ResourceBundle bundle = ResourceBundle.getBundle("config");
-        assertEquals(bundle.getString("affiliation"), readUser.getAffiliation());
-        assertEquals(bundle.getString("mspID"), readUser.getMspId());
+        this.objUnderTest.getOwnVote();
     }
 
 }
