@@ -82,6 +82,7 @@ public class SDKEventListenerImpl extends Thread implements SDKEventListener {
                 try {
                     election.checkElectionOver();
                     election.reloadVotes();
+                    onElectionRunning();
                 } catch (NetworkException | NetworkConfigException
                         | WrongCandidateNameException e) {
                     e.printStackTrace();

@@ -1,1 +1,1 @@
-[![Build Status](https://travis-ci.org/PSE-blockchain-evoting/EVote.svg?branch=master)](https://travis-ci.org/PSE-blockchain-evoting/EVote)
+[![Build Status](https://travis-ci.org/PSE-blockchain-evoting/EVote.svg?branch=master)](https://travis-ci.org/PSE-blockchain-evoting/EVote) [![codecov](https://codecov.io/gh/PSE-blockchain-evoting/EVote/branch/master/graph/badge.svg)](https://codecov.io/gh/PSE-blockchain-evoting/EVote)

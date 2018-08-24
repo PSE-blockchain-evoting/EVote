@@ -40,7 +40,8 @@ public abstract class MajorityVotingSystem extends VotingSystem {
         String[] candidates = election.getElectionData().getCandidates();
         for (int i = 0; i < candidates.length; i++) {
             if (candidates[i].equals(candidate)) {
-                ++votes[i];
+                votes[i]++;
+                break;
             }
         }
     }
