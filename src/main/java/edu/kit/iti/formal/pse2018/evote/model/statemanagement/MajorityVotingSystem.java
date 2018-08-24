@@ -28,7 +28,7 @@ public abstract class MajorityVotingSystem extends VotingSystem {
 
     public MajorityVotingSystem(Election election) {
         super(election);
-        votes = new int[election.electionDataIF.getCandidates().length];
+        votes = new int[election.getElectionData().getCandidates().length];
     }
 
     @Override
@@ -37,10 +37,10 @@ public abstract class MajorityVotingSystem extends VotingSystem {
         JsonObject obj = reader.readObject();
         String candidate = obj.getString("candidate");
 
-        String[] candidates = election.electionDataIF.getCandidates();
+        String[] candidates = election.getElectionData().getCandidates();
         for (int i = 0; i < candidates.length; i++) {
             if (candidates[i].equals(candidate)) {
-                votes[i]++;
+                ++votes[i];
             }
         }
     }

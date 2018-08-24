@@ -25,12 +25,17 @@ public class RelativeMajorityVotingSystem extends MajorityVotingSystem {
     String determineWinner() {
         int max = -1;
         int index = -1;
+        int maxCount = 0;
         for (int i = 0; i < votes.length; i++) {
             if (max < votes[i]) {
                 max = votes[i];
                 index = i;
             }
         }
-        return election.electionDataIF.getCandidates()[index];
+        for (int voteCount : votes) {
+            if (voteCount == max)
+                maxCount++;
+        }
+        return maxCount > 1 ? null : election.getElectionData().getCandidates()[index];
     }
 }

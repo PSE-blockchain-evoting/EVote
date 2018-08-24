@@ -24,15 +24,12 @@ import edu.kit.iti.formal.pse2018.evote.model.ElectionData;
 import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 import edu.kit.iti.formal.pse2018.evote.model.SDKInterface;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.SingleStringQuery;
-import edu.kit.iti.formal.pse2018.evote.model.statemanagement.AbsoluteMajorityVotingSystem;
-import edu.kit.iti.formal.pse2018.evote.model.statemanagement.SDKEventListenerImpl;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.regex.Pattern;
 
 import javax.json.Json;
 import javax.json.JsonReader;
