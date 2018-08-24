@@ -30,7 +30,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Font;
-import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import javax.imageio.ImageIO;

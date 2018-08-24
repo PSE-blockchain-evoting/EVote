@@ -67,6 +67,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
 
     /**
      * Creates a new SupervisorSDKInterfaceImpl instance.
+     *
      * @param username Username of the admin user
      * @param password Password of the admin user
      * @param filePath Filepath to save the admin identity to
@@ -74,8 +75,8 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
      * @return a new SupervisorSDKInterfaceImpl
      */
     public static SupervisorSDKInterfaceImpl createInstance(String username, String password, String filePath,
-                SDKEventListener listener) throws IOException, NetworkException, AuthenticationException,
-            InternalSDKException, NetworkConfigException {
+                                                            SDKEventListener listener) throws IOException,
+            NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
         ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         HFCAClient hfcaClient = createHFCAClient();
         Enrollment enrollment;
@@ -95,6 +96,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
 
     /**
      * Creates a new SupervisorSDKInterfaceImpl instance.
+     *
      * @param filePath path to load admin identity from
      * @param listener listener to be notified of status changes
      * @return new SupervisorSDKInterfaceImpl
@@ -127,9 +129,11 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
      * Completely stop election and restart the network.
      */
     public void destroyElection() throws NetworkException, NetworkConfigException {
+        ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         DestructionInvocation inv = new DestructionInvocation(this.hfClient);
         try {
             inv.invoke();
+            this.hfClient.getChannel(bundle.getString("channel_name")).shutdown(true);
         } catch (ProposalException e) {
             throw new NetworkException(e.getMessage());
         } catch (InvalidArgumentException e) {
@@ -139,6 +143,7 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
 
     /**
      * Creates a new election.
+     *
      * @param electionData to create the election with
      */
     public void createElection(ElectionDataIF electionData) throws NetworkException, NetworkConfigException {
