@@ -16,7 +16,6 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection;
 
 import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
-import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.ElectionStatusListener;
 
 import org.hyperledger.fabric.sdk.ChaincodeEvent;
 import org.hyperledger.fabric.sdk.Channel;

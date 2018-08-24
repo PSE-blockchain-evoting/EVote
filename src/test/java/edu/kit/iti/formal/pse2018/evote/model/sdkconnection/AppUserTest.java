@@ -15,8 +15,6 @@
 
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection;
 
-import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.AppUser;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,6 +36,7 @@ public class AppUserTest {
         String accountName = "TestAccountName";
         String mspID = "TestMSPID";
         Enrollment enrollment = mock(Enrollment.class);
+        Enrollment enrollment2 = mock(Enrollment.class);
         AppUser appUser = new AppUser(username, affiliation, roles, accountName, mspID, enrollment);
         assertEquals(username, appUser.getName());
         assertEquals(affiliation, appUser.getAffiliation());
@@ -45,5 +44,7 @@ public class AppUserTest {
         assertEquals(accountName, appUser.getAccount());
         assertEquals(mspID, appUser.getMspId());
         assertEquals(enrollment, appUser.getEnrollment());
+        appUser.setEnrollment(enrollment2);
+        assertEquals(enrollment2, appUser.getEnrollment());
     }
 }
