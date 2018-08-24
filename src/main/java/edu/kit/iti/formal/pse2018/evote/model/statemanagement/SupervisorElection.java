@@ -152,7 +152,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         } else if (start.after(end)) {
             cgi.setTimespanIssue(lang.getString("timespan_order_issue"));
             return true;
-        } else if (end.after(new Date())){
+        } else if (end.before(new Date())) {
             cgi.setTimespanIssue(lang.getString("timespan_ends_in_past"));
             return true;
         }

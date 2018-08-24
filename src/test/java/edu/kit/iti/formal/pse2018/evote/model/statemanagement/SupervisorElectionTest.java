@@ -17,7 +17,6 @@ package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
@@ -26,8 +25,6 @@ import edu.kit.iti.formal.pse2018.evote.utils.VotingSystemType;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.SupervisorElectionEndListenerImpl;
 import edu.kit.iti.formal.pse2018.evote.view.supervisorview.SupervisorGUI;
 
-import static org.mockito.Mockito.*;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,6 +32,8 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SupervisorElectionTest {
     private SupervisorElection model;
@@ -166,9 +165,7 @@ public class SupervisorElectionTest {
         assertFalse(model.setElectionData(data));
         when(data.getStartDate()).thenReturn(stDate);
         when(data.getEndDate()).thenReturn(stDate);
-        // it's better to have assertFalse() below,
-        // but it's not working
-        assertTrue(model.setElectionData(data));
+        assertFalse(model.setElectionData(data));
         when(data.getStartDate()).thenReturn(stDate);
         when(data.getEndDate()).thenReturn(endDate);
         assertTrue(model.setElectionData(data));
