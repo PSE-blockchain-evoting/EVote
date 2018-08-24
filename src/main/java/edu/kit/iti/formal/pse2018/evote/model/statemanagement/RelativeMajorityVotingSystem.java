@@ -33,8 +33,9 @@ public class RelativeMajorityVotingSystem extends MajorityVotingSystem {
             }
         }
         for (int voteCount : votes) {
-            if (voteCount == max)
+            if (voteCount == max) {
                 maxCount++;
+            }
         }
         return maxCount > 1 ? null : election.getElectionData().getCandidates()[index];
     }
