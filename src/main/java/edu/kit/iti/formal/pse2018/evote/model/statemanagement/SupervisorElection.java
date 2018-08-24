@@ -295,7 +295,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         ResourceBundle resourceBundle = ConfigResourceBundle.loadBundle("config");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
 
-        supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(filePath,
+        supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(path,
                 sdkEventListenerImpl);
         sdkInterfaceImpl = supervisorSDKInterface;
         if (sdkInterfaceImpl.isElectionInitialized()) {
