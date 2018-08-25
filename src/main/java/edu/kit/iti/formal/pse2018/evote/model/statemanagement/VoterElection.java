@@ -83,7 +83,7 @@ public class VoterElection extends Election implements VoterViewToModelIF, Voter
                 hasVoted = true;
                 vote = ownVote;
             }
-            sdkEventListenerImpl.start();
+            statusThread.start();
         } else {
             throw new ElectionRunningException("No Election is initialized");
         }

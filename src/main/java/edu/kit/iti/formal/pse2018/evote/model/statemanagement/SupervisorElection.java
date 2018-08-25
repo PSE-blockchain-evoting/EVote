@@ -248,7 +248,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
             sdkInterfaceImpl = supervisorSDKInterface;
             if (sdkInterfaceImpl.isElectionInitialized()) {
                 loadSDKData();
-                sdkEventListenerImpl.start();
+                statusThread.start();
             }
         } catch (IOException e) {
             return false;
@@ -284,7 +284,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
                     + File.separator + v.getName() + ".cert");
         }
         reloadVotes();
-        sdkEventListenerImpl.start();
+        statusThread.start();
     }
 
     @Override
@@ -302,7 +302,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         sdkInterfaceImpl = supervisorSDKInterface;
         if (sdkInterfaceImpl.isElectionInitialized()) {
             loadSDKData();
-            sdkEventListenerImpl.start();
+            statusThread.start();
         }
     }
 

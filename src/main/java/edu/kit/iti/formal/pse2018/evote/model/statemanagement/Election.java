@@ -27,7 +27,7 @@ public abstract class Election {
 
     protected SDKInterface sdkInterfaceImpl;
 
-    protected SDKEventListenerImpl sdkEventListenerImpl;
+    protected ElectionStatusThread statusThread;
 
     protected ElectionDataIF electionDataIF;
 
@@ -42,12 +42,12 @@ public abstract class Election {
      * @throws NetworkConfigException The network was wrongly configured.
      */
     public Election(ElectionStatusListener electionStatusListener) throws NetworkException, NetworkConfigException {
-        sdkEventListenerImpl = new SDKEventListenerImpl(this);
-        sdkEventListenerImpl.setElectionStatusListener(electionStatusListener);
+        statusThread = new ElectionStatusThread(this);
+        statusThread.setElectionStatusListener(electionStatusListener);
     }
 
     public void setElectionStatusListener(ElectionStatusListener listener) {
-        sdkEventListenerImpl.setElectionStatusListener(listener);
+        statusThread.setElectionStatusListener(listener);
     }
 
     public ElectionDataIF getElectionData() {

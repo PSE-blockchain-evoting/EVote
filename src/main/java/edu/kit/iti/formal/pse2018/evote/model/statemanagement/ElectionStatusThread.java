@@ -19,11 +19,11 @@ import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
-import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 
+import java.util.Date;
 import java.util.Random;
 
-public class SDKEventListenerImpl extends Thread {
+public class ElectionStatusThread extends Thread {
 
     public static double BACKOFF_AVG = (15 * 1000);
     public static double DEVIATION = 1000;
@@ -35,38 +35,37 @@ public class SDKEventListenerImpl extends Thread {
     protected ElectionStatusListener electionStatusListener;
 
     /**
-     * Creates an instance of SDKEventListenerImpl. This thread will repeatedly cause
+     * Creates an instance of ElectionStatusThread. This thread will repeatedly cause
      * a check, whether the Election is over by the SDKConnection.
      *
      * @param election The Election context.
      */
-    public SDKEventListenerImpl(Election election) throws NetworkException, NetworkConfigException {
+    public ElectionStatusThread(Election election) throws NetworkException, NetworkConfigException {
         hasEnded = false;
         Random r = new Random();
         backoff = Math.round(r.nextGaussian() * DEVIATION + BACKOFF_AVG);
 
         this.election = election;
-        election.checkElectionOver();
     }
 
     public void setElectionStatusListener(ElectionStatusListener electionStatusListener) {
         this.electionStatusListener = electionStatusListener;
     }
 
-    public void onElectionEnd() {
-        lastEvent = System.currentTimeMillis();
-        hasEnded = true;
-        if (electionStatusListener != null) {
-            electionStatusListener.electionOver();
-        }
-    }
-
-    public void onElectionRunning() {
-        lastEvent = System.currentTimeMillis();
-        assert (!hasEnded);
-
-        if (electionStatusListener != null) {
-            electionStatusListener.electionUpdate();
+    private void dispatchElectionCheck() {
+        System.out.print(new Date() + ": Checkinging Election Over... ");
+        try {
+            if (election.checkElectionOver()) {
+                System.out.println("True");
+                electionStatusListener.electionOver();
+                hasEnded = true;
+            } else {
+                System.out.println("False");
+                electionStatusListener.electionUpdate();
+            }
+            election.reloadVotes();
+        } catch (NetworkException | NetworkConfigException | WrongCandidateNameException e) {
+            e.printStackTrace();
         }
     }
 
@@ -77,15 +76,7 @@ public class SDKEventListenerImpl extends Thread {
             long diff = cur - lastEvent;
             if (diff > backoff) {
                 lastEvent = cur;
-                try {
-                    election.checkElectionOver();
-                    election.reloadVotes();
-                    onElectionRunning();
-                } catch (NetworkException | NetworkConfigException
-                        | WrongCandidateNameException e) {
-                    e.printStackTrace();
-                    break;
-                }
+                dispatchElectionCheck();
             }
 
             long sleep = backoff + lastEvent - cur;
@@ -96,5 +87,11 @@ public class SDKEventListenerImpl extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public synchronized void start() {
+        System.out.println("Starting ElectionStatusThread");
+        super.start();
     }
 }
