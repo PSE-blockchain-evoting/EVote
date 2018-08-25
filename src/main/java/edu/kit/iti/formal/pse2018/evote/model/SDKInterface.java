@@ -23,7 +23,7 @@ public interface SDKInterface {
 
     public String[] getAllVotes() throws NetworkException, NetworkConfigException;
 
-    public void dispatchElectionOverCheck() throws NetworkException, NetworkConfigException;
+    public boolean isElectionOver() throws NetworkException, NetworkConfigException;
 
     public ElectionDataIF getElectionData()throws NetworkException, NetworkConfigException;
 

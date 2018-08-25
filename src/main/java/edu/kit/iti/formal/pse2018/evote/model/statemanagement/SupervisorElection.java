@@ -244,7 +244,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
             f.mkdirs();
             filePath += File.separator + "supervisor.cert";
             supervisorSDKInterface = SupervisorSDKInterfaceImpl
-                    .createInstance(username, password, filePath, sdkEventListenerImpl);
+                    .createInstance(username, password, filePath);
             sdkInterfaceImpl = supervisorSDKInterface;
             if (sdkInterfaceImpl.isElectionInitialized()) {
                 loadSDKData();
@@ -298,8 +298,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         ResourceBundle resourceBundle = ConfigResourceBundle.loadBundle("config");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
 
-        supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(path,
-                sdkEventListenerImpl);
+        supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(path);
         sdkInterfaceImpl = supervisorSDKInterface;
         if (sdkInterfaceImpl.isElectionInitialized()) {
             loadSDKData();

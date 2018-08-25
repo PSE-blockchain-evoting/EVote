@@ -16,29 +16,35 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection;
 
 
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionData;
-import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
-import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.Transaction;
-import edu.kit.iti.formal.pse2018.evote.model.statemanagement.Election;
-import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 
-import java.io.*;
-import java.net.MalformedURLException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ResourceBundle;
 import java.util.concurrent.CompletableFuture;
-
 import javax.json.Json;
-import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
 import org.hyperledger.fabric.sdk.BlockEvent;
 import org.hyperledger.fabric.sdk.Channel;
-import org.hyperledger.fabric.sdk.Enrollment;
 import org.hyperledger.fabric.sdk.HFClient;
 import org.hyperledger.fabric.sdk.TransactionProposalRequest;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
@@ -47,18 +53,9 @@ import org.hyperledger.fabric_ca.sdk.HFCAEnrollment;
 import org.hyperledger.fabric_ca.sdk.HFCAIdentity;
 import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
 import org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({HFCAClient.class, HFClient.class, ElectionData.class})
@@ -101,9 +98,8 @@ public class SupervisorSDKInterfaceImplMethodTest {
         FileOutputStream fos = new FileOutputStream(appUserFile);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(appUser);
-        SDKEventListener listener = mock(SDKEventListener.class);
         this.objUnderTest = SupervisorSDKInterfaceImpl.createInstance(
-                appUserFile.getPath(), listener);
+                appUserFile.getPath());
     }
 
     //TODO: Add further tests for different methods in SupervisorSDKInterfaceImpl

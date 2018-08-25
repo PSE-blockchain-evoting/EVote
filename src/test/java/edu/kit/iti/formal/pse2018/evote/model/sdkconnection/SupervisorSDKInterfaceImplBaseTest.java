@@ -16,14 +16,24 @@
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection;
 
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
-import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 
-import java.io.*;
-import java.net.MalformedURLException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import org.hyperledger.fabric.sdk.Channel;
 import org.hyperledger.fabric.sdk.Enrollment;
@@ -32,17 +42,8 @@ import org.hyperledger.fabric_ca.sdk.HFCAClient;
 import org.hyperledger.fabric_ca.sdk.HFCAIdentity;
 import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
 import org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({HFCAClient.class,HFClient.class})
@@ -74,9 +75,8 @@ public class SupervisorSDKInterfaceImplBaseTest {
         when(HFClient.createNewInstance()).thenReturn(hfClient);
 
         File appUserFile = tempFolder.newFile("appuser");
-        SDKEventListener listener = mock(SDKEventListener.class);
         SupervisorSDKInterfaceImpl supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance("admin",
-                "password", appUserFile.getPath(), listener);
+                "password", appUserFile.getPath());
         FileInputStream fis = new FileInputStream(appUserFile);
         ObjectInputStream ois = new ObjectInputStream(fis);
         Object writtenObject = ois.readObject();
@@ -106,9 +106,8 @@ public class SupervisorSDKInterfaceImplBaseTest {
         FileOutputStream fos = new FileOutputStream(appUserFile);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(appUser);
-        SDKEventListener listener = mock(SDKEventListener.class);
         SupervisorSDKInterfaceImpl supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(
-                appUserFile.getPath(), listener);
+                appUserFile.getPath());
     }
 
 
