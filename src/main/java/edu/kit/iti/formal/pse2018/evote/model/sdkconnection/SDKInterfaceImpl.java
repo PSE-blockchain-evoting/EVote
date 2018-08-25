@@ -19,7 +19,6 @@ import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
-import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 import edu.kit.iti.formal.pse2018.evote.model.SDKInterface;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.AllVotesQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.ElectionDataQuery;
@@ -31,9 +30,7 @@ import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.ResourceBundle;
 
 import org.hyperledger.fabric.sdk.Channel;
@@ -51,23 +48,16 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
 
     protected AppUser appUser;
     protected HFClient hfClient;
-    private ElectionStatusListener electionStatusListener;
 
     /**
      * Sets the AppUser attribute and creates ElectionStatusListener and HFClient.
      */
-    protected SDKInterfaceImpl(AppUser appUser, SDKEventListener listener) throws NetworkConfigException,
+    protected SDKInterfaceImpl(AppUser appUser) throws NetworkConfigException,
             AuthenticationException, InternalSDKException, NetworkException {
         this.appUser = appUser;
         createHFClient();
         createChannel();
         ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
-        try {
-            this.electionStatusListener = new ElectionStatusListener(listener,
-                    hfClient.getChannel(bundle.getString("channel_name")));
-        } catch (InvalidArgumentException e) {
-            throw new NetworkConfigException(e.getMessage());
-        }
     }
 
     /**
@@ -78,7 +68,7 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
      * @throws ClassNotFoundException if file is not a valid file
      * @throws ClassCastException     if file is not a valid AppUser
      */
-    protected SDKInterfaceImpl(String filePath, SDKEventListener listener) throws AuthenticationException,
+    protected SDKInterfaceImpl(String filePath) throws AuthenticationException,
             NetworkConfigException, NetworkException, InternalSDKException {
         try {
             FileInputStream fis = new FileInputStream(filePath);
@@ -90,12 +80,6 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
         createHFClient();
         createChannel();
         ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
-        try {
-            this.electionStatusListener = new ElectionStatusListener(listener,
-                    hfClient.getChannel(bundle.getString("channel_name")));
-        } catch (InvalidArgumentException e) {
-            throw new NetworkConfigException(e.getMessage());
-        }
     }
 
     private void createHFClient() throws InternalSDKException, AuthenticationException {
@@ -170,7 +154,7 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
     /**
      * Requests an election status update from the network.
      */
-    public void dispatchElectionOverCheck() throws NetworkException, NetworkConfigException {
+    public boolean isElectionOver() throws NetworkException, NetworkConfigException {
         ElectionStatusQuery query = new ElectionStatusQuery(this.hfClient);
         try {
             query.query();
@@ -179,6 +163,7 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
         } catch (InvalidArgumentException e) {
             throw new NetworkConfigException(e.getMessage());
         }
+        return query.getResult().equals("ended");
     }
 
     /**

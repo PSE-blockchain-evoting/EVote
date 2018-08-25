@@ -60,10 +60,8 @@ public abstract class Election {
      * @throws NetworkException       Exception within the SDKConnection is thrown.
      * @throws NetworkConfigException The network was wrongly configured.
      */
-    public void checkElectionOver() throws NetworkException, NetworkConfigException {
-        if (sdkInterfaceImpl != null) {
-            sdkInterfaceImpl.dispatchElectionOverCheck();
-        }
+    public boolean checkElectionOver() throws NetworkException, NetworkConfigException {
+        return sdkInterfaceImpl.isElectionOver();
     }
 
     public String getWinner() {

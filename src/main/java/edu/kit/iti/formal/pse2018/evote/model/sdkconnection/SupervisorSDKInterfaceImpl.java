@@ -19,7 +19,6 @@ import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
-import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorSDKInterface;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.DestructionInvocation;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.InitializationInvocation;
@@ -53,15 +52,15 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
 
     private HFCAClient hfcaClient;
 
-    private SupervisorSDKInterfaceImpl(String filePath, SDKEventListener listener, HFCAClient hfcaClient)
+    private SupervisorSDKInterfaceImpl(String filePath, HFCAClient hfcaClient)
             throws NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
-        super(filePath, listener);
+        super(filePath);
         this.hfcaClient = hfcaClient;
     }
 
-    private SupervisorSDKInterfaceImpl(AppUser appUser, SDKEventListener listener, HFCAClient hfcaClient)
+    private SupervisorSDKInterfaceImpl(AppUser appUser, HFCAClient hfcaClient)
             throws NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
-        super(appUser, listener);
+        super(appUser);
         this.hfcaClient = hfcaClient;
     }
 
@@ -71,12 +70,11 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
      * @param username Username of the admin user
      * @param password Password of the admin user
      * @param filePath Filepath to save the admin identity to
-     * @param listener listener to be notified of status changes
      * @return a new SupervisorSDKInterfaceImpl
      */
-    public static SupervisorSDKInterfaceImpl createInstance(String username, String password, String filePath,
-                                                            SDKEventListener listener) throws IOException,
-            NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
+    public static SupervisorSDKInterfaceImpl createInstance(String username, String password, String filePath)
+            throws IOException, NetworkException, AuthenticationException, InternalSDKException,
+            NetworkConfigException {
         ResourceBundle bundle = ConfigResourceBundle.loadBundle("config");
         HFCAClient hfcaClient = createHFCAClient();
         Enrollment enrollment;
@@ -91,19 +89,18 @@ public class SupervisorSDKInterfaceImpl extends SDKInterfaceImpl implements Supe
         FileOutputStream fos = new FileOutputStream(filePath);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeObject(appUser);
-        return new SupervisorSDKInterfaceImpl(appUser, listener, hfcaClient);
+        return new SupervisorSDKInterfaceImpl(appUser, hfcaClient);
     }
 
     /**
      * Creates a new SupervisorSDKInterfaceImpl instance.
      *
      * @param filePath path to load admin identity from
-     * @param listener listener to be notified of status changes
      * @return new SupervisorSDKInterfaceImpl
      */
-    public static SupervisorSDKInterfaceImpl createInstance(String filePath, SDKEventListener listener)
+    public static SupervisorSDKInterfaceImpl createInstance(String filePath)
             throws NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
-        return new SupervisorSDKInterfaceImpl(filePath, listener, createHFCAClient());
+        return new SupervisorSDKInterfaceImpl(filePath, createHFCAClient());
     }
 
     private static HFCAClient createHFCAClient() throws InternalSDKException, NetworkException {

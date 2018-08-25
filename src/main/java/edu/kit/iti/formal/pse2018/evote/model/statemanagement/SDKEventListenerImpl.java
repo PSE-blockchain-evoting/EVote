@@ -23,7 +23,7 @@ import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 
 import java.util.Random;
 
-public class SDKEventListenerImpl extends Thread implements SDKEventListener {
+public class SDKEventListenerImpl extends Thread {
 
     public static double BACKOFF_AVG = (15 * 1000);
     public static double DEVIATION = 1000;
@@ -53,7 +53,6 @@ public class SDKEventListenerImpl extends Thread implements SDKEventListener {
         this.electionStatusListener = electionStatusListener;
     }
 
-    @Override
     public void onElectionEnd() {
         lastEvent = System.currentTimeMillis();
         hasEnded = true;
@@ -62,7 +61,6 @@ public class SDKEventListenerImpl extends Thread implements SDKEventListener {
         }
     }
 
-    @Override
     public void onElectionRunning() {
         lastEvent = System.currentTimeMillis();
         assert (!hasEnded);

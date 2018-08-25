@@ -15,6 +15,10 @@
 
 package edu.kit.iti.formal.pse2018.evote.model.sdkconnection;
 
+import org.junit.Ignore;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.EnrollmentException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
@@ -30,18 +34,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
-
 import javax.json.Json;
 import javax.json.JsonReader;
 
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
 
 //THIS TEST ONLY WORKS WITH A RUNNING NETWORK
 @Ignore
@@ -60,7 +58,7 @@ public class SDKConnectionITTest {
         //userFilePath = tempFolder.newFile("user1Ident").getAbsolutePath();
         userFilePath = "/tmp/evote/user1Ident";
         supervisorEventListener = mock(SDKEventListener.class);
-        supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance("admin", "adminpw", tempFolder.newFile("adminIdent").getAbsolutePath(), supervisorEventListener);
+        supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance("admin", "adminpw", tempFolder.newFile("adminIdent").getAbsolutePath());
     }
 
 
@@ -112,7 +110,7 @@ public class SDKConnectionITTest {
         //createElectionTest();
 
         voterEventListener = mock(SDKEventListener.class);
-        voterSDKInterface = new VoterSDKInterfaceImpl(userFilePath, voterEventListener);
+        voterSDKInterface = new VoterSDKInterfaceImpl(userFilePath);
         queryElectionData(voterSDKInterface);
         //System.out.println("\u001B[33m" + "DISPATCH DONE" + "\u001B[0m");
         //verify(voterEventListener, times(1)).onElectionRunning();

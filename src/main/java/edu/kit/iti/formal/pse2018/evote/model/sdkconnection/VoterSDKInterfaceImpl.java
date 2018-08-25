@@ -19,21 +19,18 @@ import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
-import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 import edu.kit.iti.formal.pse2018.evote.model.VoterSDKInterface;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.OwnVoteQuery;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.transactions.VoteInvocation;
-
-import java.io.IOException;
 
 import org.hyperledger.fabric.sdk.exception.InvalidArgumentException;
 import org.hyperledger.fabric.sdk.exception.ProposalException;
 
 public class VoterSDKInterfaceImpl extends SDKInterfaceImpl implements VoterSDKInterface {
 
-    public VoterSDKInterfaceImpl(String filePath, SDKEventListener sdkEventListener) throws NetworkException,
+    public VoterSDKInterfaceImpl(String filePath) throws NetworkException,
             AuthenticationException, InternalSDKException, NetworkConfigException {
-        super(filePath, sdkEventListener);
+        super(filePath);
     }
 
     /**
