@@ -15,20 +15,18 @@
 
 package edu.kit.iti.formal.pse2018.evote.model.statemanagement;
 
+import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.VoterSDKInterfaceImpl;
 import org.junit.Test;
 
-import edu.kit.iti.formal.pse2018.evote.exceptions.AuthenticationException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.ElectionRunningException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.InternalSDKException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
-import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
-import edu.kit.iti.formal.pse2018.evote.model.VoterSDKInterface;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
 import edu.kit.iti.formal.pse2018.evote.utils.VotingSystemType;
-import edu.kit.iti.formal.pse2018.evote.model.statemanagement.VoterElection;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.mockito.Mockito.*;
 
@@ -38,6 +36,8 @@ import java.util.Locale;
 
 import static org.junit.Assert.*;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(VoterElection.class)
 public class VoterElectionTest {
 
     private Date addDays(Date val, int daysCnt) {
@@ -67,8 +67,7 @@ public class VoterElectionTest {
         return mockData;
     }
 
-    private VoterSDKInterface genMockVoterSDK(ElectionDataIF data) throws NetworkException, NetworkConfigException {
-        VoterSDKInterface mockVoterSDK = mock(VoterSDKInterface.class);
+    private void genMockVoterSDK(ElectionDataIF data, VoterSDKInterfaceImpl mockVoterSDK) throws NetworkException, NetworkConfigException {
         doReturn(true)
             .when(mockVoterSDK)
             .isElectionInitialized();
@@ -86,22 +85,20 @@ public class VoterElectionTest {
         doReturn("")
             .when(mockVoterSDK)
             .getOwnVote();
-        return mockVoterSDK;
     }
 
     @Test
-    public void all() throws NetworkException, NetworkConfigException,
-            AuthenticationException, InternalSDKException, WrongCandidateNameException, ElectionRunningException {
+    public void all() throws Exception {
         Locale.setDefault(new Locale("de", "DE"));
         ElectionDataIF mockData = genMockData();
         ElectionStatusListener list = mock(ElectionStatusListener.class);
         // https://github.com/mockito/mockito/wiki/Mocking-Object-Creation
-        VoterElection election = spy(new VoterElection(list));
-        VoterSDKInterface mockVoterSDK = genMockVoterSDK(mockData);
-        doReturn(mockVoterSDK)
-            .when(election)
-            .makeVoterSDKInterfaceImpl(anyString(), any(SDKEventListener.class));
+        VoterElection election = new VoterElection(list);
+        VoterSDKInterfaceImpl mockVoterSDK = mock(VoterSDKInterfaceImpl.class);
+        PowerMockito.whenNew(VoterSDKInterfaceImpl.class).withAnyArguments().thenReturn(mockVoterSDK);
+        genMockVoterSDK(mockData, mockVoterSDK);
         election.authenticate("some/cool/path/to/the/certificate/of/the/voter");
+        Thread.sleep(3000);
         String myVote = "[\"Sue\",\"Bob\",\"Bill\"]";
         boolean resVote = election.vote(myVote);
         assertTrue(resVote);

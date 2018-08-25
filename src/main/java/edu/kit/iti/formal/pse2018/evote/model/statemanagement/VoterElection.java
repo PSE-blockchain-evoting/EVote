@@ -68,17 +68,11 @@ public class VoterElection extends Election implements VoterViewToModelIF, Voter
         return hasVoted;
     }
 
-    VoterSDKInterface makeVoterSDKInterfaceImpl(String filePath, SDKEventListener sdkEventListener)
-            throws NetworkException, AuthenticationException, InternalSDKException, NetworkConfigException {
-        // https://github.com/mockito/mockito/wiki/Mocking-Object-Creation
-        return new VoterSDKInterfaceImpl(filePath, sdkEventListener);
-    }
-
     @Override
     public void authenticate(String path) throws NetworkException, AuthenticationException,
             InternalSDKException, NetworkConfigException, WrongCandidateNameException,
             ElectionRunningException {
-        voterSDKInterface = makeVoterSDKInterfaceImpl(path, sdkEventListenerImpl);
+        voterSDKInterface = new VoterSDKInterfaceImpl(path, sdkEventListenerImpl);
         sdkInterfaceImpl = voterSDKInterface;
         if (sdkInterfaceImpl.isElectionInitialized()) {
             loadSDKData();
