@@ -30,13 +30,11 @@ public class AbsoluteMajorityVotingSystem extends MajorityVotingSystem {
             totalNumberOfVotes += votes[i];
         }
 
-        for (int i = 0; i < voteCount.length - 2; i++) {
-            if (voteCount[i] < voteCount[i + 1]) {
-                winnerIndex = i + 1;
-            }
+        for (int i = 1; i < voteCount.length; i++) {
+            winnerIndex = voteCount[i] > voteCount[winnerIndex] ? i : winnerIndex;
         }
-        if (voteCount[winnerIndex] >= (totalNumberOfVotes / 2)) {
-            return election.electionDataIF.getCandidates()[winnerIndex];
+        if ((double)voteCount[winnerIndex] > ((double) totalNumberOfVotes / 2)) {
+            return election.getElectionData().getCandidates()[winnerIndex];
         }
         return null; //no winner
     }
