@@ -41,6 +41,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
@@ -69,49 +70,93 @@ public class SupervisorElection extends Election implements SupervisorControlToM
      * @return true if every election configuration entry complies with the standards, returns false else
      */
     private boolean checkElectionConfiguration(ElectionDataIF electionDataIF) {
-        boolean value = true;
+        boolean value = false;
         ResourceBundle resourceBundle = ResourceBundle.getBundle("ConfigIssues");
 
         ConfigIssuesImpl cgi = new ConfigIssuesImpl();
-        if (electionDataIF.getName() != null
-                && !electionDataIF.getName().matches(".*\\w.*")) {
-            cgi.setNameIssue(resourceBundle.getString("name_issue"));
-            value = false;
-        }
 
-        //checking if there are at least two candidates
-        if (electionDataIF.getCandidates() != null
-                && electionDataIF.getCandidates().length <= 1) {
-            cgi.setCandidateIssue(resourceBundle.getString("candidate_length_issue"));
-            value = false;
-        }
+        value |= findNameIssue(electionDataIF.getName(), cgi);
 
-        //checking if any candidate name is empty
-        if (electionDataIF.getCandidates() != null
-                && !Arrays.stream(electionDataIF.getCandidates()).allMatch(x -> x.matches(".*\\w.*"))) {
-            cgi.setCandidateIssue(resourceBundle.getString("candidate_issue"));
-            value = false;
-        }
+        value |= findCandidateIssue(electionDataIF.getCandidates(), cgi);
 
-        //checking if there is at least one voter
-        if (electionDataIF.getVoterCount() < 1) {
-            cgi.setVoterIssue(resourceBundle.getString("voter_length_issue"));
-            value = false;
+        String[] svoters = new String[voters.length];
+        for (int i = 0; i < voters.length; i++) {
+            svoters[i] = voters[i].getName();
         }
+        value |= findVoterIssue(svoters, cgi);
 
-        //check if starting time comes after ending time
-        if (electionDataIF.getStartDate() != null
-                && electionDataIF.getEndDate() != null
-                && electionDataIF.getStartDate().after(electionDataIF.getEndDate())) {
-            cgi.setTimespanIssue(resourceBundle.getString("timespan_issue"));
-            value = false;
-        }
+        value |= findTimespanIssue(electionDataIF.getStartDate(), electionDataIF.getEndDate(), cgi);
 
-        if (!value) {
+        if (value) {
             configIssuesImpl = cgi;
+        } else {
+            configIssuesImpl = null;
         }
 
-        return value;
+        return !value;
+    }
+
+    private boolean findNameIssue(String name, ConfigIssuesImpl cgi) {
+        ResourceBundle lang = ResourceBundle.getBundle("ConfigIssues");
+        if (name == null) {
+            cgi.setNameIssue(lang.getString("name_issue"));
+            return true;
+        } else if (!name.matches(".*\\w.*")) {
+            cgi.setNameIssue(lang.getString("name_issue"));
+            return true;
+        }
+        return false;
+    }
+
+    private boolean findCandidateIssue(String[] candidates, ConfigIssuesImpl cgi) {
+        ResourceBundle lang = ResourceBundle.getBundle("ConfigIssues");
+        if (candidates == null) {
+            cgi.setCandidateIssue(lang.getString("candidate_length_issue"));
+            return true;
+        } else if (candidates.length <= 1) {
+            cgi.setCandidateIssue(lang.getString("candidate_length_issue"));
+            return true;
+        } else if (!Arrays.stream(candidates).allMatch(x -> x.matches(".*\\w.*"))) {
+            cgi.setCandidateIssue(lang.getString("candidate_name_issue"));
+            return true;
+        } else if (Arrays.stream(candidates).distinct().count() < candidates.length) {
+            cgi.setCandidateIssue(lang.getString("candidate_duplicate"));
+            return true;
+        }
+        return false;
+    }
+
+    private boolean findVoterIssue(String[] voters, ConfigIssuesImpl cgi) {
+        ResourceBundle lang = ResourceBundle.getBundle("ConfigIssues");
+        if (voters == null) {
+            cgi.setVoterIssue(lang.getString("voter_length_issue"));
+            return true;
+        } else if (voters.length <= 1) {
+            cgi.setVoterIssue(lang.getString("voter_length_issue"));
+            return true;
+        } else if (!Arrays.stream(voters).allMatch(x -> x.matches(".*\\w.*"))) {
+            cgi.setVoterIssue(lang.getString("voter_name_issue"));
+            return true;
+        } else if (Arrays.stream(voters).distinct().count() < voters.length) {
+            cgi.setVoterIssue(lang.getString("voter_duplicate"));
+            return true;
+        }
+        return false;
+    }
+
+    private boolean findTimespanIssue(Date start, Date end, ConfigIssuesImpl cgi) {
+        ResourceBundle lang = ResourceBundle.getBundle("ConfigIssues");
+        if (start == null || end == null) {
+            cgi.setTimespanIssue(lang.getString("timespan_date_issue"));
+            return true;
+        } else if (start.after(end)) {
+            cgi.setTimespanIssue(lang.getString("timespan_order_issue"));
+            return true;
+        } else if (end.before(new Date())) {
+            cgi.setTimespanIssue(lang.getString("timespan_ends_in_past"));
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -193,8 +238,11 @@ public class SupervisorElection extends Election implements SupervisorControlToM
             AuthenticationException, InternalSDKException, NetworkConfigException {
         ResourceBundle resourceBundle = ConfigResourceBundle.loadBundle("config");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
+        File f = new File(filePath);
 
         try {
+            f.mkdirs();
+            filePath += File.separator + "supervisor.cert";
             supervisorSDKInterface = SupervisorSDKInterfaceImpl
                     .createInstance(username, password, filePath, sdkEventListenerImpl);
             sdkInterfaceImpl = supervisorSDKInterface;
@@ -223,7 +271,14 @@ public class SupervisorElection extends Election implements SupervisorControlToM
 
         ResourceBundle config = ConfigResourceBundle.loadBundle("config");
         File f = new File(config.getString("voter_Certificates"));
-        f.mkdirs();
+        if (f.exists()) {
+            File[] list = f.listFiles();
+            for (File f1 : list) {
+                Files.delete(Paths.get(f1.getPath()));
+            }
+        } else {
+            f.mkdirs();
+        }
         for (Voter v : voters) {
             supervisorSDKInterface.createUser(v.getName(), config.getString("voter_Certificates")
                     + File.separator + v.getName() + ".cert");
@@ -243,7 +298,7 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         ResourceBundle resourceBundle = ConfigResourceBundle.loadBundle("config");
         String filePath = resourceBundle.getString("electionSupervisor_Certificate");
 
-        supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(filePath,
+        supervisorSDKInterface = SupervisorSDKInterfaceImpl.createInstance(path,
                 sdkEventListenerImpl);
         sdkInterfaceImpl = supervisorSDKInterface;
         if (sdkInterfaceImpl.isElectionInitialized()) {

@@ -48,7 +48,10 @@ public class VoterAuthenticationListener extends VoterEventListener {
             } else {
                 gui.showError(lang.getString("noElectionRunning"));
             }
-        } catch (InternalSDKException | NetworkException | AuthenticationException | NetworkConfigException e) {
+        } catch (InternalSDKException | NetworkException | NetworkConfigException e) {
+            gui.showError(lang.getString("voterAuthenticationBad"));
+            e.printStackTrace();
+        } catch (AuthenticationException e) {
             gui.showError(lang.getString("voterAuthenticationBad"));
             e.printStackTrace();
         } catch (WrongCandidateNameException e) {

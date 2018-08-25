@@ -25,8 +25,8 @@ import java.util.Random;
 
 public class SDKEventListenerImpl extends Thread implements SDKEventListener {
 
-    public static double BACKOFF_AVG = (5 * 60 * 1000);
-    public static double DEVIATION = 60 * 1000;
+    public static double BACKOFF_AVG = (15 * 1000);
+    public static double DEVIATION = 1000;
 
     protected long backoff;
     protected long lastEvent;
@@ -82,6 +82,7 @@ public class SDKEventListenerImpl extends Thread implements SDKEventListener {
                 try {
                     election.checkElectionOver();
                     election.reloadVotes();
+                    onElectionRunning();
                 } catch (NetworkException | NetworkConfigException
                         | WrongCandidateNameException e) {
                     e.printStackTrace();

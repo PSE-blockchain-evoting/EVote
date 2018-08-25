@@ -43,9 +43,12 @@ public class FirstAuthenticationListener extends SupervisorEventListener {
             } else {
                 gui.showFrontpage();
             }
-        } catch (NetworkException | AuthenticationException
-                | NetworkConfigException | InternalSDKException e) {
-            gui.showError(lang.getString("authFailed"));
+        } catch (NetworkException | InternalSDKException e) {
+            gui.showError(lang.getString("networkError"));
+            e.printStackTrace();
+        } catch (AuthenticationException | NetworkConfigException e) {
+            gui.showError(lang.getString("firstAuthFailed"));
+            e.printStackTrace();
         }
     }
 }
