@@ -152,8 +152,8 @@ public class ElectionData implements ElectionDataIF {
         String[] candidateDescs = obj.getJsonArray("candidateDescriptions").getValuesAs(JsonString.class)
                 .stream().map(x -> x.getString()).toArray(String[]::new);
 
-        Date startDate = new Date(obj.getJsonNumber("startDate").longValue());
-        Date endDate = new Date(obj.getJsonNumber("endDate").longValue());
+        Date startDate = new Date((obj.getJsonNumber("startDate").longValue() * 1000));
+        Date endDate = new Date((obj.getJsonNumber("endDate").longValue() * 1000));
         int voterCount = obj.getInt("voterCount");
         obj = obj.getJsonObject("endCondition");
         ElectionEndCondition condition;
