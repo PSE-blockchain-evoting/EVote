@@ -101,6 +101,8 @@ public class SupervisorResult extends SupervisorGUIPanel {
                 }
             }
         });
+
+        lblWinner = new JLabel(lang.getString("lblWinnerPrefix") + ": " + adapter.getWinner());
     }
 
     private void buildLayout() {

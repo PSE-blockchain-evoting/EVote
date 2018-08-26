@@ -158,11 +158,13 @@ public abstract class SDKInterfaceImpl implements SDKInterface {
         ElectionStatusQuery query = new ElectionStatusQuery(this.hfClient);
         try {
             query.query();
+
         } catch (ProposalException e) {
             throw new NetworkException(e.getMessage());
         } catch (InvalidArgumentException e) {
             throw new NetworkConfigException(e.getMessage());
         }
+        System.out.println("isElectionOver: " + query.getResult());
         return query.getResult().equals("ended");
     }
 

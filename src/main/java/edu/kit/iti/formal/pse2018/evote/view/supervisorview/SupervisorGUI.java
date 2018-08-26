@@ -258,6 +258,8 @@ public class SupervisorGUI extends JFrame implements SupervisorControlToViewIF {
 
     @Override
     public void electionOver() {
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
+        showSuccess(lang.getString("electionOver"));
         showResults();
     }
 }
