@@ -22,6 +22,7 @@ import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.exceptions.WrongCandidateNameException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
+import edu.kit.iti.formal.pse2018.evote.model.SDKEventListener;
 import edu.kit.iti.formal.pse2018.evote.model.VoterControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.model.VoterSDKInterface;
 import edu.kit.iti.formal.pse2018.evote.model.VoterViewToModelIF;
