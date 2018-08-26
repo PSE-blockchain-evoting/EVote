@@ -130,8 +130,8 @@ public class ElectionData implements ElectionDataIF {
         objectBuilder.add("candidates", arrayBuilder);
         arrayBuilder = Json.createArrayBuilder(Arrays.asList(electionData.getCandidateDescriptions()));
         objectBuilder.add("candidateDescriptions", arrayBuilder);
-        objectBuilder.add("startDate", electionData.getStartDate().getTime() / 1000 * 1000);
-        objectBuilder.add("endDate", electionData.getEndDate().getTime() / 1000 * 1000);
+        objectBuilder.add("startDate", electionData.getStartDate().getTime() / 1000);
+        objectBuilder.add("endDate", electionData.getEndDate().getTime() / 1000);
         JsonObjectBuilder temp = Json.createObjectBuilder();
         objectBuilder.add("endCondition", electionData.getEndCondition().asJsonObject());
         objectBuilder.add("voterCount", electionData.getVoterCount());
