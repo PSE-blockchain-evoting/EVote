@@ -225,6 +225,7 @@ public class FinishPanel extends ConfigPanel {
         updateData();
         lblIssues.setText("");
         adapter.getConfirmedConfigListener().actionPerformed(null);
+        btnContinue.setEnabled(adapter.getConfigIssues() == null);
     }
 
     public String getExportPath() {
