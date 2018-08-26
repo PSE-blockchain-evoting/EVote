@@ -215,6 +215,8 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
 
     @Override
     public void electionOver() {
+        ResourceBundle lang = ResourceBundle.getBundle("VoterView");
+        showSuccess(lang.getString("electionOver"));
         showResults();
     }
 }
