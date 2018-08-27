@@ -102,7 +102,9 @@ public class SupervisorResult extends SupervisorGUIPanel {
             }
         });
 
-        lblWinner = new JLabel(lang.getString("lblWinnerPrefix") + ": " + adapter.getWinner());
+        lblWinner = new JLabel();
+        lblWinner.setFont((Font) UIManager.get("Vote.font"));
+        updateResults(adapter.getResults(), adapter.getWinner());
     }
 
     private void buildLayout() {
@@ -113,7 +115,10 @@ public class SupervisorResult extends SupervisorGUIPanel {
 
         layout.setHorizontalGroup(layout.createParallelGroup()
                 .addGroup(layout.createSequentialGroup()
-                        .addComponent(table)
+                        .addGroup(layout.createParallelGroup()
+                                .addComponent(lblWinner)
+                                .addComponent(table)
+                        )
                         .addGroup(layout.createParallelGroup()
                                 .addGroup(layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
@@ -121,7 +126,6 @@ public class SupervisorResult extends SupervisorGUIPanel {
                                         .addGap(0, 0, Short.MAX_VALUE)
                                 )
                                 .addComponent(chart, 0, 0, Short.MAX_VALUE)
-                                .addComponent(lblWinner)
                         )
                 )
                 .addGroup(layout.createSequentialGroup()
@@ -135,6 +139,7 @@ public class SupervisorResult extends SupervisorGUIPanel {
                 .addGroup(layout.createParallelGroup()
                         .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
+                                .addComponent(lblWinner)
                                 .addComponent(table)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
                                 .addComponent(btnEndElection)
@@ -142,7 +147,6 @@ public class SupervisorResult extends SupervisorGUIPanel {
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnInfo)
                                 .addComponent(chart)
-                                .addComponent(lblWinner)
                         )
                 )
                 .addGroup(layout.createParallelGroup()
@@ -157,5 +161,13 @@ public class SupervisorResult extends SupervisorGUIPanel {
     @Override
     public void updateResults(int[] results, String winner) {
         manager.updateComponents(results);
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
+        String s;
+        if (winner == null) {
+            s = lang.getString("noWinner");
+        } else {
+            s = winner;
+        }
+        lblWinner.setText(lang.getString("lblWinnerPrefix") + ": " + s);
     }
 }

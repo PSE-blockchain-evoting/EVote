@@ -91,7 +91,13 @@ public class VoterResult extends VoterGUIPanel {
             }
         });
 
-        lblWinner = new JLabel(lang.getString("lblWinnerText") + ": " + adapter.getWinner());
+        String s;
+        if (adapter.getWinner() == null) {
+            s = lang.getString("noWinner");
+        } else {
+            s = adapter.getWinner();
+        }
+        lblWinner = new JLabel(lang.getString("lblWinnerText") + ": " + s);
         lblWinner.setFont((Font) UIManager.get("Vote.font"));
     }
 
@@ -126,7 +132,7 @@ public class VoterResult extends VoterGUIPanel {
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
                                 .addComponent(lblWinner)
                                 .addComponent(form)
-                                .addGap(0,0,Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                         )
                         .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnInfos)
