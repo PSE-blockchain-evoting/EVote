@@ -71,20 +71,21 @@ public class ElectionStatusThread extends Thread {
 
     @Override
     public void run() {
+        lastEvent = System.currentTimeMillis();
         while (!hasEnded) {
             long cur = System.currentTimeMillis();
-            long diff = cur - lastEvent;
-            if (diff > backoff) {
-                lastEvent = cur;
-                dispatchElectionCheck();
-            }
-
             long sleep = backoff + lastEvent - cur;
             assert (sleep > 0);
             try {
                 Thread.sleep(sleep);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            }
+
+            long diff = cur - lastEvent;
+            if (diff > backoff) {
+                lastEvent = cur;
+                dispatchElectionCheck();
             }
         }
     }
