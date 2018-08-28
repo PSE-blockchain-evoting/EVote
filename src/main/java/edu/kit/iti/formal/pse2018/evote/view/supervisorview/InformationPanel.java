@@ -54,7 +54,7 @@ public class InformationPanel extends JPanel {
                 + lang.getString(data.getVotingSystem().name()));
         lblVotingSystem.setFont(f);
 
-        SimpleDateFormat spf = new SimpleDateFormat("dd.MM.yyyy, hh:mm");
+        SimpleDateFormat spf = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
         String startString = spf.format(data.getStartDate());
         String endString = spf.format(data.getEndDate());
         lblTimeSpan = new JLabel(lang.getString("lblTimespanPrefix") + ": "
