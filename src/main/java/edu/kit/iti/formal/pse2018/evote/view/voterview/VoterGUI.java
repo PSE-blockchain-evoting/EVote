@@ -172,10 +172,8 @@ public class VoterGUI extends JFrame implements VoterControlToViewIF {
         }
 
         ResourceBundle lang = ResourceBundle.getBundle("VoterView");
-        if (componentManager == null) {
-            componentManager = VoterVSComponentManagerBuilder.generateComponentManager(
-                    adapter.getElectionData().getVotingSystem(), adapter);
-        }
+        componentManager = VoterVSComponentManagerBuilder.generateComponentManager(
+                adapter.getElectionData().getVotingSystem(), adapter);
         componentManager.enableColors(true);
         currentPanel = new VoterResult(adapter, componentManager);
         buildLayout();
