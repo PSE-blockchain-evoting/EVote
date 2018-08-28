@@ -55,6 +55,7 @@ public class ElectionStatusThread extends Thread {
     private void dispatchElectionCheck() {
         System.out.print(new Date() + ": Checkinging Election Over... ");
         try {
+            election.reloadVotes();
             if (election.checkElectionOver()) {
                 System.out.println("True");
                 electionStatusListener.electionOver();
@@ -63,7 +64,6 @@ public class ElectionStatusThread extends Thread {
                 System.out.println("False");
                 electionStatusListener.electionUpdate();
             }
-            election.reloadVotes();
         } catch (NetworkException | NetworkConfigException | WrongCandidateNameException e) {
             e.printStackTrace();
         }
