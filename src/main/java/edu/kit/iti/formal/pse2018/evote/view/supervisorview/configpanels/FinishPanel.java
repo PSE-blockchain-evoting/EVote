@@ -193,12 +193,12 @@ public class FinishPanel extends ConfigPanel {
         ElectionDataIF data = gui.getElectionData();
         Date startDate = data.getStartDate();
         Date endDate = data.getEndDate();
-        SimpleDateFormat spf = new SimpleDateFormat("dd.MM.yyyy, hh:mm");
+        SimpleDateFormat spf = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
         String start = startDate != null ? spf.format(startDate) : "________";
         String end = endDate != null ? spf.format(endDate) : "________";
 
-        lblTimeFrame.setText(lang.getString("lblTimespanPrefix") + start
-                + lang.getString("lblTimespanMiddle") + " " + end);
+        lblTimeFrame.setText(lang.getString("lblTimespanPrefix") + start + " "
+                + lang.getString("lblTimespanMiddle") + end);
         lblVotingSystem.setText(lang.getString("lblVotingSystemPrefix") + " "
                 + viewLang.getString(data.getVotingSystem().name()));
         lblCandidates.setText(lang.getString("lblCandidateText"));
