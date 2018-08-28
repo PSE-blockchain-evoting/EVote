@@ -199,7 +199,7 @@ public class FinishPanel extends ConfigPanel {
 
         lblTimeFrame.setText(lang.getString("lblTimespanPrefix") + start + " "
                 + lang.getString("lblTimespanMiddle") + end);
-        lblVotingSystem.setText(lang.getString("lblVotingSystemPrefix") + " "
+        lblVotingSystem.setText(lang.getString("lblVotingSystemPrefix") + ": "
                 + viewLang.getString(data.getVotingSystem().name()));
         lblCandidates.setText(lang.getString("lblCandidateText"));
 
