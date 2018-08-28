@@ -63,7 +63,7 @@ import org.hyperledger.fabric.sdk.exception.ProposalException;
 import org.hyperledger.fabric_ca.sdk.HFCAClient;
 import org.hyperledger.fabric_ca.sdk.exception.EnrollmentException;
 import org.hyperledger.fabric_ca.sdk.exception.InvalidArgumentException;
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(PowerMockRunner.class)
@@ -178,6 +178,54 @@ public class SDKInterfaceImplTest {
         when(this.channel.queryByChaincode(any()))
                 .thenThrow(org.hyperledger.fabric.sdk.exception.InvalidArgumentException.class);
         this.objUnderTest.getAllVotes();
+    }
+
+    @Test
+    public void isElectionInitializedTest() throws NetworkException, NetworkConfigException, IOException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException {
+        String input = "true";
+        when(responses.get(0).getChaincodeActionResponsePayload()).thenReturn(input.getBytes());
+        boolean res = this.objUnderTest.isElectionInitialized();
+        assertTrue(res);
+    }
+
+    @Test(expected = NetworkException.class)
+    public void isElectionInitializedProposalExceptionTest() throws NetworkException, NetworkConfigException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException {
+        when(this.channel.queryByChaincode(any())).thenThrow(ProposalException.class);
+        this.objUnderTest.isElectionInitialized();
+    }
+
+    @Test(expected = NetworkConfigException.class)
+    public void isElectionInitializedInvalidArgumentExceptionTest() throws NetworkException, NetworkConfigException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException {
+        when(this.channel.queryByChaincode(any()))
+                .thenThrow(org.hyperledger.fabric.sdk.exception.InvalidArgumentException.class);
+        this.objUnderTest.isElectionInitialized();
+    }
+
+    @Test
+    public void isElectionOverTest() throws NetworkException, NetworkConfigException, IOException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException {
+        String input = "ended";
+        when(responses.get(0).getChaincodeActionResponsePayload()).thenReturn(input.getBytes());
+        boolean res = this.objUnderTest.isElectionOver();
+        assertTrue(res);
+    }
+
+    @Test(expected = NetworkException.class)
+    public void isElectionOverProposalExceptionTest() throws NetworkException, NetworkConfigException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException {
+        when(this.channel.queryByChaincode(any())).thenThrow(ProposalException.class);
+        this.objUnderTest.isElectionOver();
+    }
+
+    @Test(expected = NetworkConfigException.class)
+    public void isElectionOverInvalidArgumentExceptionTest() throws NetworkException, NetworkConfigException,
+            org.hyperledger.fabric.sdk.exception.InvalidArgumentException, ProposalException {
+        when(this.channel.queryByChaincode(any()))
+                .thenThrow(org.hyperledger.fabric.sdk.exception.InvalidArgumentException.class);
+        this.objUnderTest.isElectionOver();
     }
 
 
