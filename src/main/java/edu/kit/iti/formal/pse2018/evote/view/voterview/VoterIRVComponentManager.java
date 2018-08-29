@@ -56,7 +56,7 @@ public class VoterIRVComponentManager extends VoterVSComponentManager {
         de.setEditable(false);
         de.setButtonText("!");
         GapExtension ge0 = new GapExtension(de, f);
-        TextExtension names = new TextExtension(ge0, f, data.getCandidates());
+        names = new TextExtension(ge0, f, data.getCandidates());
         GapExtension ge1 = new GapExtension(names, f);
         re = new RankingExtension(ge1, f, data.getCandidates().length);
 
