@@ -70,6 +70,7 @@ public class GeneralConfigPanel extends ConfigPanel {
         cbxVotingSystem.addItem(viewLang.getString(VotingSystemType.INSTANTRUNOFF.name()));
         txaDescription = new JTextArea();
         txaDescription.setLineWrap(true);
+        txaDescription.setWrapStyleWord(true);
         spDescription = new JScrollPane(txaDescription);
 
         lblName.setFont((Font) UIManager.get("General.font"));

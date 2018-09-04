@@ -92,6 +92,7 @@ public class FinishPanel extends ConfigPanel {
         txaDescription = new JTextArea();
         txaDescription.setEditable(false);
         txaDescription.setLineWrap(true);
+        txaDescription.setWrapStyleWord(true);
         spDescription = new JScrollPane(txaDescription);
 
         lblIssues = new JLabel("");
