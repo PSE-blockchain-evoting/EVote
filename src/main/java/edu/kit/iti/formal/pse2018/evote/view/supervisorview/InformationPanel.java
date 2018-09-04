@@ -67,6 +67,8 @@ public class InformationPanel extends JPanel {
         txaDescription = new JTextArea(data.getDescription());
         txaDescription.setFont(f);
         txaDescription.setEditable(false);
+        txaDescription.setLineWrap(true);
+        txaDescription.setWrapStyleWord(true);
     }
 
     private void buildLayout() {
@@ -87,7 +89,7 @@ public class InformationPanel extends JPanel {
                 .addComponent(lblVotingSystem)
                 .addComponent(lblTimeSpan)
                 .addComponent(lblDescription)
-                .addComponent(txaDescription)
+                .addComponent(txaDescription, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         this.setLayout(layout);
     }
