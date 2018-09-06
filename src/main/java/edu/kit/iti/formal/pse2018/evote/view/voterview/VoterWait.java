@@ -18,7 +18,7 @@ package edu.kit.iti.formal.pse2018.evote.view.voterview;
 import edu.kit.iti.formal.pse2018.evote.view.components.ExtendableList;
 
 import java.awt.Font;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -71,7 +71,7 @@ public class VoterWait extends VoterGUIPanel {
         Date end = adapter.getElectionData().getEndDate();
         Calendar c = Calendar.getInstance(Locale.getDefault());
         c.setTime(end);
-        DateFormat dt = DateFormat.getDateInstance(DateFormat.LONG, Locale.getDefault());
+        SimpleDateFormat dt = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
         lblElectionEnd = new JLabel(lang.getString("lblElectionEndText")
                 + " " + dt.format(c.getTime()));
         lblElectionEnd.setFont(f);
