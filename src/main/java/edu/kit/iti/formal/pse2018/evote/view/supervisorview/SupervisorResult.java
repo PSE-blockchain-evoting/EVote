@@ -128,6 +128,7 @@ public class SupervisorResult extends SupervisorGUIPanel {
                                 .addComponent(lblWinner)
                                 .addComponent(table)
                         )
+                        .addGap(5, 5, 10)
                         .addGroup(layout.createParallelGroup()
                                 .addGroup(layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)

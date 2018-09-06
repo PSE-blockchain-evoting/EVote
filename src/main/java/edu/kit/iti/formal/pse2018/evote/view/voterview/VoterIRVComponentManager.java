@@ -31,6 +31,7 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonReader;
@@ -74,7 +75,16 @@ public class VoterIRVComponentManager extends VoterVSComponentManager {
             i++;
         }
 
-        chart = new StackedBarChart();
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
+        String[] labels = new String[data.getCandidates().length];
+        for (int j = 0; j < labels.length; j++) {
+            labels[j] = (j + 1) + ". " + lang.getString("vote");
+        }
+
+        StackedBarChart sbc = new StackedBarChart();
+        sbc.setLabels(labels);
+        chart = sbc;
+
         chart.setColors(VoterVSComponentManager.CANDIDATE_COLORS);
         chart.setData(adapter.getResults());
     }

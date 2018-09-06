@@ -25,6 +25,7 @@ import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.TextExten
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ResourceBundle;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
@@ -40,7 +41,19 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
      */
     public SupervisorIRVComponentManager(SupervisorAdapter adapter) {
         super(adapter);
-        chart = new StackedBarChart();
+
+        ElectionDataIF data = adapter.getElectionData();
+        String[] candidates = data.getCandidates();
+
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
+        String[] labels = new String[candidates.length];
+        for (int i = 0; i < labels.length; i++) {
+            labels[i] = (i + 1) + ". " + lang.getString("vote");
+        }
+
+        StackedBarChart sbc = new StackedBarChart();
+        sbc.setLabels(labels);
+        chart = sbc;
         chart.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
         chart.setData(adapter.getResults());
 
@@ -48,8 +61,6 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
 
         Font v = new FontUIResource("Monospace", Font.BOLD, 30);
 
-        ElectionDataIF data = adapter.getElectionData();
-        String[] candidates = data.getCandidates();
 
         canVotes = new TextExtension(null, fbig, null);
         canVotes.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
