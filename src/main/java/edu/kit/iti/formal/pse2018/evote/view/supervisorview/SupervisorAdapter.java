@@ -93,4 +93,8 @@ public class SupervisorAdapter {
     public int[] getResults() {
         return model.getResults();
     }
+
+    public boolean isElectionOver(){
+        return model.isElectionOver();
+    }
 }

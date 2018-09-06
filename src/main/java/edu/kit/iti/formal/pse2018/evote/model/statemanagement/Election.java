@@ -101,4 +101,8 @@ public abstract class Election {
     public boolean isElectionInitialized() throws NetworkException, NetworkConfigException {
         return sdkInterfaceImpl.isElectionInitialized();
     }
+
+    public boolean isElectionOver(){
+        return statusThread.isElectionOver();
+    }
 }
