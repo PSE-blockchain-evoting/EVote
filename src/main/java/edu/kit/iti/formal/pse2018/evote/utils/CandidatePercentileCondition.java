@@ -26,6 +26,10 @@ public class CandidatePercentileCondition extends ElectionEndCondition {
         this.percentage = percentage;
     }
 
+    public int getPercentage(){
+        return percentage;
+    }
+
     @Override
     public JsonObject asJsonObject() {
         return Json.createObjectBuilder()

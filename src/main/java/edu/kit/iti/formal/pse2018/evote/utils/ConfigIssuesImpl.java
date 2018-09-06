@@ -21,6 +21,7 @@ public class ConfigIssuesImpl implements ConfigIssues {
     private String candidateIssue;
     private String voterIssue;
     private String timespanIssue;
+    private String endConditionIssue;
 
     public void setNameIssue(String nameIssue) {
         this.nameIssue = nameIssue;
@@ -38,6 +39,9 @@ public class ConfigIssuesImpl implements ConfigIssues {
         this.timespanIssue = timespanIssue;
     }
 
+    public void setEndConditionIssue(String endConditionIssue) {
+        this.endConditionIssue = endConditionIssue;
+    }
 
     @Override
     public String getNameIssue() {
@@ -57,5 +61,10 @@ public class ConfigIssuesImpl implements ConfigIssues {
     @Override
     public String getTimespanIssue() {
         return timespanIssue;
+    }
+
+    @Override
+    public String getEndConditionIssue() {
+        return endConditionIssue;
     }
 }

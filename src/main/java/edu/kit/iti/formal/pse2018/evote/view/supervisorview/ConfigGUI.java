@@ -167,6 +167,11 @@ public class ConfigGUI extends JDialog {
             text += startTag + vi + endTag;
         }
 
+        String eci = ci.getEndConditionIssue();
+        if (eci != null) {
+            text += startTag + eci + endTag;
+        }
+
         String suffix = "</ul></html>";
         text += suffix;
 
