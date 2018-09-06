@@ -48,6 +48,10 @@ public class VoterAdapter {
         return model.getOwnVote();
     }
 
+    public String getOwnName() {
+        return model.getOwnName();
+    }
+
     public ElectionDataIF getElectionData() {
         return model.getElectionData();
     }

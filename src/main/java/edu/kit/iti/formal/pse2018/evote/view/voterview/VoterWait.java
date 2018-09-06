@@ -37,6 +37,7 @@ public class VoterWait extends VoterGUIPanel {
     private ExtendableList form;
     private JLabel lblOwnVote;
     private JLabel lblElectionEnd;
+    private JLabel lblVoterName;
 
     private GroupLayout layout;
 
@@ -75,6 +76,9 @@ public class VoterWait extends VoterGUIPanel {
         lblElectionEnd = new JLabel(lang.getString("lblElectionEndText")
                 + " " + dt.format(c.getTime()));
         lblElectionEnd.setFont(f);
+
+        lblVoterName = new JLabel(lang.getString("voterName") + ": " + adapter.getOwnName());
+        lblVoterName.setFont((Font) UIManager.get("Vote.font"));
     }
 
     private void buildLayout() {
@@ -82,6 +86,11 @@ public class VoterWait extends VoterGUIPanel {
         layout.setAutoCreateGaps(true);
 
         layout.setHorizontalGroup(layout.createParallelGroup()
+                .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
+                        .addComponent(lblVoterName)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
+                )
                 .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup()
@@ -98,6 +107,7 @@ public class VoterWait extends VoterGUIPanel {
         );
 
         layout.setVerticalGroup(layout.createSequentialGroup()
+                .addComponent(lblVoterName)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
                 .addComponent(lblElectionEnd)
                 .addGap(0, 10, 10)

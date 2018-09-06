@@ -43,6 +43,7 @@ public class VoterResult extends VoterGUIPanel {
     private InformationPanel pnlInfos;
     private JScrollPane spInfos;
     private JLabel lblWinner;
+    private JLabel lblVoterName;
 
     private GroupLayout layout;
 
@@ -99,6 +100,9 @@ public class VoterResult extends VoterGUIPanel {
         }
         lblWinner = new JLabel(lang.getString("lblWinnerText") + ": " + s);
         lblWinner.setFont((Font) UIManager.get("Vote.font"));
+
+        lblVoterName = new JLabel(lang.getString("voterName") + ": " + adapter.getOwnName());
+        lblVoterName.setFont((Font) UIManager.get("Vote.font"));
     }
 
     private void buildLayout() {
@@ -108,6 +112,7 @@ public class VoterResult extends VoterGUIPanel {
         layout.setHorizontalGroup(layout.createParallelGroup()
                 .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup()
+                                .addComponent(lblVoterName)
                                 .addComponent(lblWinner)
                                 .addComponent(form)
                         )
@@ -130,6 +135,7 @@ public class VoterResult extends VoterGUIPanel {
                 .addGroup(layout.createParallelGroup()
                         .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
+                                .addComponent(lblVoterName)
                                 .addComponent(lblWinner)
                                 .addComponent(form)
                                 .addGap(0, 0, Short.MAX_VALUE)

@@ -63,4 +63,9 @@ public class VoterSDKInterfaceImpl extends SDKInterfaceImpl implements VoterSDKI
         }
         return query.getResult();
     }
+
+    @Override
+    public String getOwnName() {
+        return appUser.getName();
+    }
 }

@@ -153,4 +153,9 @@ public class ModelMock implements SupervisorControlToModelIF,
         //return "{\"candidate\":\"Bitcoin\"}";
         return ownVote;
     }
+
+    @Override
+    public String getOwnName() {
+        return null;
+    }
 }
