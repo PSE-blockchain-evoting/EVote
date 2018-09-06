@@ -28,7 +28,7 @@ public class StackedBarChart extends Diagram {
 
     public static final int[] TEST_DATA = {4, 123, 64, 22, 5, 43, 83, 23, 12, 73, 22, 13, 2};
     public static final Color[] TEST_COLOR = {Color.BLACK, Color.RED, Color.YELLOW, Color.GREEN, Color.MAGENTA,
-            Color.ORANGE, Color.PINK};
+        Color.ORANGE, Color.PINK};
     private String[] labels;
     private boolean drawLabels;
 

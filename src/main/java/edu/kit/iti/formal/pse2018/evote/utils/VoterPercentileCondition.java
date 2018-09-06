@@ -26,7 +26,7 @@ public class VoterPercentileCondition extends ElectionEndCondition {
         this.percentage = percentage;
     }
 
-    public int getPercentage(){
+    public int getPercentage() {
         return percentage;
     }
 

@@ -95,7 +95,7 @@ public class ElectionStatusThread extends Thread {
         super.start();
     }
 
-    public boolean isElectionOver(){
+    public boolean isElectionOver() {
         return hasEnded;
     }
 }

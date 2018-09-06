@@ -102,7 +102,7 @@ public abstract class Election {
         return sdkInterfaceImpl.isElectionInitialized();
     }
 
-    public boolean isElectionOver(){
+    public boolean isElectionOver() {
         return statusThread.isElectionOver();
     }
 }

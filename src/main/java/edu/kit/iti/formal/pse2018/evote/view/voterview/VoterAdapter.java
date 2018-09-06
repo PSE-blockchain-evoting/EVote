@@ -68,7 +68,7 @@ public class VoterAdapter {
         return model.getResults();
     }
 
-    public boolean isElectionOver(){
+    public boolean isElectionOver() {
         return model.isElectionOver();
     }
 }
