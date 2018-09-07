@@ -126,6 +126,7 @@ public class RankingExtension extends ComponentExtension<JComboBox<String>> {
      * @param b Enable/Disable.
      */
     public void setEditable(boolean b) {
+        editable = b;
         for (JComboBox<String> cbx : components) {
             cbx.setEnabled(b);
         }
