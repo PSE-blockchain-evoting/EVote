@@ -25,6 +25,8 @@ import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.TextExten
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ResourceBundle;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
@@ -40,7 +42,19 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
      */
     public SupervisorIRVComponentManager(SupervisorAdapter adapter) {
         super(adapter);
-        chart = new StackedBarChart();
+
+        ElectionDataIF data = adapter.getElectionData();
+        String[] candidates = data.getCandidates();
+
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
+        String[] labels = new String[candidates.length];
+        for (int i = 0; i < labels.length; i++) {
+            labels[i] = (i + 1) + ". " + lang.getString("vote");
+        }
+
+        StackedBarChart sbc = new StackedBarChart();
+        sbc.setLabels(labels);
+        chart = sbc;
         chart.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
         chart.setData(adapter.getResults());
 
@@ -48,8 +62,6 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
 
         Font v = new FontUIResource("Monospace", Font.BOLD, 30);
 
-        ElectionDataIF data = adapter.getElectionData();
-        String[] candidates = data.getCandidates();
 
         canVotes = new TextExtension(null, fbig, null);
         canVotes.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
@@ -58,7 +70,12 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
         canName.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
         table = new ExtendableList(canName);
         canName.setList(table);
+
+        ResourceBundle l = ResourceBundle.getBundle("View");
+        lblTableDescription = new JLabel(l.getString("IRVVSTableDescription"));
+        lblTableDescription.setFont((Font) UIManager.get("Small.font"));
     }
+
 
     @Override
     public Diagram createResultDiagram() {
@@ -68,6 +85,11 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
     @Override
     public ExtendableList createResultTable() {
         return table;
+    }
+
+    @Override
+    public JLabel createTableDescriptionLabel() {
+        return lblTableDescription;
     }
 
     @Override
@@ -117,6 +139,6 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
         int col = data[0];
         int rows = (data.length - 1) / data[0];
 
-        return data[1 + voteNr * col + cand];
+        return data[1 + cand * col + voteNr];
     }
 }

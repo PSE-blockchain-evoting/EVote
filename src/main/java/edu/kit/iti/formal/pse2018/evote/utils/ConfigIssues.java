@@ -24,4 +24,6 @@ public interface ConfigIssues {
     public String getVoterIssue();
     
     public String getTimespanIssue();
+
+    public String getEndConditionIssue();
 }

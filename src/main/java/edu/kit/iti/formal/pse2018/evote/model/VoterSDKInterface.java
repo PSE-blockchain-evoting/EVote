@@ -23,4 +23,6 @@ public interface VoterSDKInterface extends SDKInterface {
     public void vote(String vote) throws NetworkException, NetworkConfigException;
 
     public String getOwnVote() throws NetworkException, NetworkConfigException;
+
+    public String getOwnName();
 }

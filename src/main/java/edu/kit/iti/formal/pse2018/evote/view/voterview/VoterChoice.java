@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
@@ -40,6 +41,7 @@ public class VoterChoice extends VoterGUIPanel {
     JToggleButton btnInfo;
     InformationPanel pnlInfos;
     JScrollPane spInfos;
+    JLabel lblVoterName;
 
     GroupLayout layout;
 
@@ -92,6 +94,9 @@ public class VoterChoice extends VoterGUIPanel {
         btnExit = new JButton(lang.getString("btnExitText"));
         btnExit.setFont(f);
         btnExit.addActionListener(adapter.getLogoutListener());
+
+        lblVoterName = new JLabel(lang.getString("voterName") + ": " + adapter.getOwnName());
+        lblVoterName.setFont((Font) UIManager.get("Vote.font"));
     }
 
     private void buildLayout() {
@@ -100,6 +105,7 @@ public class VoterChoice extends VoterGUIPanel {
 
         layout.setHorizontalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup()
+                        .addComponent(lblVoterName)
                         .addComponent(form)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -124,6 +130,7 @@ public class VoterChoice extends VoterGUIPanel {
         layout.setVerticalGroup(layout.createParallelGroup()
                 .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
+                        .addComponent(lblVoterName)
                         .addComponent(form, 0, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
                         .addComponent(btnConfirmVote)

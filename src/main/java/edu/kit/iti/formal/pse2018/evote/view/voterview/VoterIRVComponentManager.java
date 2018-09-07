@@ -31,10 +31,12 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonReader;
 import javax.json.JsonString;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 public class VoterIRVComponentManager extends VoterVSComponentManager {
@@ -74,9 +76,22 @@ public class VoterIRVComponentManager extends VoterVSComponentManager {
             i++;
         }
 
-        chart = new StackedBarChart();
+        ResourceBundle lang = ResourceBundle.getBundle("SupervisorView");
+        String[] labels = new String[data.getCandidates().length];
+        for (int j = 0; j < labels.length; j++) {
+            labels[j] = (j + 1) + ". " + lang.getString("vote");
+        }
+
+        StackedBarChart sbc = new StackedBarChart();
+        sbc.setLabels(labels);
+        chart = sbc;
+
         chart.setColors(VoterVSComponentManager.CANDIDATE_COLORS);
         chart.setData(adapter.getResults());
+
+        ResourceBundle l = ResourceBundle.getBundle("View");
+        lblTableDescription = new JLabel(l.getString("IRVVSTableDescription"));
+        lblTableDescription.setFont((Font) UIManager.get("Small.font"));
     }
 
     @Override
@@ -90,31 +105,57 @@ public class VoterIRVComponentManager extends VoterVSComponentManager {
     }
 
     @Override
+    public JLabel createTableDescriptionLabel() {
+        return lblTableDescription;
+    }
+
+    @Override
     public String getVote() {
         int[] ranking = re.getRanking();
+        ElectionDataIF data = adapter.getElectionData();
+        String[] candidates = data.getCandidates();
+
+        String[] vote = evaluateInput(ranking, candidates);
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder(Arrays.asList(vote));
+        String res = arrayBuilder.build().toString();
+        System.out.println("VoteString = " + res);
+        return res;
+    }
+
+    /**
+     * This method builds an Array where the candidates are ordered based on their ranking.
+     *
+     * @param ranking    The ranking provided as an Integer Array where each index corresponds
+     *                   the rankding of the candidate with the same index.
+     * @param candidates The names of the candidates.
+     * @return  A String Array of the candidate names ordered by their ranking. This excludes
+     *          Candidates with a ranking of zero.
+     */
+    public static String[] evaluateInput(int[] ranking, String[] candidates) {
         int size = 0;
         for (int i = 0; i < ranking.length; i++) {
             if (ranking[i] != 0) {
                 size++;
             }
         }
-
         String[] vote = new String[size];
 
-        ElectionDataIF data = adapter.getElectionData();
-        String[] candidates = data.getCandidates();
+        int low = 0;
+        int high = Integer.MAX_VALUE;
+        int idx = -1;
         for (int i = 1; i <= size; i++) {
             for (int j = 0; j < candidates.length; j++) {
-                if (ranking[j] == i) {
-                    vote[i - 1] = candidates[j];
+                if (ranking[j] > low && ranking[j] < high) {
+                    high = ranking[j];
+                    idx = j;
                 }
             }
+            vote[i - 1] = candidates[idx];
+            low = high;
+            high = Integer.MAX_VALUE;
         }
 
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder(Arrays.asList(vote));
-        String res = arrayBuilder.build().toString();
-        System.out.println("VoteString = " + res);
-        return res;
+        return vote;
     }
 
     @Override

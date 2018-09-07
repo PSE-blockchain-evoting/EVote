@@ -117,6 +117,11 @@ public class ModelMock implements SupervisorControlToModelIF,
     }
 
     @Override
+    public boolean isElectionOver() {
+        return false;
+    }
+
+    @Override
     public int[] getResults() {
         //int[] i = {10, 2, 41, 5};
         int[] i = {4, 123, 64, 22, 5,
@@ -152,5 +157,10 @@ public class ModelMock implements SupervisorControlToModelIF,
     public String getOwnVote() {
         //return "{\"candidate\":\"Bitcoin\"}";
         return ownVote;
+    }
+
+    @Override
+    public String getOwnName() {
+        return null;
     }
 }

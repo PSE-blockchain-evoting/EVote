@@ -16,8 +16,6 @@
 package edu.kit.iti.formal.pse2018.evote.view.supervisorview;
 
 import edu.kit.iti.formal.pse2018.evote.control.SupervisorViewToControlIF;
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkConfigException;
-import edu.kit.iti.formal.pse2018.evote.exceptions.NetworkException;
 import edu.kit.iti.formal.pse2018.evote.model.ElectionStatusListener;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorViewToModelIF;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigIssues;
@@ -92,5 +90,9 @@ public class SupervisorAdapter {
 
     public int[] getResults() {
         return model.getResults();
+    }
+
+    public boolean isElectionOver() {
+        return model.isElectionOver();
     }
 }

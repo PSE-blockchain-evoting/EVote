@@ -25,5 +25,7 @@ public interface ViewToModelIF {
 
     public void setElectionStatusListener(ElectionStatusListener listener);
 
+    public boolean isElectionOver();
+
     public int[] getResults();
 }

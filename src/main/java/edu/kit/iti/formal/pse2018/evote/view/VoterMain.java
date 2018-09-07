@@ -15,7 +15,6 @@
 
 package edu.kit.iti.formal.pse2018.evote.view;
 
-import edu.kit.iti.formal.pse2018.evote.view.supervisorview.SupervisorGUI;
 import edu.kit.iti.formal.pse2018.evote.view.voterview.VoterGUI;
 
 import java.awt.Font;
@@ -34,6 +33,7 @@ public class VoterMain {
         UIManager.put("Title.font", new FontUIResource("Sans Serif", Font.BOLD, 35));
         UIManager.put("General.font", new FontUIResource("Sans Serif", Font.BOLD, 15));
         UIManager.put("Vote.font", new FontUIResource("Sans Serif", Font.BOLD, 30));
+        UIManager.put("Small.font", new FontUIResource("Sans Serif", Font.BOLD, 20));
 
         VoterGUI gui = new VoterGUI();
     }

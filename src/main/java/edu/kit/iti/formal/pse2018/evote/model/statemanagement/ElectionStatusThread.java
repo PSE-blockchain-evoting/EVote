@@ -58,8 +58,8 @@ public class ElectionStatusThread extends Thread {
             election.reloadVotes();
             if (election.checkElectionOver()) {
                 System.out.println("True");
-                electionStatusListener.electionOver();
                 hasEnded = true;
+                electionStatusListener.electionOver();
             } else {
                 System.out.println("False");
                 electionStatusListener.electionUpdate();
@@ -93,5 +93,9 @@ public class ElectionStatusThread extends Thread {
     public synchronized void start() {
         System.out.println("Starting ElectionStatusThread");
         super.start();
+    }
+
+    public boolean isElectionOver() {
+        return hasEnded;
     }
 }

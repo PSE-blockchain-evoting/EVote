@@ -48,6 +48,10 @@ public class VoterAdapter {
         return model.getOwnVote();
     }
 
+    public String getOwnName() {
+        return model.getOwnName();
+    }
+
     public ElectionDataIF getElectionData() {
         return model.getElectionData();
     }
@@ -62,5 +66,9 @@ public class VoterAdapter {
 
     public int[] getResults() {
         return model.getResults();
+    }
+
+    public boolean isElectionOver() {
+        return model.isElectionOver();
     }
 }

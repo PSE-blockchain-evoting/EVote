@@ -109,7 +109,6 @@ public class RankingExtension extends ComponentExtension<JComboBox<String>> {
         for (JComboBox<String> cbx : components) {
             if (!cbx.getSelectedItem().equals(noSelection)) {
                 int rm = Integer.parseInt((String) cbx.getSelectedItem());
-                System.out.println("removing = " + rm);
                 list.remove((Integer) rm);
             }
         }
@@ -127,6 +126,7 @@ public class RankingExtension extends ComponentExtension<JComboBox<String>> {
      * @param b Enable/Disable.
      */
     public void setEditable(boolean b) {
+        editable = b;
         for (JComboBox<String> cbx : components) {
             cbx.setEnabled(b);
         }

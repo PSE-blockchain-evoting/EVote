@@ -16,8 +16,10 @@
 package edu.kit.iti.formal.pse2018.evote.view.components;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import javax.swing.plaf.FontUIResource;
 
 /**
  * StackedBarChart is a JComponent which will draw a stacked bar chart on the given data.
@@ -26,7 +28,14 @@ public class StackedBarChart extends Diagram {
 
     public static final int[] TEST_DATA = {4, 123, 64, 22, 5, 43, 83, 23, 12, 73, 22, 13, 2};
     public static final Color[] TEST_COLOR = {Color.BLACK, Color.RED, Color.YELLOW, Color.GREEN, Color.MAGENTA,
-                                              Color.ORANGE, Color.PINK};
+        Color.ORANGE, Color.PINK};
+    private String[] labels;
+    private boolean drawLabels;
+
+    public StackedBarChart() {
+        super();
+        drawLabels = true;
+    }
 
     @Override
     public void setData(int[] data) {
@@ -56,14 +65,20 @@ public class StackedBarChart extends Diagram {
         for (int i = 0; i < getRows(); i++) {
             int sum = 0;
             for (int j = 0; j < segments; j++) {
-                sum += accessData(j, i);
+                sum += accessData(i, j);
             }
 
             for (int j = 0; j < segments; j++) {
-                int length = (int)((double) getWidth() * ((double) accessData(j, i) / (double) sum));
+                int length = (int) ((double) getWidth() * ((double) accessData(i, j) / (double) sum));
                 g.setColor(getColor(j));
                 g.fillRect(x, y, length, barHeight);
                 x += length;
+            }
+
+            if (drawLabels) {
+                g.setColor(Color.BLACK);
+                g.setFont(new FontUIResource("Sans Serif", Font.BOLD, barDist));
+                g.drawString(labels[i % labels.length], 0, y);
             }
 
             y += barDist + barHeight;
@@ -105,5 +120,9 @@ public class StackedBarChart extends Diagram {
     private Color getColor(int i) {
         int cols = getColumns();
         return colors[i % cols];
+    }
+
+    public void setLabels(String[] labels) {
+        this.labels = labels;
     }
 }

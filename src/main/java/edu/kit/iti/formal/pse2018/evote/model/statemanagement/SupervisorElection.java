@@ -27,10 +27,13 @@ import edu.kit.iti.formal.pse2018.evote.model.SupervisorControlToModelIF;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorSDKInterface;
 import edu.kit.iti.formal.pse2018.evote.model.SupervisorViewToModelIF;
 import edu.kit.iti.formal.pse2018.evote.model.sdkconnection.SupervisorSDKInterfaceImpl;
+import edu.kit.iti.formal.pse2018.evote.utils.CandidatePercentileCondition;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigIssues;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigIssuesImpl;
 import edu.kit.iti.formal.pse2018.evote.utils.ConfigResourceBundle;
 import edu.kit.iti.formal.pse2018.evote.utils.ElectionDataIF;
+import edu.kit.iti.formal.pse2018.evote.utils.ElectionEndCondition;
+import edu.kit.iti.formal.pse2018.evote.utils.VoterPercentileCondition;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -86,6 +89,8 @@ public class SupervisorElection extends Election implements SupervisorControlToM
         value |= findVoterIssue(svoters, cgi);
 
         value |= findTimespanIssue(electionDataIF.getStartDate(), electionDataIF.getEndDate(), cgi);
+
+        value |= findEndConditionIssue(electionDataIF.getEndCondition(), cgi);
 
         if (value) {
             configIssuesImpl = cgi;
@@ -154,6 +159,28 @@ public class SupervisorElection extends Election implements SupervisorControlToM
             return true;
         } else if (end.before(new Date())) {
             cgi.setTimespanIssue(lang.getString("timespan_ends_in_past"));
+            return true;
+        }
+        return false;
+    }
+
+    private boolean findEndConditionIssue(ElectionEndCondition cond, ConfigIssuesImpl cgi) {
+        ResourceBundle lang = ResourceBundle.getBundle("ConfigIssues");
+
+        int perc;
+        if (cond instanceof CandidatePercentileCondition) {
+            perc = ((CandidatePercentileCondition) cond).getPercentage();
+        } else if (cond instanceof VoterPercentileCondition) {
+            perc = ((VoterPercentileCondition) cond).getPercentage();
+        } else {
+            return false;
+        }
+
+        if (perc <= 0) {
+            cgi.setEndConditionIssue(lang.getString("percentage_low"));
+            return true;
+        } else if (perc > 100) {
+            cgi.setEndConditionIssue(lang.getString("percentage_high"));
             return true;
         }
         return false;
