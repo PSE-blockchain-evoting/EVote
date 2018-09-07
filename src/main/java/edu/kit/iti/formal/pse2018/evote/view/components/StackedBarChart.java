@@ -65,11 +65,11 @@ public class StackedBarChart extends Diagram {
         for (int i = 0; i < getRows(); i++) {
             int sum = 0;
             for (int j = 0; j < segments; j++) {
-                sum += accessData(j, i);
+                sum += accessData(i, j);
             }
 
             for (int j = 0; j < segments; j++) {
-                int length = (int) ((double) getWidth() * ((double) accessData(j, i) / (double) sum));
+                int length = (int) ((double) getWidth() * ((double) accessData(i, j) / (double) sum));
                 g.setColor(getColor(j));
                 g.fillRect(x, y, length, barHeight);
                 x += length;

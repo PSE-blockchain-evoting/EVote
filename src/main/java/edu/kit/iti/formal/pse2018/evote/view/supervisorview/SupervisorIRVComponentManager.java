@@ -128,6 +128,6 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
         int col = data[0];
         int rows = (data.length - 1) / data[0];
 
-        return data[1 + voteNr * col + cand];
+        return data[1 + cand * col + voteNr];
     }
 }

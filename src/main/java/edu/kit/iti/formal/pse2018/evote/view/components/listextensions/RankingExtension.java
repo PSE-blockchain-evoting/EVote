@@ -109,7 +109,6 @@ public class RankingExtension extends ComponentExtension<JComboBox<String>> {
         for (JComboBox<String> cbx : components) {
             if (!cbx.getSelectedItem().equals(noSelection)) {
                 int rm = Integer.parseInt((String) cbx.getSelectedItem());
-                System.out.println("removing = " + rm);
                 list.remove((Integer) rm);
             }
         }
