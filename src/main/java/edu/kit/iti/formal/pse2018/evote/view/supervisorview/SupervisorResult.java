@@ -43,6 +43,7 @@ public class SupervisorResult extends SupervisorGUIPanel {
     private JButton btnExit;
     private JButton btnEndElection;
     private JLabel lblElectionStatus;
+    private JLabel lblTableDescription;
 
     private GroupLayout layout;
 
@@ -60,7 +61,7 @@ public class SupervisorResult extends SupervisorGUIPanel {
         chart = manager.createResultDiagram();
         table = manager.createResultTable();
         table.setBorder(null);
-        lblWinner = new JLabel("");
+        lblTableDescription = manager.createTableDescriptionLabel();
 
         initComponents();
         buildLayout();
@@ -115,9 +116,6 @@ public class SupervisorResult extends SupervisorGUIPanel {
     private void buildLayout() {
         layout = new GroupLayout(this);
 
-        //layout.setAutoCreateContainerGaps(true);
-        //layout.setAutoCreateGaps(true);
-
         layout.setHorizontalGroup(layout.createParallelGroup()
                 .addGroup(layout.createSequentialGroup()
                         .addComponent(lblElectionStatus)
@@ -125,7 +123,11 @@ public class SupervisorResult extends SupervisorGUIPanel {
                 )
                 .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup()
-                                .addComponent(lblWinner)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblWinner)
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(lblTableDescription)
+                                )
                                 .addComponent(table)
                         )
                         .addGap(5, 5, 10)
@@ -150,7 +152,10 @@ public class SupervisorResult extends SupervisorGUIPanel {
                 .addGroup(layout.createParallelGroup()
                         .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
-                                .addComponent(lblWinner)
+                                .addGroup(layout.createParallelGroup()
+                                        .addComponent(lblWinner)
+                                        .addComponent(lblTableDescription)
+                                )
                                 .addComponent(table)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED, 0, Short.MAX_VALUE)
                                 .addComponent(btnEndElection)

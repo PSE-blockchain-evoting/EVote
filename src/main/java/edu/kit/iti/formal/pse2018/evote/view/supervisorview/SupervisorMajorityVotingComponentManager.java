@@ -27,6 +27,7 @@ import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.TextExten
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ResourceBundle;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 public class SupervisorMajorityVotingComponentManager extends SupervisorVSComponentManager {
@@ -54,6 +55,10 @@ public class SupervisorMajorityVotingComponentManager extends SupervisorVSCompon
         ne.setList(table);
         chart = new PieChart();
         chart.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
+
+        ResourceBundle lang = ResourceBundle.getBundle("View");
+        lblTableDescription = new JLabel(lang.getString("majorityVSTableDescription"));
+        lblTableDescription.setFont((Font)UIManager.get("Small.font"));
     }
 
     @Override
@@ -64,6 +69,11 @@ public class SupervisorMajorityVotingComponentManager extends SupervisorVSCompon
     @Override
     public ExtendableList createResultTable() {
         return table;
+    }
+
+    @Override
+    public JLabel createTableDescriptionLabel() {
+        return lblTableDescription;
     }
 
     @Override

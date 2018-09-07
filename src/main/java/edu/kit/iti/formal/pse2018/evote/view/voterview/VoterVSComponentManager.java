@@ -19,6 +19,7 @@ import edu.kit.iti.formal.pse2018.evote.view.components.Diagram;
 import edu.kit.iti.formal.pse2018.evote.view.components.ExtendableList;
 
 import java.awt.Color;
+import javax.swing.JLabel;
 
 public abstract class VoterVSComponentManager {
 
@@ -29,6 +30,7 @@ public abstract class VoterVSComponentManager {
 
     protected Diagram chart;
     protected ExtendableList table;
+    protected JLabel lblTableDescription;
 
     public VoterVSComponentManager(VoterAdapter adapter) {
         this.adapter = adapter;
@@ -37,6 +39,8 @@ public abstract class VoterVSComponentManager {
     public abstract Diagram createResultDiagram();
 
     public abstract ExtendableList createVotingForm();
+
+    public abstract JLabel createTableDescriptionLabel();
 
     public abstract String getVote();
 

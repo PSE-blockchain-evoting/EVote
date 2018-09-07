@@ -26,6 +26,7 @@ import edu.kit.iti.formal.pse2018.evote.view.components.listextensions.TextExten
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ResourceBundle;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.plaf.FontUIResource;
 
@@ -69,7 +70,12 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
         canName.setColors(SupervisorVSComponentManager.CANDIDATE_COLORS);
         table = new ExtendableList(canName);
         canName.setList(table);
+
+        ResourceBundle l = ResourceBundle.getBundle("View");
+        lblTableDescription = new JLabel(l.getString("IRVVSTableDescription"));
+        lblTableDescription.setFont((Font) UIManager.get("Small.font"));
     }
+
 
     @Override
     public Diagram createResultDiagram() {
@@ -79,6 +85,11 @@ public class SupervisorIRVComponentManager extends SupervisorVSComponentManager 
     @Override
     public ExtendableList createResultTable() {
         return table;
+    }
+
+    @Override
+    public JLabel createTableDescriptionLabel() {
+        return lblTableDescription;
     }
 
     @Override

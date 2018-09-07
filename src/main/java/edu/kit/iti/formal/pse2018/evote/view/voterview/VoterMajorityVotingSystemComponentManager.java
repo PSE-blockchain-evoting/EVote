@@ -30,12 +30,14 @@ import java.awt.Font;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
 import javax.json.Json;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 public class VoterMajorityVotingSystemComponentManager extends VoterVSComponentManager {
@@ -89,6 +91,10 @@ public class VoterMajorityVotingSystemComponentManager extends VoterVSComponentM
         chart = new PieChart();
         chart.setColors(VoterVSComponentManager.CANDIDATE_COLORS);
         chart.setData(adapter.getResults());
+
+        ResourceBundle lang = ResourceBundle.getBundle("View");
+        lblTableDescription = new JLabel(lang.getString("majorityVSTableDescription"));
+        lblTableDescription.setFont((Font)UIManager.get("Small.font"));
     }
 
     @Override
@@ -99,6 +105,11 @@ public class VoterMajorityVotingSystemComponentManager extends VoterVSComponentM
     @Override
     public ExtendableList createVotingForm() {
         return table;
+    }
+
+    @Override
+    public JLabel createTableDescriptionLabel() {
+        return lblTableDescription;
     }
 
     @Override

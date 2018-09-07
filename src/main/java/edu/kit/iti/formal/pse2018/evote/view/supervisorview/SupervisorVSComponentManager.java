@@ -19,6 +19,7 @@ import edu.kit.iti.formal.pse2018.evote.view.components.Diagram;
 import edu.kit.iti.formal.pse2018.evote.view.components.ExtendableList;
 
 import java.awt.Color;
+import javax.swing.JLabel;
 
 public abstract class SupervisorVSComponentManager {
 
@@ -29,6 +30,7 @@ public abstract class SupervisorVSComponentManager {
 
     protected Diagram chart;
     protected ExtendableList table;
+    protected JLabel lblTableDescription;
 
     public SupervisorVSComponentManager(SupervisorAdapter adapter) {
         this.adapter = adapter;
@@ -37,6 +39,8 @@ public abstract class SupervisorVSComponentManager {
     public abstract Diagram createResultDiagram();
 
     public abstract ExtendableList createResultTable();
+
+    public abstract JLabel createTableDescriptionLabel();
 
     public abstract void updateComponents(int[] data);
 }

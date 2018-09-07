@@ -36,6 +36,7 @@ import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonReader;
 import javax.json.JsonString;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 public class VoterIRVComponentManager extends VoterVSComponentManager {
@@ -87,6 +88,10 @@ public class VoterIRVComponentManager extends VoterVSComponentManager {
 
         chart.setColors(VoterVSComponentManager.CANDIDATE_COLORS);
         chart.setData(adapter.getResults());
+
+        ResourceBundle l = ResourceBundle.getBundle("View");
+        lblTableDescription = new JLabel(l.getString("IRVVSTableDescription"));
+        lblTableDescription.setFont((Font)UIManager.get("Small.font"));
     }
 
     @Override
@@ -97,6 +102,11 @@ public class VoterIRVComponentManager extends VoterVSComponentManager {
     @Override
     public ExtendableList createVotingForm() {
         return table;
+    }
+
+    @Override
+    public JLabel createTableDescriptionLabel() {
+        return lblTableDescription;
     }
 
     @Override
